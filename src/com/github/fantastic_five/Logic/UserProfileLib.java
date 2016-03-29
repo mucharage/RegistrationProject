@@ -29,6 +29,8 @@ public class UserProfileLib
 			}
 		}
 	}
+	
+	//TODO: boolean hasUser based on UserID -- never have 2 users in the DB with the same userID
 
 	/**
 	 * 
@@ -76,6 +78,8 @@ public class UserProfileLib
 			return new GUIViewCourses();
 		case 1:
 			return new GUIStudent();
+		case 2:
+			return null;// TODO: implement TA stuff
 		case 3:
 			return new GUITeacher();
 		case 4:
