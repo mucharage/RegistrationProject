@@ -49,7 +49,7 @@ public class StudentRegistrationMain
 		};
 		SwingUtilities.invokeLater(r);
 	}
-	
+
 	/**
 	 * Creates a default user profile set that is absolutely necessary
 	 */
