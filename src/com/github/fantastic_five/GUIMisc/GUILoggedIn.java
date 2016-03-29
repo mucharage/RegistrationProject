@@ -1,4 +1,5 @@
 package com.github.fantastic_five.GUIMisc;
+
 /**
  * @author Fantastic Five (Jose Stovall)
  * A JPanel displaying all teachers in the university

@@ -74,13 +74,13 @@ public class GUIViewCourses extends JPanel
 			public void mouseClicked(MouseEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}//end of mouseClicked
-		});//end of mouseListener
+			}// end of mouseClicked
+		});// end of mouseListener
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
 		/**
-		 * adds a log in GUI 
+		 * adds a log in GUI
 		 */
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
@@ -96,5 +96,5 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
 
-	}//end of GUIViewCourses()
-}//end of JPanel extension of GUViewCourses
+	}// end of GUIViewCourses()
+}// end of JPanel extension of GUViewCourses

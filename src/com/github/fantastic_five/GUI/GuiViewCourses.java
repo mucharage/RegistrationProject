@@ -25,14 +25,13 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 public class GuiViewCourses extends JPanel
 {
 	/**
-	 * This GUI displays the all available courses that our 
-	 * University offers. 
+	 * This GUI displays the all available courses that our University offers.
 	 */
 	public GuiViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
-		
+
 		/**
 		 * Adds a ScrollPane
 		 */
@@ -42,8 +41,8 @@ public class GuiViewCourses extends JPanel
 		add(scrollPane);
 
 		/**
-		 * Adds a table displaying important details for each courses. 
-		 *  
+		 * Adds a table displaying important details for each courses.
+		 * 
 		 */
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
@@ -72,11 +71,11 @@ public class GuiViewCourses extends JPanel
 			public void mouseClicked(MouseEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
-			}//end of mouseClicked
-		});//end of MouseListener
+			}// end of mouseClicked
+		});// end of MouseListener
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-		
+
 		/**
 		 * Adds a login Panel
 		 */
@@ -85,7 +84,7 @@ public class GuiViewCourses extends JPanel
 		add(loginPanel);
 
 		/**
-		 * Adds a Label named View Courses. 
+		 * Adds a Label named View Courses.
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
@@ -94,5 +93,5 @@ public class GuiViewCourses extends JPanel
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
 
-	}//end of GuiViewCourses()
-}//end of JPanel extension of GuiViewCourses
+	}// end of GuiViewCourses()
+}// end of JPanel extension of GuiViewCourses

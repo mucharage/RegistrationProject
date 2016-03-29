@@ -1,4 +1,5 @@
 package com.github.fantastic_five.GUIMisc;
+
 /**
  * @author Fantastic Five (Jose Stovall)
  * A JPanel displaying all teachers in the university
@@ -25,13 +26,13 @@ public class GUIWIP extends JPanel
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
-		
+
 		JLabel lblThisGuiIs = new JLabel("This GUI is a WIP Stand-In");
 		lblThisGuiIs.setForeground(Color.RED);
 		lblThisGuiIs.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblThisGuiIs.setBounds(188, 42, 225, 32);
 		add(lblThisGuiIs);
-		
+
 		JButton btnViewLoginGui = new JButton("View Login GUI");
 		btnViewLoginGui.setBounds(101, 146, 122, 23);
 		btnViewLoginGui.addActionListener(new ActionListener()
@@ -42,7 +43,7 @@ public class GUIWIP extends JPanel
 			}
 		});
 		add(btnViewLoginGui);
-		
+
 		JButton btnViewAdminGui = new JButton("View Admin GUI");
 		btnViewAdminGui.setBounds(101, 241, 122, 23);
 		btnViewAdminGui.addActionListener(new ActionListener()
@@ -53,7 +54,7 @@ public class GUIWIP extends JPanel
 			}
 		});
 		add(btnViewAdminGui);
-		
+
 		JButton btnViewStudentGui = new JButton("View Student GUI");
 		btnViewStudentGui.setBounds(373, 241, 117, 23);
 		btnViewStudentGui.addActionListener(new ActionListener()
@@ -64,7 +65,7 @@ public class GUIWIP extends JPanel
 			}
 		});
 		add(btnViewStudentGui);
-		
+
 		JButton btnViewTeacherGui = new JButton("View Teacher GUI");
 		btnViewTeacherGui.setBounds(373, 146, 117, 23);
 		btnViewTeacherGui.addActionListener(new ActionListener()

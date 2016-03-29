@@ -28,19 +28,19 @@ public class GUIViewCourse extends JPanel
 	private JTable table;
 
 	/**
-	 * This GUI shall display all the available courses that our University offers. 
+	 * This GUI shall display all the available courses that our University offers.
 	 */
 	public GUIViewCourse()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
-		
-		//creates a scrollpane
+
+		// creates a scrollpane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
-		//creates a table which displays all available courses
+		// creates a table which displays all available courses
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
 						null },
@@ -58,7 +58,7 @@ public class GUIViewCourse extends JPanel
 		{ "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room" }));
 		scrollPane.setViewportView(table);
 
-		//adds a back button
+		// adds a back button
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter()
 		{
@@ -71,12 +71,12 @@ public class GUIViewCourse extends JPanel
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
-		//adds a log in panel
+		// adds a log in panel
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		//adds a view course label 
+		// adds a view course label
 		JLabel lblCourseRemoval = new JLabel("View Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
