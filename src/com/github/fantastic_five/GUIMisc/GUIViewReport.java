@@ -1,4 +1,5 @@
 package com.github.fantastic_five.GUIMisc;
+
 /**
  * @author Fantastic Five (Jose Stovall)
  * A JPanel displaying all teachers in the university
@@ -69,14 +70,14 @@ public class GUIViewReport extends JPanel
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-			
+
 		JLabel lblCourseRemoval = new JLabel("View Report");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
-		
+
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);

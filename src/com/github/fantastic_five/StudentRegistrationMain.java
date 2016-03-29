@@ -11,9 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.github.fantastic_five.GUIMisc.GUIWIP;
 
 /**
- * @author Clark Stephen
- * Group 5
- * Main class containing the Window itself and functions to control its contents
+ * @author Clark Stephen Group 5 Main class containing the Window itself and functions to control its contents
  */
 
 public class StudentRegistrationMain

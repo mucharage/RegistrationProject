@@ -26,8 +26,8 @@ public class GUIStudent extends JPanel
 {
 
 	/**
-	 * This GUIStudent class extends the JPanel. This is the first display
-	 * that the Student user will see when he/she logs in to his/her account.
+	 * This GUIStudent class extends the JPanel. This is the first display that the Student user will see when he/she logs in to his/her account.
+	 * 
 	 * @return A window Containing the main actions a student can do
 	 */
 	public GUIStudent()
@@ -110,6 +110,6 @@ public class GUIStudent extends JPanel
 			}// end of actionPerformed
 		});// end of addActionListener
 		add(btnBackToWip);
-		
-	}//end of GUIStudent()
-}//end of JPanel extension of GUIStudent
+
+	}// end of GUIStudent()
+}// end of JPanel extension of GUIStudent

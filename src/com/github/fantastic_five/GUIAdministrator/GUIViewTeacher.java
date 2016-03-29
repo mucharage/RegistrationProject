@@ -53,7 +53,7 @@ public class GUIViewTeacher extends JPanel
 		{ "Last", "First", "Courses", "Availability" }));
 		scrollPane.setViewportView(table);
 
-		//Back button to return to previous GUI
+		// Back button to return to previous GUI
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter()
 		{

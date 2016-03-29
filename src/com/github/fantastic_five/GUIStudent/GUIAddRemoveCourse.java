@@ -27,8 +27,8 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 @SuppressWarnings("serial")
 public class GUIAddRemoveCourse extends JPanel
 {
-	/** 
-	 * Private instant variables 
+	/**
+	 * Private instant variables
 	 */
 	private JTextField textField;
 	private JButton btnNewButton;
@@ -39,9 +39,7 @@ public class GUIAddRemoveCourse extends JPanel
 	private JTable table;
 
 	/**
-	 * This GUI class displays the panel for adding and removing courses.
-	 * Here student can search course by CRN that he/she want to
-	 * add or remove, and would allow them to do so. 
+	 * This GUI class displays the panel for adding and removing courses. Here student can search course by CRN that he/she want to add or remove, and would allow them to do so.
 	 */
 	public GUIAddRemoveCourse()
 	{
@@ -52,7 +50,7 @@ public class GUIAddRemoveCourse extends JPanel
 		textField.setBounds(88, 82, 206, 20);
 		add(textField);
 		textField.setColumns(10);
-		
+
 		/**
 		 * Button & Logic for Add Courses to list below.
 		 */
@@ -62,10 +60,10 @@ public class GUIAddRemoveCourse extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-			}//end of the actionPerformed
-		});//end of the addActionListener
+			}// end of the actionPerformed
+		});// end of the addActionListener
 		add(btnNewButton);
-		
+
 		/**
 		 * Button & Logic for Remove for the list below
 		 */
@@ -77,23 +75,23 @@ public class GUIAddRemoveCourse extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				GUIRemove.main(null);
-			}//end of the actionPerformed 
-		});//end of the actionPerformed 
+			}// end of the actionPerformed
+		});// end of the actionPerformed
 		add(btnNewButton_1);
 
 		/**
-		 * adds a back button. 
+		 * adds a back button.
 		 */
 		btnBack = new JButton("Back");
-		btnBack.setBounds(41, 389, 128, 23);		
+		btnBack.setBounds(41, 389, 128, 23);
 		btnBack.addMouseListener(new MouseAdapter()
 		{
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}//end of mouseClicked
-		});//end of addMouseListener
+			}// end of mouseClicked
+		});// end of addMouseListener
 		add(btnBack);
 
 		/**
@@ -104,7 +102,7 @@ public class GUIAddRemoveCourse extends JPanel
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
-		
+
 		/**
 		 * Adds a label named, "CRN:"
 		 */
@@ -119,36 +117,35 @@ public class GUIAddRemoveCourse extends JPanel
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(41, 227, 540, 107);
 		add(scrollPane_1);
-		
+
 		/**
-		 * Creates a Table which shall display result of the course that 
-		 * user has searched for 
+		 * Creates a Table which shall display result of the course that user has searched for
 		 */
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane_1.setViewportView(table_1);
-		 
+
 		/**
 		 * Creates an another ScrollPane
 		 */
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(41, 113, 539, 59);
 		add(scrollPane);
-		
+
 		/**
-		 * Creates an another Table which shall course that user has added. 
+		 * Creates an another Table which shall course that user has added.
 		 */
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane.setViewportView(table);
-		
+
 		/**
 		 * Adds a GUILogIn
 		 */
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-		
+
 		/**
 		 * Adds a Label named, "Add or Remove Courses."
 		 */
@@ -158,6 +155,6 @@ public class GUIAddRemoveCourse extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(177, 30, 243, 23);
 		add(lblCourseRemoval);
-		
-	}//end of GUIAddorRemoveCourse()
-}//end of JPanel extension of GUIAddorRemoveCourse()
+
+	}// end of GUIAddorRemoveCourse()
+}// end of JPanel extension of GUIAddorRemoveCourse()

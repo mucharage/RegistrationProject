@@ -1,4 +1,5 @@
 package com.github.fantastic_five.GUITeacher;
+
 /**
  * @author Christian Phillips
  * Group 5 
@@ -22,17 +23,16 @@ import com.github.fantastic_five.GUIMisc.GUIWIP;
 public class GUITeacher extends JPanel
 {
 	/**
-	 * The GUITeacher class extends the JPanel. This is the first 
-	 * display that the Teacher user will see when he/she logs in
-	 * to his/her account.
-	 * @return A window Containing the main actions a Teacher can do 
+	 * The GUITeacher class extends the JPanel. This is the first display that the Teacher user will see when he/she logs in to his/her account.
+	 * 
+	 * @return A window Containing the main actions a Teacher can do
 	 */
 	public GUITeacher()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
 
-		//Button & Logic for View Course
+		// Button & Logic for View Course
 		JButton btnView = new JButton("View Course");
 		btnView.addMouseListener(new MouseAdapter()
 		{
@@ -81,7 +81,7 @@ public class GUITeacher extends JPanel
 		lblTeacher.setBounds(178, 96, 243, 23);
 		add(lblTeacher);
 
-		//@TODO: Remove this later:
+		// @TODO: Remove this later:
 		JButton btnBackToWip = new JButton("Back to WIP Menu");
 		btnBackToWip.setBounds(489, 400, 119, 23);
 		btnBackToWip.addActionListener(new ActionListener()
@@ -90,8 +90,8 @@ public class GUITeacher extends JPanel
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIWIP());
 			}
-		});		
+		});
 		add(btnBackToWip);
-		
+
 	}
 }

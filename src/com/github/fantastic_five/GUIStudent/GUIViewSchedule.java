@@ -27,8 +27,7 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 public class GUIViewSchedule extends JPanel
 {
 	/**
-	 * This GUI that shall display student's individual schedule 
-	 * of courses that he/she has chosen
+	 * This GUI that shall display student's individual schedule of courses that he/she has chosen
 	 */
 	public GUIViewSchedule()
 	{
@@ -40,14 +39,14 @@ public class GUIViewSchedule extends JPanel
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 60, 587, 107);
 		add(scrollPane);
-		
+
 		/**
 		 * adds a table which would displays list of courses that user have chosen
 		 */
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane.setViewportView(table);
-		
+
 		/**
 		 * Button & logic for back button
 		 */
@@ -59,12 +58,12 @@ public class GUIViewSchedule extends JPanel
 			public void mouseClicked(MouseEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}//end of mouseClicked
-		});//end of MouseListener
+			}// end of mouseClicked
+		});// end of MouseListener
 		add(btnBack);
 
 		/**
-		 * Button & Logic for print button 
+		 * Button & Logic for print button
 		 */
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setBounds(498, 386, 99, 23);
@@ -72,8 +71,8 @@ public class GUIViewSchedule extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-			}//end of actionPerformed 
-		});//end of actionListener
+			}// end of actionPerformed
+		});// end of actionListener
 		add(btnPrint);
 
 		/**
@@ -82,14 +81,14 @@ public class GUIViewSchedule extends JPanel
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 178, 587, 197);
 		add(scrollPane_1);
-		
+
 		/**
 		 * adds a login GUI
 		 */
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-		
+
 		/**
 		 * adds a JLabel named "View Schedule"
 		 */
@@ -99,6 +98,6 @@ public class GUIViewSchedule extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(177, 30, 243, 23);
 		add(lblCourseRemoval);
-				
-	}//end of GUIViewSchedule()
-}//end of JPanel extension of GUIViewSchedule
+
+	}// end of GUIViewSchedule()
+}// end of JPanel extension of GUIViewSchedule

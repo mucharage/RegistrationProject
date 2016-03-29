@@ -1,4 +1,5 @@
 package com.github.fantastic_five.GUITeacher;
+
 /**
  * @author Christian Phillips
  * Group 5 
@@ -39,10 +40,7 @@ public class GUIAddRemoveClass extends JPanel
 	private JTable table;
 
 	/**
-	 * This GUI class displays the panel for adding and removing 
-	 * courses that the teacher is teaching. 
-	 * Here teacher can search course by CRN that he/she wants to 
-	 * add or remove, and would allow them to do so. 
+	 * This GUI class displays the panel for adding and removing courses that the teacher is teaching. Here teacher can search course by CRN that he/she wants to add or remove, and would allow them to do so.
 	 *
 	 */
 	public GUIAddRemoveClass()
@@ -55,7 +53,7 @@ public class GUIAddRemoveClass extends JPanel
 		add(textField);
 		textField.setColumns(10);
 
-		//Button & Logic for Add courses
+		// Button & Logic for Add courses
 		btnNewButton = new JButton("Add");
 		btnNewButton.setBounds(180, 183, 254, 23);
 		btnNewButton.addActionListener(new ActionListener()
@@ -66,7 +64,7 @@ public class GUIAddRemoveClass extends JPanel
 		});
 		add(btnNewButton);
 
-		//Button & Logic for Remove Courses
+		// Button & Logic for Remove Courses
 		btnNewButton_1 = new JButton("Remove");
 		btnNewButton_1.setBounds(180, 345, 254, 23);
 		btnNewButton_1.addActionListener(new ActionListener()
@@ -78,7 +76,7 @@ public class GUIAddRemoveClass extends JPanel
 		});
 		add(btnNewButton_1);
 
-		//adds a back button 
+		// adds a back button
 		btnBack = new JButton("Back");
 		btnBack.setBounds(41, 389, 128, 23);
 		btnBack.addActionListener(new ActionListener()
@@ -97,14 +95,14 @@ public class GUIAddRemoveClass extends JPanel
 		});
 		add(btnBack);
 
-		//adds a label named "Search By"
+		// adds a label named "Search By"
 		JLabel lblSearchBy = new JLabel("Search By:");
 		lblSearchBy.setBounds(41, 56, 116, 20);
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
 
-		//adds a label named "CRN:"
+		// adds a label named "CRN:"
 		lblCrn = new JLabel("CRN:");
 		lblCrn.setBounds(43, 84, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -114,7 +112,7 @@ public class GUIAddRemoveClass extends JPanel
 		scrollPane_1.setBounds(41, 227, 540, 107);
 		add(scrollPane_1);
 
-		//adds a table
+		// adds a table
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane_1.setViewportView(table_1);
@@ -123,16 +121,16 @@ public class GUIAddRemoveClass extends JPanel
 		scrollPane.setBounds(41, 113, 539, 59);
 		add(scrollPane);
 
-		//adds another table 
+		// adds another table
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane.setViewportView(table);
-		
+
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-		
-		//adds a label named "Add or Remove Courses
+
+		// adds a label named "Add or Remove Courses
 		JLabel lblCourseRemoval = new JLabel("Add or Remove Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));

@@ -32,7 +32,7 @@ public class GUIForgotPass
 		{
 			public void run()
 			{
-			    // Try to create the new pop-up window
+				// Try to create the new pop-up window
 				try
 				{
 					GUIForgotPass window = new GUIForgotPass();
@@ -51,29 +51,29 @@ public class GUIForgotPass
 	 */
 	public GUIForgotPass()
 	{
-		  // Initialize frame as a new JFrame
+		// Initialize frame as a new JFrame
 		frame = new JFrame("Password Recovery");
-		  // Set the dimensions of the frame
+		// Set the dimensions of the frame
 		frame.setBounds(100, 100, 303, 141);
-		  // When the frame is closed, it simply goes away
+		// When the frame is closed, it simply goes away
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 
-		  // Create a text area to go inside the frame
+		// Create a text area to go inside the frame
 		JTextArea txtpnPleaseContactThe = new JTextArea();
-		  // Making the font "Tahoma", plain text, size 15
+		// Making the font "Tahoma", plain text, size 15
 		txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		  // Menu is the color of the text area background
+		// Menu is the color of the text area background
 		txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
-		  // Make the text not editable by the user
+		// Make the text not editable by the user
 		txtpnPleaseContactThe.setEditable(false);
-		  // The text that is displayed
+		// The text that is displayed
 		txtpnPleaseContactThe.setText("Please contact the System\r\n  Administration Office to\r\n   obtain your password.\r\n          Thank you.");
-		  // Set the dimensions of the frame
+		// Set the dimensions of the frame
 		txtpnPleaseContactThe.setBounds(57, 11, 178, 80);
-		  // add the text area to the pane and frame
+		// add the text area to the pane and frame
 		frame.getContentPane().add(txtpnPleaseContactThe);
 	}
 }

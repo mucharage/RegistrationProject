@@ -1,7 +1,7 @@
 package com.github.fantastic_five.Logic;
+
 /**
- * @author Clark Stephen
- * Group 5
+ * @author Clark Stephen Group 5
  */
 public class Lib
 {
