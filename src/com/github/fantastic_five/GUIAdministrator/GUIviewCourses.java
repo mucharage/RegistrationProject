@@ -22,13 +22,13 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
-public class GuiViewCourses extends JPanel
+public class GUIViewCourses extends JPanel
 {
 	/**
 	 * This GUI displays the all available courses that our 
 	 * University offers. 
 	 */
-	public GuiViewCourses()
+	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
