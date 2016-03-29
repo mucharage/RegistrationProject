@@ -23,20 +23,29 @@ public class UserProfileLib
 		{
 			if (users.get(i).getUserID().equalsIgnoreCase(userID))
 			{
+				// TODO: implement output for .dat file
 				users.remove(i);
 				break;
 			}
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @param userID
+	 *            the username to check for
+	 * @param password
+	 *            the password to test against
+	 * @return the UserProfile object that matches with the username & password
+	 */
 	public static UserProfile getUserProfile(String userID, char[] password)
 	{
-		for(UserProfile u : users)
+		for (UserProfile u : users)
 		{
-			if(u.getUserID().equalsIgnoreCase(userID))
+			if (u.getUserID().equalsIgnoreCase(userID))
 			{
 				String tempPass = new String(password);
-				if(u.passwordIs(tempPass))
+				if (u.passwordIs(tempPass))
 					return u;
 			}
 		}
@@ -49,18 +58,30 @@ public class UserProfileLib
 	 */
 	public static void addUser(UserProfile profile)
 	{
+		// TODO: implement output for .dat file
 		users.add(profile);
 	}
-	
+
+	/**
+	 * 
+	 * @param permLevel
+	 *            the permission level of the user
+	 * @return the GUI that should be shown based on perm level
+	 */
 	public static JPanel getGUIFromPerm(int permLevel)
 	{
-		switch(permLevel)
+		switch (permLevel)
 		{
-		case 0:return new GUIViewCourses();
-		case 1:return new GUIStudent();
-		case 3:return new GUITeacher();
-		case 4:return new GUIAdmin();
-		default:return new GUIViewCourses();
+		case 0:
+			return new GUIViewCourses();
+		case 1:
+			return new GUIStudent();
+		case 3:
+			return new GUITeacher();
+		case 4:
+			return new GUIAdmin();
+		default:
+			return new GUIViewCourses();
 		}
 	}
 }

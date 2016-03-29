@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,6 +19,9 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.CourseLib;
 
 @SuppressWarnings("serial")
 public class GUIAddClass extends JPanel
@@ -135,13 +139,33 @@ public class GUIAddClass extends JPanel
 		btnNewButton.setBounds(10, 386, 128, 23);
 		add(btnNewButton);
 
-		// Create button TODO: add logic
 		JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("Not yet implemented");
+				// Temporary Variables for creating the course object
+				String title = fieldCourseName.getText();
+				String description = fieldCourseDesc.getText();
+				String CRN = fieldCRN.getText();
+				int studentCap = Integer.parseInt(fieldCapacity.getText());
+				HashSet<Day> days = new HashSet<>();
+				String[] parts = fieldTimes.getText().split("[\\W]");
+				int startHour = Integer.parseInt(parts[0]);
+				int startMinute = Integer.parseInt(parts[1]);
+				int endHour = Integer.parseInt(parts[2]);
+				int endMinute = Integer.parseInt(parts[3]);
+
+				String[] dayParts = fieldDays.getText().split(" ");
+				for (String s : dayParts)
+					days.add(Day.getDayFromAbbreviation(s));
+
+				// Creates course and adds it to the course list
+				Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
+				CourseLib.addCourseToCourseList(c);
+				// TODO: implement output to .dat
+				// Resets the fields
+				clearFields();
 			}
 		});
 		btnCreate.setBounds(240, 300, 217, 23);
