@@ -1,6 +1,6 @@
 /**
- * @author Alay Patel (leader)
- * Group 5 
+ * @author Fantastic Five (Alay Patel)
+ * This GUI displays the all available courses that our University offers. 
  */
 
 package com.github.fantastic_five.GUIAdministrator;
@@ -24,15 +24,11 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
 {
-	/**
-	 * This GUI displays the all available courses that our 
-	 * University offers. 
-	 */
 	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
-		
+
 		/**
 		 * Adds a ScrollPane
 		 */
@@ -42,8 +38,8 @@ public class GUIViewCourses extends JPanel
 		add(scrollPane);
 
 		/**
-		 * Adds a table displaying important details for each courses. 
-		 *  
+		 * Adds a table displaying important details for each courses.
+		 * 
 		 */
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
@@ -72,11 +68,11 @@ public class GUIViewCourses extends JPanel
 			public void mouseClicked(MouseEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}//end of mouseClicked
-		});//end of MouseListener
+			}// end of mouseClicked
+		});// end of MouseListener
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-		
+
 		/**
 		 * Adds a login Panel
 		 */
@@ -85,7 +81,7 @@ public class GUIViewCourses extends JPanel
 		add(loginPanel);
 
 		/**
-		 * Adds a Label named View Courses. 
+		 * Adds a Label named View Courses.
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
@@ -94,5 +90,5 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
 
-	}//end of GuiViewCourses()
-}//end of JPanel extension of GuiViewCourses
+	}// end of GuiViewCourses()
+}// end of JPanel extension of GuiViewCourses
