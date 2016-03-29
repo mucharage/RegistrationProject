@@ -11,6 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.GUILogin;
+
 @SuppressWarnings("serial")
 public class GUILoggedIn extends JPanel
 {
@@ -31,14 +34,14 @@ public class GUILoggedIn extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Make button log out
+				StudentRegistrationMain.loggedIn.remove(0);
+				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
 			}
 		});
 		add(btnLogOut);
 
-		// Sets a label, TODO: make the label show the logged in user
-		JLabel lblCurrentLoggedIn = new JLabel("Current Logged In User:");
-		lblCurrentLoggedIn.setBounds(10, 4, 117, 14);
+		JLabel lblCurrentLoggedIn = new JLabel("Current Logged In User:" + StudentRegistrationMain.loggedIn.get(0).getUserID());
+		lblCurrentLoggedIn.setBounds(10, 4, 517, 14);
 		add(lblCurrentLoggedIn);
 	}
 }

@@ -24,8 +24,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUI.GUIForgotPass;
-import com.github.fantastic_five.GUIMisc.GUIWIP;
+import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.UserProfileLib;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -111,6 +111,18 @@ public class GUILogin extends JPanel
 		JButton btnLogin = new JButton("Login");
 		// Set the dimensions of the button
 		btnLogin.setBounds(204, 272, 90, 23);
+		btnLogin.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				UserProfile user = UserProfileLib.getUserProfile(usernameField.getText(), passwordField.getPassword());
+				if (user != null)
+				{
+					StudentRegistrationMain.loggedIn.add(user);
+					StudentRegistrationMain.replaceMainWindowContents(UserProfileLib.getGUIFromPerm(user.getPermLevel()));
+				}
+			}
+		});
 		// Add button to panel
 		add(btnLogin);
 
@@ -123,22 +135,10 @@ public class GUILogin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GuiViewCourses());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourses());
 			}
 		});
 		// Add button to panel
 		add(btnGuest);
-
-		// @TODO: Remove this later:
-		JButton btnBackToWip = new JButton("Back to WIP Menu");
-		btnBackToWip.setBounds(489, 400, 119, 23);
-		btnBackToWip.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIWIP());
-			}
-		});
-		add(btnBackToWip);
 	}
 }
