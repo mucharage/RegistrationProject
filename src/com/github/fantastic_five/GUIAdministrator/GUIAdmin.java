@@ -20,7 +20,6 @@ import javax.swing.SwingConstants;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 import com.github.fantastic_five.GUIMisc.GUIViewReport;
-import com.github.fantastic_five.GUIMisc.GUIWIP;
 
 @SuppressWarnings("serial")
 public class GUIAdmin extends JPanel
@@ -116,17 +115,5 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(178, 96, 243, 23);
 		add(lblAdministration);
-
-		// @TODO: Remove this later:
-		JButton btnBackToWip = new JButton("Back to WIP Menu");
-		btnBackToWip.setBounds(489, 400, 119, 23);
-		btnBackToWip.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIWIP());
-			}
-		});
-		add(btnBackToWip);
 	}
 }

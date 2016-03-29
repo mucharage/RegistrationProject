@@ -23,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
-import com.github.fantastic_five.Logic.Lib;
 
 @SuppressWarnings("serial")
 public class GUIRemoveClass extends JPanel
@@ -101,7 +100,7 @@ public class GUIRemoveClass extends JPanel
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						Lib.removeMatchingCRN(Integer.parseInt(fieldCRN.getText()));
+						System.out.println("Not yet implemented.");
 						popup.dispose();
 					}
 				});
