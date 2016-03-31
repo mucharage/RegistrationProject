@@ -36,7 +36,7 @@ public class GUIAddCourse extends JPanel
 	private JTextField fieldCapacity;
 	private JTextField fieldTimeEnd;
 
-	public GUIAddClass()
+	public GUIAddCourse()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
