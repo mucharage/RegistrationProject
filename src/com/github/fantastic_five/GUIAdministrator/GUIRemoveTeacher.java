@@ -1,5 +1,10 @@
 package com.github.fantastic_five.GUIAdministrator;
 
+/**
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel which removes a teacher UserProfile from the UserProfileDatabase
+ */
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

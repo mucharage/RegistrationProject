@@ -1,5 +1,10 @@
 package com.github.fantastic_five.GUIAdministrator;
 
+/**
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel which adds new teacher UserProfiles to the UserProfileDatabase
+ */
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -103,7 +108,7 @@ public class GUIAddTeacher extends JPanel
 		passwordTextField.setColumns(10);
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
-		
+
 		// Back Button
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
