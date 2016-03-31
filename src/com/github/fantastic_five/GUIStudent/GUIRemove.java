@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUIRemove
 {
@@ -62,15 +64,19 @@ public class GUIRemove
 		JLabel txtpnAreYouSure = new JLabel();
 		txtpnAreYouSure.setText("Are you sure?");
 		txtpnAreYouSure.setForeground(Color.RED);
-		txtpnAreYouSure.setFont(new Font("Verdana", Font.BOLD, 16));
+		txtpnAreYouSure.setFont(new Font("Tahoma", Font.BOLD, 16));
 		txtpnAreYouSure.setBounds(86, 11, 127, 20);
 		frame.getContentPane().add(txtpnAreYouSure);
 
 		JButton btnYes = new JButton("Yes");
-		btnYes.setBounds(10, 44, 89, 23);
+		btnYes.setBounds(10, 54, 89, 23);
 		frame.getContentPane().add(btnYes);
 
 		JButton btnNo = new JButton("No");
+		btnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNo.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -79,7 +85,7 @@ public class GUIRemove
 				frame.dispose();
 			}// end of mouseClicked
 		});// end of mouseListener
-		btnNo.setBounds(192, 42, 89, 23);
+		btnNo.setBounds(202, 54, 89, 23);
 		frame.getContentPane().add(btnNo);
 	}// end of main
 }// end of GUIremove
