@@ -2,6 +2,9 @@ package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,10 +14,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileLib;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 /**
- * @author Clark Stephen Group 5 Main class containing the Window itself and functions to control its contents
+ * @author Fantastic Five (Jose Stovall)
  */
 
 public class StudentRegistrationMain
@@ -23,6 +26,8 @@ public class StudentRegistrationMain
 	public static JFrame mainWindow = new JFrame("FF Student Registration");
 	public static Dimension mainWindowDimension = new Dimension(618, 458);
 	public static ArrayList<UserProfile> loggedIn = new ArrayList<UserProfile>();
+	public static PrintWriter classOutput;
+	public static PrintWriter userOutput;
 
 	public static void main(String[] args)
 	{
@@ -44,10 +49,48 @@ public class StudentRegistrationMain
 				// Put anything that needs to run in main here!
 				createBaseUsers();
 				createMainWindow();
+				initializeOutFiles();
 				replaceMainWindowContents(new GUILogin());
 			}
 		};
 		SwingUtilities.invokeLater(r);
+	}
+	
+	private static void initializeOutFiles()
+	{
+		try
+		{
+			classOutput = new PrintWriter(new File("classes.dat"));
+			userOutput = new PrintWriter(new File("users.dat"));
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void clearUserOutput()
+	{
+		try
+		{
+			userOutput = new PrintWriter(new File("class.dat"));
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static void clearClassOutput()
+	{
+		try
+		{
+			classOutput = new PrintWriter(new File("class.dat"));
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -56,7 +99,7 @@ public class StudentRegistrationMain
 	private static void createBaseUsers()
 	{
 		UserProfile adminUser = new UserProfile("admin", "password", UserProfile.ADMIN, "Group", "Five", "Administrator");
-		UserProfileLib.addUser(adminUser);
+		UserProfileDatabase.addUser(adminUser);
 	}
 
 	/**
