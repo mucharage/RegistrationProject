@@ -10,7 +10,7 @@ public class UserProfile
 {
 	public static final int GUEST = 0;
 	public static final int STUDENT = 1;
-	// public static final int TA = 2;
+	public static final int TA = 2;
 	public static final int TEACHER = 3;
 	public static final int ADMIN = 4;
 
