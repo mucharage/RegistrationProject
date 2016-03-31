@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.CourseLib;
+import com.github.fantastic_five.Logic.CourseDatabase;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
@@ -98,7 +98,7 @@ public class StudentRegistrationMain
 						int endMinute = Integer.parseInt(tempParts[1]);
 
 						Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
-						CourseLib.addCourseToCourseList(c);
+						CourseDatabase.addCourseToCourseList(c);
 					}
 				}
 				courseIn.close();
