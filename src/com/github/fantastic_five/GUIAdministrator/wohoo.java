@@ -22,9 +22,9 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 import com.github.fantastic_five.GUIMisc.GUIViewReport;
 
 @SuppressWarnings("serial")
-public class GUIAdmin extends JPanel
+public class wohoo extends JPanel
 {
-	public GUIAdmin()
+	public wohoo()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
@@ -78,7 +78,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(new GUIAdmin()));
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(new wohoo()));
 			}
 		});
 		add(btnViewReport);
