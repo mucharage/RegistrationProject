@@ -321,6 +321,12 @@ public class Course
 
 			return rVal;
 		}
+		
+		@Override
+		public String toString()
+		{
+			return formatTime(24);
+		}
 	}
 
 	public static enum Day
@@ -406,6 +412,6 @@ public class Course
 	@Override
 	public String toString()
 	{
-		return this.title + "|" + this.description + "|" + this.crn + "|" + this.studentCap + "|" + this.days + "|" + this.startTime + "|" + this.endTime;
+		return this.title + " | " + this.description + " | " + this.crn + " | " + this.studentCap + " | " + this.days + " | " + this.startTime + " | " + this.endTime;
 	}
 }

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.CourseLib;
@@ -141,11 +142,12 @@ public class GUIAddClass extends JPanel
 				int CRN = getCRN();
 				int studentCap = Integer.parseInt(fieldCapacity.getText());
 				HashSet<Day> days = new HashSet<>();
-				String[] parts = fieldTimeStart.getText().split("[\\W]");
-				int startHour = Integer.parseInt(parts[0]);
-				int startMinute = Integer.parseInt(parts[1]);
-				int endHour = Integer.parseInt(parts[2]);
-				int endMinute = Integer.parseInt(parts[3]);
+				String[] startTimeParts = fieldTimeStart.getText().split("[\\W]");
+				int startHour = Integer.parseInt(startTimeParts[0]);
+				int startMinute = Integer.parseInt(startTimeParts[1]);
+				String[] endTimeParts = fieldTimeEnd.getText().split("[\\W]");
+				int endHour = Integer.parseInt(endTimeParts[0]);
+				int endMinute = Integer.parseInt(endTimeParts[1]);
 
 				String[] dayParts = fieldDays.getText().split(" ");
 				for (String s : dayParts)
@@ -163,9 +165,9 @@ public class GUIAddClass extends JPanel
 		add(btnCreate);
 
 		// Adds the login panel to this window
-//		JPanel loginPanel = new GUILoggedIn();
-//		loginPanel.setBounds(0, 0, 618, 24);
-//		add(loginPanel);
+		JPanel loginPanel = new GUILoggedIn();
+		loginPanel.setBounds(0, 0, 618, 24);
+		add(loginPanel);
 	}
 
 	/**
@@ -177,6 +179,7 @@ public class GUIAddClass extends JPanel
 		fieldCourseDesc.setText("");
 		fieldDays.setText("");
 		fieldTimeStart.setText("");
+		fieldTimeEnd.setText("");
 		fieldCapacity.setText("");
 	}
 

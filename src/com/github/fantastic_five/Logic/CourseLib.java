@@ -1,13 +1,16 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
-
-import com.github.fantastic_five.StudentRegistrationMain;
 
 public class CourseLib
 {
 	// Essentially the master course list of the university
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
+	// PrintWriter for courses
+	static PrintStream courseOut;
 
 	/**
 	 * @param course
@@ -25,9 +28,19 @@ public class CourseLib
 	 */
 	public static void updateCourseListFile()
 	{
-		StudentRegistrationMain.clearClassOutput();
-		for (Course c : courseList)
-			StudentRegistrationMain.classOutput.println(c.toString());
+		try
+		{
+			courseOut = new PrintStream(new File("courses.dat"));
+			for (Course c : courseList)
+			{
+				courseOut.println(c.toString());
+				System.out.println(c.toString());
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
