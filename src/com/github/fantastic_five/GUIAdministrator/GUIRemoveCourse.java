@@ -69,7 +69,7 @@ public class GUIRemoveCourse extends JPanel
 				// Creates a pop-up window
 				JFrame popup = new JFrame("Confirmation");
 				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				popup.setPreferredSize(new Dimension(307, 117));
+				popup.setPreferredSize(new Dimension(307, 107));
 				popup.setResizable(false);
 
 				JPanel GUI = new JPanel();
@@ -82,21 +82,21 @@ public class GUIRemoveCourse extends JPanel
 				lblAreYouSure.setBounds(86, 11, 127, 20);
 				GUI.add(lblAreYouSure);
 
-				// Yes button should remove the CRN from the list
-				JButton btnYes = new JButton("No");
-				btnYes.addActionListener(new ActionListener()
+				// No button should remove the CRN from the list
+				JButton btnNo = new JButton("No");
+				btnNo.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
 					{
 						popup.dispose();
 					}
 				});
-				btnYes.setBounds(192, 42, 89, 23);
-				GUI.add(btnYes);
+				btnNo.setBounds(191, 49, 100, 23);
+				GUI.add(btnNo);
 
-				// No button closes the window
-				JButton btnNo = new JButton("Yes");
-				btnNo.addActionListener(new ActionListener()
+				// Yes button closes the window
+				JButton btnYes = new JButton("Yes");
+				btnYes.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
 					{
@@ -104,8 +104,8 @@ public class GUIRemoveCourse extends JPanel
 						popup.dispose();
 					}
 				});
-				btnNo.setBounds(10, 44, 89, 23);
-				GUI.add(btnNo);
+				btnYes.setBounds(10, 49, 100, 23);
+				GUI.add(btnYes);
 
 				// Finalizes the popup window
 				popup.getContentPane().add(GUI);
