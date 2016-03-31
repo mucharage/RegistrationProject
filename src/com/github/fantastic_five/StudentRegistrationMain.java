@@ -115,9 +115,9 @@ public class StudentRegistrationMain
 	 */
 	private static void createBaseUsers()
 	{
-		UserProfile teacherUser = new UserProfile("teacher", "password", UserProfile.TEACHER, "Group", "Five", "Teacher");
-		UserProfile studentUser = new UserProfile("student", "password", UserProfile.STUDENT, "Group", "Five", "Student");
-		UserProfile adminUser = new UserProfile("admin", "password", UserProfile.ADMIN, "Group", "Five", "Administrator");
+		UserProfile teacherUser = new UserProfile("teacher", "pass", UserProfile.TEACHER, "Group", "Five", "Teacher");
+		UserProfile studentUser = new UserProfile("student", "pass", UserProfile.STUDENT, "Group", "Five", "Student");
+		UserProfile adminUser = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Administrator");
 		UserProfileDatabase.addUser(teacherUser);
 		UserProfileDatabase.addUser(studentUser);
 		UserProfileDatabase.addUser(adminUser);

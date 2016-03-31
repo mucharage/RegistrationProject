@@ -54,7 +54,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddClass());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddCourse());
 			}
 		});
 		add(btnCreateCourseOffering);
