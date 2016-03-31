@@ -66,7 +66,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveClass());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveCourse());
 			}
 		});
 		add(btnRemoveCourseOffering);
