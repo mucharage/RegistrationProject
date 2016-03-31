@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileLib;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -115,11 +115,11 @@ public class GUILogin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile user = UserProfileLib.getUserProfile(usernameField.getText(), passwordField.getPassword());
+				UserProfile user = UserProfileDatabase.getUserProfile(usernameField.getText(), passwordField.getPassword());
 				if (user != null)
 				{
 					StudentRegistrationMain.loggedIn.add(user);
-					StudentRegistrationMain.replaceMainWindowContents(UserProfileLib.getGUIFromPerm(user.getPermLevel()));
+					StudentRegistrationMain.replaceMainWindowContents(UserProfileDatabase.getGUIFromPerm(user.getPermLevel()));
 				}
 			}
 		});

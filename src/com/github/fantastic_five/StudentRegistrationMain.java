@@ -2,7 +2,10 @@ package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -11,10 +14,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileLib;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 /**
- * @author Clark Stephen Group 5 Main class containing the Window itself and functions to control its contents
+ * @author Fantastic Five (Jose Stovall)
  */
 
 public class StudentRegistrationMain
@@ -41,7 +44,7 @@ public class StudentRegistrationMain
 			@Override
 			public void run()
 			{
-				// Put anything that needs to run in main here!
+				readInFromFiles();
 				createBaseUsers();
 				createMainWindow();
 				replaceMainWindowContents(new GUILogin());
@@ -51,12 +54,45 @@ public class StudentRegistrationMain
 	}
 
 	/**
+	 * initializes variables using data stored in our .dat files
+	 */
+	private static void readInFromFiles()
+	{
+		File coursesFile = new File("courses.dat");
+		if (coursesFile != null)
+		{
+			try
+			{
+				Scanner courseIn = new Scanner(new File("courses.dat"));
+				while(courseIn.hasNextLine())
+				{
+					String line = courseIn.nextLine();
+					String[] lineParts = line.split(" | ");
+					String title = lineParts[0];
+					String description = lineParts[1];
+					int CRN = Integer.parseInt(lineParts[2]);
+					int cap = Integer.parseInt(lineParts[3]);
+					
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
 	 * Creates a default user profile set that is absolutely necessary
 	 */
 	private static void createBaseUsers()
 	{
+		UserProfile teacherUser = new UserProfile("teacher", "password", UserProfile.TEACHER, "Group", "Five", "Teacher");
+		UserProfile studentUser = new UserProfile("student", "password", UserProfile.STUDENT, "Group", "Five", "Student");
 		UserProfile adminUser = new UserProfile("admin", "password", UserProfile.ADMIN, "Group", "Five", "Administrator");
-		UserProfileLib.addUser(adminUser);
+		UserProfileDatabase.addUser(teacherUser);
+		UserProfileDatabase.addUser(studentUser);
+		UserProfileDatabase.addUser(adminUser);
 	}
 
 	/**

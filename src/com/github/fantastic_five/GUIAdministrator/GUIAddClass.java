@@ -10,10 +10,12 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -27,96 +29,85 @@ import com.github.fantastic_five.Logic.CourseLib;
 public class GUIAddClass extends JPanel
 {
 	// Private instance variables
-	private JTextField fieldCRN;
 	private JTextField fieldCourseName;
-	private JTextField fieldSection;
-	private JTextField fieldCourseDesc;
+	private JTextArea fieldCourseDesc;
 	private JTextField fieldDays;
-	private JTextField fieldTimes;
+	private JTextField fieldTimeStart;
 	private JTextField fieldCapacity;
+	private JTextField fieldTimeEnd;
 
 	public GUIAddClass()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
 
-		// All Labels and their positions:
-		JLabel lblCrn = new JLabel("CRN:");
-		lblCrn.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCrn.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCrn.setBounds(119, 115, 111, 21);
-		add(lblCrn);
-
 		JLabel lblCourseName = new JLabel("Course Name:");
 		lblCourseName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCourseName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCourseName.setBounds(119, 140, 111, 14);
+		lblCourseName.setBounds(119, 90, 111, 14);
 		add(lblCourseName);
-
-		JLabel lblSection = new JLabel("Section  Number:");
-		lblSection.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSection.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSection.setBounds(119, 165, 111, 14);
-		add(lblSection);
 
 		JLabel lblCourseDesc = new JLabel("Course Desc:");
 		lblCourseDesc.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCourseDesc.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCourseDesc.setBounds(119, 190, 111, 14);
+		lblCourseDesc.setBounds(119, 221, 111, 14);
 		add(lblCourseDesc);
 
 		JLabel lblDaysOffered = new JLabel("Days Offered:");
 		lblDaysOffered.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDaysOffered.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDaysOffered.setBounds(119, 215, 111, 14);
+		lblDaysOffered.setBounds(119, 117, 111, 14);
 		add(lblDaysOffered);
 
-		JLabel lblTimeOffered = new JLabel("Time Offered:");
-		lblTimeOffered.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTimeOffered.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTimeOffered.setBounds(119, 240, 111, 14);
-		add(lblTimeOffered);
+		JLabel lblTimeStart = new JLabel("Start Time:");
+		lblTimeStart.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTimeStart.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTimeStart.setBounds(119, 144, 111, 14);
+		add(lblTimeStart);
+		
+		JLabel lblTimeEnd = new JLabel("End Time:");
+		lblTimeEnd.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTimeEnd.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTimeEnd.setBounds(119, 171, 111, 14);
+		add(lblTimeEnd);
 
 		JLabel lblStudentCapacity = new JLabel("Student Capacity:");
 		lblStudentCapacity.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStudentCapacity.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblStudentCapacity.setBounds(119, 265, 111, 14);
+		lblStudentCapacity.setBounds(119, 196, 111, 14);
 		add(lblStudentCapacity);
 
 		// All modifiable text fields and their positions:
-		fieldCRN = new JTextField();
-		fieldCRN.setColumns(10);
-		fieldCRN.setBounds(240, 113, 217, 20);
-		add(fieldCRN);
-
 		fieldCourseName = new JTextField();
 		fieldCourseName.setColumns(10);
-		fieldCourseName.setBounds(240, 138, 217, 20);
+		fieldCourseName.setBounds(240, 88, 217, 20);
 		add(fieldCourseName);
 
-		fieldSection = new JTextField();
-		fieldSection.setColumns(10);
-		fieldSection.setBounds(240, 163, 217, 20);
-		add(fieldSection);
-
-		fieldCourseDesc = new JTextField();
+		fieldCourseDesc = new JTextArea();
+		fieldCourseDesc.setLineWrap(true);
+		fieldCourseDesc.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fieldCourseDesc.setColumns(10);
-		fieldCourseDesc.setBounds(240, 188, 217, 20);
+		fieldCourseDesc.setBounds(240, 223, 217, 66);
 		add(fieldCourseDesc);
 
 		fieldDays = new JTextField();
 		fieldDays.setColumns(10);
-		fieldDays.setBounds(240, 213, 217, 20);
+		fieldDays.setBounds(240, 115, 217, 20);
 		add(fieldDays);
 
-		fieldTimes = new JTextField();
-		fieldTimes.setColumns(10);
-		fieldTimes.setBounds(240, 238, 217, 20);
-		add(fieldTimes);
+		fieldTimeStart = new JTextField();
+		fieldTimeStart.setColumns(10);
+		fieldTimeStart.setBounds(240, 142, 217, 20);
+		add(fieldTimeStart);
+		
+		fieldTimeEnd = new JTextField();
+		fieldTimeEnd.setColumns(10);
+		fieldTimeEnd.setBounds(240, 169, 217, 20);
+		add(fieldTimeEnd);
 
 		fieldCapacity = new JTextField();
 		fieldCapacity.setColumns(10);
-		fieldCapacity.setBounds(240, 263, 217, 20);
+		fieldCapacity.setBounds(240, 194, 217, 20);
 		add(fieldCapacity);
 
 		// Panel label, basically
@@ -139,6 +130,7 @@ public class GUIAddClass extends JPanel
 		btnNewButton.setBounds(10, 386, 128, 23);
 		add(btnNewButton);
 
+		// Button with logic for creation
 		JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener()
 		{
@@ -147,14 +139,15 @@ public class GUIAddClass extends JPanel
 				// Temporary Variables for creating the course object
 				String title = fieldCourseName.getText();
 				String description = fieldCourseDesc.getText();
-				String CRN = fieldCRN.getText();
+				int CRN = getCRN();
 				int studentCap = Integer.parseInt(fieldCapacity.getText());
 				HashSet<Day> days = new HashSet<>();
-				String[] parts = fieldTimes.getText().split("[\\W]");
-				int startHour = Integer.parseInt(parts[0]);
-				int startMinute = Integer.parseInt(parts[1]);
-				int endHour = Integer.parseInt(parts[2]);
-				int endMinute = Integer.parseInt(parts[3]);
+				String[] startTimeParts = fieldTimeStart.getText().split("[\\W]");
+				int startHour = Integer.parseInt(startTimeParts[0]);
+				int startMinute = Integer.parseInt(startTimeParts[1]);
+				String[] endTimeParts = fieldTimeEnd.getText().split("[\\W]");
+				int endHour = Integer.parseInt(endTimeParts[0]);
+				int endMinute = Integer.parseInt(endTimeParts[1]);
 
 				String[] dayParts = fieldDays.getText().split(" ");
 				for (String s : dayParts)
@@ -163,7 +156,7 @@ public class GUIAddClass extends JPanel
 				// Creates course and adds it to the course list
 				Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
 				CourseLib.addCourseToCourseList(c);
-				// TODO: implement output to .dat
+
 				// Resets the fields
 				clearFields();
 			}
@@ -175,7 +168,6 @@ public class GUIAddClass extends JPanel
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-
 	}
 
 	/**
@@ -183,12 +175,26 @@ public class GUIAddClass extends JPanel
 	 */
 	public void clearFields()
 	{
-		fieldCRN.setText("");
 		fieldCourseName.setText("");
-		fieldSection.setText("");
 		fieldCourseDesc.setText("");
 		fieldDays.setText("");
-		fieldTimes.setText("");
+		fieldTimeStart.setText("");
+		fieldTimeEnd.setText("");
 		fieldCapacity.setText("");
+	}
+
+	/**
+	 * @return A random, non-conflicting CRN from 1000 - 9999
+	 */
+	int getCRN()
+	{
+		Random rand = new Random();
+		// Gets a value between 0 and 8999 (inclusive) then adds 1000
+		int ret = rand.nextInt(9000) + 1000;
+		// Recursive call to get a CRN that is available
+		if (!CourseLib.doesCRNExist(ret))
+			return ret;
+		else
+			return getCRN();
 	}
 }

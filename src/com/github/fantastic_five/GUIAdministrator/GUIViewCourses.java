@@ -1,8 +1,7 @@
 /**
  * @author Fantastic Five (Alay Patel)
- * This GUI displays the all available courses that our University offers. 
+ * This GUI displays all of the available courses that our University offers. 
  */
-
 package com.github.fantastic_five.GUIAdministrator;
 
 import java.awt.Color;
