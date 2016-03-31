@@ -50,7 +50,7 @@ public class GUIViewStudent extends JPanel
 				{ null, null, null, null, null, null, null },
 				{ null, null, null, null, null, null, null },
 				{ null, null, null, null, null, null, null }, }, new String[]
-		{ "Last", "First", "Type", "Payment" }));
+		{ "Last", "First", "Type", "Paid" }));
 		scrollPane.setViewportView(table);
 
 		// Back button

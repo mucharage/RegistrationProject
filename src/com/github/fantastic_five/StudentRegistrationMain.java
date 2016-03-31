@@ -2,7 +2,11 @@ package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -10,11 +14,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
+import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.CourseLib;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileLib;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 /**
- * @author Clark Stephen Group 5 Main class containing the Window itself and functions to control its contents
+ * @author Fantastic Five (Jose Stovall)
  */
 
 public class StudentRegistrationMain
@@ -41,7 +48,7 @@ public class StudentRegistrationMain
 			@Override
 			public void run()
 			{
-				// Put anything that needs to run in main here!
+				readInFromFiles();
 				createBaseUsers();
 				createMainWindow();
 				replaceMainWindowContents(new GUILogin());
@@ -51,12 +58,69 @@ public class StudentRegistrationMain
 	}
 
 	/**
+	 * initializes variables using data stored in our .dat files
+	 */
+	private static void readInFromFiles()
+	{
+		File coursesFile = new File("courses.dat");
+		if (coursesFile != null)
+		{
+			try
+			{
+				Scanner courseIn = new Scanner(new File("courses.dat"));
+				while (courseIn.hasNextLine())
+				{
+					// Separates the output file into smaller bits
+					String line = courseIn.nextLine();
+					String[] lineParts = line.split("_");
+					if (lineParts.length == 7)
+					{
+						// Handles a few parts of the Course obj
+						String title = lineParts[0];
+						String description = lineParts[1];
+						int CRN = Integer.parseInt(lineParts[2]);
+						int studentCap = Integer.parseInt(lineParts[3]);
+						// Handles the Days
+						HashSet<Day> days = new HashSet<>();
+						String[] tempParts = lineParts[4].split("[\\W]");
+						for (String s : tempParts)
+						{
+							if (Day.getDayFromName(s) != null)
+								days.add(Day.getDayFromName(s));
+						}
+						// Handles Start time
+						tempParts = lineParts[5].split(":");
+						int startHour = Integer.parseInt(tempParts[0]);
+						int startMinute = Integer.parseInt(tempParts[1]);
+						// Handles end time
+						tempParts = lineParts[6].split(":");
+						int endHour = Integer.parseInt(tempParts[0]);
+						int endMinute = Integer.parseInt(tempParts[1]);
+
+						Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
+						CourseLib.addCourseToCourseList(c);
+					}
+				}
+				courseIn.close();
+			}
+			catch (FileNotFoundException e)
+			{
+				// doing nothing with this because no file found is to be expected at least once
+			}
+		}
+	}
+
+	/**
 	 * Creates a default user profile set that is absolutely necessary
 	 */
 	private static void createBaseUsers()
 	{
-		UserProfile adminUser = new UserProfile("admin", "password", UserProfile.ADMIN, "Group", "Five", "Administrator");
-		UserProfileLib.addUser(adminUser);
+		UserProfile teacherUser = new UserProfile("teacher", "pass", UserProfile.TEACHER, "Group", "Five", "Teacher");
+		UserProfile studentUser = new UserProfile("student", "pass", UserProfile.STUDENT, "Group", "Five", "Student");
+		UserProfile adminUser = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Administrator");
+		UserProfileDatabase.addUser(teacherUser);
+		UserProfileDatabase.addUser(studentUser);
+		UserProfileDatabase.addUser(adminUser);
 	}
 
 	/**
