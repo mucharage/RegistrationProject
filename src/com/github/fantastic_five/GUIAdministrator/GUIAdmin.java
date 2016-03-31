@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,20 +29,14 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnView.addMouseListener(new MouseAdapter()
+		btnView.setBounds(233, 180, 156, 23);
+		btnView.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourses());
 			}
 		});
-
-		btnView.setBounds(233, 180, 156, 23);
 		add(btnView);
 
 		// Button & logic for adding classes
@@ -107,6 +99,76 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnViewTeacher);
 
+		// Button & Logic for Student Addition
+		JButton btnAddStudent = new JButton("Add Student");
+		btnAddStudent.setBounds(48, 214, 154, 23);
+		btnAddStudent.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddStudent());
+			}
+		});
+		add(btnAddStudent);
+
+		// Button & Logic for Student Removal
+		JButton btnRemoveStudent = new JButton("Remove Student");
+		btnRemoveStudent.setBounds(50, 248, 154, 23);
+		btnRemoveStudent.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveStudent());
+			}
+		});
+		add(btnRemoveStudent);
+
+		// Button & Logic for Student Report
+		JButton btnViewStudents = new JButton("View Student Report");
+		btnViewStudents.setBounds(50, 282, 154, 23);
+		btnViewStudents.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		add(btnViewStudents);
+
+		// Button & Logic for Teacher Addition
+		JButton btnAddTeacher = new JButton("Add Teacher");
+		btnAddTeacher.setBounds(415, 214, 156, 23);
+		btnAddTeacher.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddTeacher());
+			}
+		});
+		add(btnAddTeacher);
+
+		// Button & Logic for Teacher Removal
+		JButton btnRemoveTeacher = new JButton("Remove Teacher");
+		btnRemoveTeacher.setBounds(415, 248, 156, 23);
+		btnRemoveTeacher.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveTeacher());
+			}
+		});
+		add(btnRemoveTeacher);
+
+		// Button & Logic for Teacher Report
+		JButton btnViewTeachers = new JButton("View Teacher Report");
+		btnViewTeachers.setBounds(415, 282, 156, 23);
+		btnViewTeachers.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		add(btnViewTeachers);
+
 		// Adds the login panel
 		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
@@ -119,41 +181,6 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(191, 97, 243, 23);
 		add(lblAdministration);
-		
-		JButton btnNewButton = new JButton("Add Student");
-		btnNewButton.setBounds(48, 214, 154, 23);
-		add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Remove Student");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(50, 248, 154, 23);
-		add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("View Student Report");
-		btnNewButton_2.setBounds(50, 282, 154, 23);
-		add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("Add Teacher");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_3.setBounds(415, 214, 156, 23);
-		add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("Remove Teacher");
-		btnNewButton_4.setBounds(415, 248, 156, 23);
-		add(btnNewButton_4);
-		
-		JButton btnNewButton_5 = new JButton("View Teacher Report");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_5.setBounds(415, 282, 156, 23);
-		add(btnNewButton_5);
+
 	}
 }

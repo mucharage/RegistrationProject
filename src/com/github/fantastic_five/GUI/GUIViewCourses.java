@@ -77,13 +77,6 @@ public class GUIViewCourses extends JPanel
 		add(btnBack);
 
 		/**
-		 * Adds a login Panel
-		 */
-		JPanel loginPanel = new GUILoggedIn();
-		loginPanel.setBounds(0, 0, 618, 24);
-		add(loginPanel);
-
-		/**
 		 * Adds a Label named View Courses.
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Courses");

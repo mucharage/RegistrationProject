@@ -144,21 +144,27 @@ public class GUILogin extends JPanel
 		// User can press enter after entering password and it will click Login
 		passwordField.addKeyListener(new KeyListener()
 		{
-            @Override
-            public void keyTyped(KeyEvent e)
-            {
-                if(e.getKeyChar()== KeyEvent.VK_ENTER)
-                {
-                	btnLogin.doClick();
-                }
-            }
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				{
+					btnLogin.doClick();
+				}
+			}
 
-            @Override
-            public void keyPressed(KeyEvent e) {/**Do Nothing*/}
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
 
-            @Override
-            public void keyReleased(KeyEvent e) {/**Do Nothing*/}
-         });
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+		});
 		
 		// User can press enter after entering username and it will click Login
 		usernameField.addKeyListener(new KeyListener()
