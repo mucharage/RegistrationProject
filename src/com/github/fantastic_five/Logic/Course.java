@@ -361,19 +361,19 @@ public class Course
 		{
 			switch (name)
 			{
-			case "Monday":
+			case "MONDAY":
 				return MONDAY;
-			case "Tuesday":
+			case "TUESDAY":
 				return TUESDAY;
-			case "Wednesday":
+			case "WEDNESDAY":
 				return WEDNESDAY;
-			case "Thursday":
+			case "THURSDAY":
 				return THURSDAY;
-			case "Friday":
+			case "FRIDAY":
 				return FRIDAY;
-			case "Saturday":
+			case "SATURDAY":
 				return SATURDAY;
-			case "Sunday":
+			case "SUNDAY":
 				return SUNDAY;
 			default:
 				return null;
@@ -412,6 +412,6 @@ public class Course
 	@Override
 	public String toString()
 	{
-		return this.title + " | " + this.description + " | " + this.crn + " | " + this.studentCap + " | " + this.days + " | " + this.startTime + " | " + this.endTime;
+		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
 	}
 }
