@@ -1,5 +1,10 @@
 package com.github.fantastic_five.GUIAdministrator;
 
+/**
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel which adds new student UserProfiles to the UserProfileDatabase
+ */
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
