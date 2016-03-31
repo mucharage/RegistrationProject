@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUILoggedIn extends JPanel
@@ -40,8 +41,28 @@ public class GUILoggedIn extends JPanel
 		});
 		add(btnLogOut);
 
-		JLabel lblCurrentLoggedIn = new JLabel("Current Logged In User:" + StudentRegistrationMain.loggedIn.get(0).getUserID());
+		UserProfile u = StudentRegistrationMain.loggedIn.get(0);
+		JLabel lblCurrentLoggedIn = new JLabel("Current Logged In User: " + u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
 		lblCurrentLoggedIn.setBounds(10, 4, 517, 14);
 		add(lblCurrentLoggedIn);
+	}
+
+	public String getPermDescriptionFromInt(int level)
+	{
+		switch (level)
+		{
+		case 0:
+			return "Guest";
+		case 1:
+			return "Student";
+		case 2:
+			return "Teacher's Assistant";
+		case 3:
+			return "Teacher";
+		case 4:
+			return "Admin";
+		default:
+			return "";
+		}
 	}
 }
