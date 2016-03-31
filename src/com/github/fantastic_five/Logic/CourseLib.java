@@ -32,10 +32,7 @@ public class CourseLib
 		{
 			courseOut = new PrintStream(new File("courses.dat"));
 			for (Course c : courseList)
-			{
 				courseOut.println(c.toString());
-				System.out.println(c.toString());
-			}
 		}
 		catch (FileNotFoundException e)
 		{
