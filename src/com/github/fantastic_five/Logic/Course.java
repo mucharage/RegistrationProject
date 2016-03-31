@@ -11,7 +11,7 @@ public class Course
 {
 	private String title;
 	private String description;
-	private String crn;
+	private int crn;
 	private int studentCap;
 	private HashSet<Day> days;
 	private Time startTime;
@@ -42,7 +42,7 @@ public class Course
 	 * @param endTimeMin
 	 *            A whole number less than 60, representing the minute of the hour at which the course ends
 	 */
-	public Course(String title, String description, String crn, int studentCap, HashSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
+	public Course(String title, String description, int crn, int studentCap, HashSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
 	{
 		this.title = title;
 		this.description = description;
@@ -84,7 +84,7 @@ public class Course
 	 * 
 	 * @return The crn of the course
 	 */
-	public String getCRN()
+	public int getCRN()
 	{
 		return crn;
 	}
@@ -401,5 +401,11 @@ public class Course
 				return null;
 			}
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.title + "|" + this.description + "|" + this.crn + "|" + this.studentCap + "|" + this.days + "|" + this.startTime + "|" + this.endTime;
 	}
 }
