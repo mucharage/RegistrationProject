@@ -2,6 +2,7 @@ package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -117,9 +118,11 @@ public class StudentRegistrationMain
 	{
 		UserProfile teacherUser = new UserProfile("teacher", "pass", UserProfile.TEACHER, "Group", "Five", "Teacher");
 		UserProfile studentUser = new UserProfile("student", "pass", UserProfile.STUDENT, "Group", "Five", "Student");
+		UserProfile taUser = new UserProfile("ta", "pass", UserProfile.TA, "Group", "Five", "Teaching Assistant");
 		UserProfile adminUser = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Administrator");
 		UserProfileDatabase.addUser(teacherUser);
 		UserProfileDatabase.addUser(studentUser);
+		UserProfileDatabase.addUser(taUser);
 		UserProfileDatabase.addUser(adminUser);
 	}
 
@@ -144,8 +147,31 @@ public class StudentRegistrationMain
 	 */
 	public static void replaceMainWindowContents(Component newComponent)
 	{
-		mainWindow.getContentPane().removeAll();
-		mainWindow.getContentPane().add(newComponent);
-		mainWindow.pack();
+		// Gets all active Frames - this has been adapted specifically for the TA view
+		Frame[] frames = Frame.getFrames();
+		// If there is only one active window (i.e. the user is NOT a TA)
+		if (frames.length == 1)
+		{
+			mainWindow.getContentPane().removeAll();
+			mainWindow.getContentPane().add(newComponent);
+			mainWindow.pack();
+		}
+		// Else they are a TA and will have multiple windows open
+		else
+		{
+			for (Frame f : frames)
+			{
+				// Checks to see if the selected frame is the one currently being used, and IS a JFrame
+				if (f.isActive() && f instanceof JFrame)
+				{
+					// Casts the frame to a temporary JFrame object (this is safe because of the instanceof check)
+					JFrame tempFrame = (JFrame) f;
+					// Does the same thing as above, but to the currently active window instead
+					tempFrame.getContentPane().removeAll();
+					tempFrame.getContentPane().add(newComponent);
+					tempFrame.pack();
+				}
+			}
+		}
 	}
 }

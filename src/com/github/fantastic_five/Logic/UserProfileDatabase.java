@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import com.github.fantastic_five.GUI.GUIViewCourses;
 import com.github.fantastic_five.GUIAdministrator.GUIAdmin;
 import com.github.fantastic_five.GUIStudent.GUIStudent;
+import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 
 public class UserProfileDatabase
@@ -91,7 +92,7 @@ public class UserProfileDatabase
 		case 1:
 			return new GUIStudent();
 		case 2:
-			return null;// TODO: implement TA stuff
+			return new GUITeacherAssistant();// TODO: implement TA stuff
 		case 3:
 			return new GUITeacher();
 		case 4:
