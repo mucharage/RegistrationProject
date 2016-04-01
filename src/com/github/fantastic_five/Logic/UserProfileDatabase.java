@@ -11,6 +11,7 @@ import com.github.fantastic_five.GUITeacher.GUITeacher;
 
 public class UserProfileDatabase
 {
+	// The entire user list
 	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
 
 	/**
