@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -75,13 +74,6 @@ public class GUIViewCourses extends JPanel
 		});// end of MouseListener
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-
-		/**
-		 * Adds a login Panel
-		 */
-		JPanel loginPanel = new GUILoggedIn();
-		loginPanel.setBounds(0, 0, 618, 24);
-		add(loginPanel);
 
 		/**
 		 * Adds a Label named View Courses.
