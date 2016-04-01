@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class CourseLib
+public class CourseDatabase
 {
 	// Essentially the master course list of the university
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
@@ -38,6 +38,19 @@ public class CourseLib
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @param CRN
+	 *            CRN to gather the course object from
+	 * @return the course object if it can be found; null otherwise.
+	 */
+	public static Course getCourseByCRN(int CRN)
+	{
+		for (Course c : courseList)
+			if (c.getCRN() == CRN)
+				return c;
+		return null;
 	}
 
 	/**
