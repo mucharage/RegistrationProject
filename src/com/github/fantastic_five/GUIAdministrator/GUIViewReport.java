@@ -1,4 +1,4 @@
-package com.github.fantastic_five.GUIMisc;
+package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
@@ -8,6 +8,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
 public class GUIViewReport extends JPanel
@@ -33,6 +39,7 @@ public class GUIViewReport extends JPanel
 	 * @return JPanel with contents for a table containing available classes
 	 * 
 	 */
+	@SuppressWarnings({ "resource", "rawtypes", "null" })
 	public GUIViewReport(JPanel previousPanel)
 	{
 		setBounds(0, 0, 618, 434);
@@ -40,7 +47,35 @@ public class GUIViewReport extends JPanel
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
-		add(scrollPane);
+		add(scrollPane);		
+		
+		Vector<String> data = null;
+		String Line;
+		Vector<String> listing = new Vector<String>();
+		
+		try{
+			FileInputStream fs = new FileInputStream("course.dat");
+			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+			StringTokenizer st = new StringTokenizer(fs.toString(),"_");	
+			while(st.hasMoreTokens())
+			{
+				listing.addElement(st.nextToken());
+			}
+			while ((Line = st.toString()) != null)
+			{
+				StringTokenizer st1 = new StringTokenizer(Line, "_");
+				while(st1.hasMoreTokens())
+				{
+					data.addElement(st1.nextToken());
+				}
+				br.close();
+			}
+		}	
+                
+             
+		catch (Exception e) {
+			
+		}
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
