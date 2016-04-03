@@ -1,6 +1,7 @@
 package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,8 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				JFrame popup = new JFrame("Teacher View");
+				//popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				createTeacherWindow();
 			}
 		});
@@ -48,6 +51,11 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				JFrame popup = new JFrame("Student View");
+				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				popup.setPreferredSize(new Dimension(618, 434));
+				popup.setResizable(false);
+				createTeacherWindow();
 				createStudentWindow();
 			}
 		});
