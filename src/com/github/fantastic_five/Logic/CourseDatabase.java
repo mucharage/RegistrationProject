@@ -30,7 +30,7 @@ public class CourseDatabase
 	{
 		try
 		{
-			courseOut = new PrintStream(new File("courses.dat"));
+			courseOut = new PrintStream(new File("courses.xls"));
 			for (Course c : courseList)
 				courseOut.println(c.toString());
 		}

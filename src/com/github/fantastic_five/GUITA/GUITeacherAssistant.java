@@ -71,7 +71,7 @@ public class GUITeacherAssistant extends JPanel
 		studentView.setResizable(false);
 		studentView.pack();
 		studentView.setVisible(true);
-		studentView.setLocationRelativeTo(null);
+		studentView.setLocation(0, 133);
 		studentView.getContentPane().add(new GUIStudent());
 		studentView.pack();
 	}
@@ -79,13 +79,12 @@ public class GUITeacherAssistant extends JPanel
 	public void createTeacherWindow()
 	{
 		JFrame teacherView = new JFrame("Teacher Perspective");
-
 		teacherView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		teacherView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		teacherView.setResizable(false);
 		teacherView.pack();
 		teacherView.setVisible(true);
-		teacherView.setLocationRelativeTo(null);
+		teacherView.setLocation(750,133);
 		teacherView.getContentPane().add(new GUITeacher());
 		teacherView.pack();
 	}
