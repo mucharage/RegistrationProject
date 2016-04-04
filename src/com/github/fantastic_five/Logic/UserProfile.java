@@ -1,5 +1,7 @@
 package com.github.fantastic_five.Logic;
 
+import java.util.ArrayList;
+
 /**
  * The account information for a person registered with the school.
  * 
@@ -21,6 +23,8 @@ public class UserProfile
 	private String middleName;
 	private String lastName;
 
+	private ArrayList<Course> currSchedule;
+
 	public UserProfile(String userID, String password, int permLevel, String firstName, String middleName, String lastName)
 	{
 		this.userID = userID;
@@ -29,6 +33,99 @@ public class UserProfile
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
+		this.currSchedule = new ArrayList<Course>();
+	}
+
+	public ArrayList<Course> getStudentSchedule()
+	{
+		return currSchedule;
+	}
+
+	/**
+	 * Adds a class to the student's schedule by CRN
+	 * 
+	 * @param CRN
+	 *            The CRN number to add to the user's schedule
+	 */
+	public void addClass(int CRN)
+	{
+		if (CourseDatabase.getCourseByCRN(CRN) != null)
+			currSchedule.add(CourseDatabase.getCourseByCRN(CRN));
+	}
+
+	/**
+	 * Adds a class to the student's schedule using an object
+	 * 
+	 * @param course
+	 *            The Course object to add to the user's schedule
+	 */
+	public void addClass(Course course)
+	{
+		currSchedule.add(course);
+	}
+
+	/**
+	 * Removes a class from the user's schedule by CRN
+	 * 
+	 * @param CRN
+	 *            The CRN number to add to the user's schedule
+	 */
+	public void removeClass(int CRN)
+	{
+		for (int i = 0; i < currSchedule.size(); i++)
+		{
+			if (currSchedule.get(i).getCRN() == CRN)
+			{
+				currSchedule.remove(i);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Removes a class from the user's schedule using a course object
+	 * 
+	 * @param course
+	 *            The Course object to remove from the user's schedule
+	 */
+	public void removeClass(Course course)
+	{
+		for (int i = 0; i < currSchedule.size(); i++)
+		{
+			if (currSchedule.get(i) == course)
+			{
+				currSchedule.remove(i);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param CRN
+	 *            The CRN to be checked
+	 * @return True if the student is already enrolled in the course, false otherwise
+	 */
+	public boolean isTaking(int CRN)
+	{
+		for (Course c : currSchedule)
+			if (c.getCRN() == CRN)
+				return true;
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param course
+	 *            The course object to be checked
+	 * @return True if the studenet is already enrolled in the course, false otherwise
+	 */
+	public boolean isTaking(Course course)
+	{
+		for (Course c : currSchedule)
+			if (c == course)
+				return true;
+		return false;
 	}
 
 	/**
