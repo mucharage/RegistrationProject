@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.CourseDatabase;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -41,19 +43,7 @@ public class GUIViewCourses extends JPanel
 		 * 
 		 */
 		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
-						null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null }, }, new String[]
+		table.setModel(new DefaultTableModel(getCourseTable(), new String[]
 		{ "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room" }));
 		scrollPane.setViewportView(table);
 
@@ -90,4 +80,24 @@ public class GUIViewCourses extends JPanel
 		add(lblCourseRemoval);
 
 	}// end of GuiViewCourses()
+
+	public Object[][] getCourseTable()
+	{
+		// "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room"
+		int entries = CourseDatabase.courseList.size();
+		Object[][] items = new Object[entries][6];
+		
+		for(int i = 0; i < entries; i++)
+		{
+			Course c = CourseDatabase.courseList.get(i);
+			items[i][0] = c.getCRN();
+			items[i][1] = c.getTitle();
+			items[i][2] = c.getStudentCap();
+			items[i][3] = c.getRemainingCap();
+			items[i][4] = c.getTeacherName();
+			items[i][5] = c.getStartTime(Course.TWELVE_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+		}
+		
+		return items;
+	}
 }// end of JPanel extension of GuiViewCourses
