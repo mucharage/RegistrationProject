@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,7 +17,6 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
-import com.github.fantastic_five.GUIMisc.GUIViewReport;
 
 @SuppressWarnings("serial")
 public class GUIAdmin extends JPanel
@@ -31,45 +28,43 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.addMouseListener(new MouseAdapter()
+		btnView.setBounds(233, 180, 156, 23);
+		btnView.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourses());
 			}
 		});
-
-		btnView.setBounds(178, 152, 243, 23);
 		add(btnView);
 
 		// Button & logic for adding classes
-		JButton btnCreateCourseOffering = new JButton("Create Course Offering");
-		btnCreateCourseOffering.setBounds(178, 186, 243, 23);
+		JButton btnCreateCourseOffering = new JButton("Add Course");
+		btnCreateCourseOffering.setBounds(233, 214, 156, 23);
 		btnCreateCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddClass());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddCourse());
 			}
 		});
 		add(btnCreateCourseOffering);
 
 		// Button & logic for removing courses
-		JButton btnRemoveCourseOffering = new JButton("Remove Course Offering");
-		btnRemoveCourseOffering.setBounds(178, 220, 243, 23);
+		JButton btnRemoveCourseOffering = new JButton("Remove Course");
+		btnRemoveCourseOffering.setBounds(233, 248, 156, 23);
 		btnRemoveCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveClass());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveCourse());
 			}
 		});
 		add(btnRemoveCourseOffering);
 
 		// Button & Logic for reports view
-		JButton btnViewReport = new JButton("View Report");
-		btnViewReport.setBounds(178, 254, 243, 23);
+		JButton btnViewReport = new JButton("View Course Report");
+		btnViewReport.setBounds(233, 282, 156, 23);
 		btnViewReport.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -81,7 +76,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Enrolled Student View
 		JButton btnViewEnrolledStudents = new JButton("View Enrolled Students");
-		btnViewEnrolledStudents.setBounds(178, 290, 243, 23);
+		btnViewEnrolledStudents.setBounds(48, 180, 156, 23);
 		btnViewEnrolledStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -93,7 +88,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Teacher Staff View
 		JButton btnViewTeacher = new JButton("View Teacher Staff");
-		btnViewTeacher.setBounds(178, 326, 243, 23);
+		btnViewTeacher.setBounds(415, 180, 156, 23);
 		btnViewTeacher.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -102,6 +97,76 @@ public class GUIAdmin extends JPanel
 			}
 		});
 		add(btnViewTeacher);
+
+		// Button & Logic for Student Addition
+		JButton btnAddStudent = new JButton("Add Student");
+		btnAddStudent.setBounds(48, 214, 154, 23);
+		btnAddStudent.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddStudent());
+			}
+		});
+		add(btnAddStudent);
+
+		// Button & Logic for Student Removal
+		JButton btnRemoveStudent = new JButton("Remove Student");
+		btnRemoveStudent.setBounds(50, 248, 154, 23);
+		btnRemoveStudent.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveStudent());
+			}
+		});
+		add(btnRemoveStudent);
+
+		// Button & Logic for Student Report
+		JButton btnViewStudents = new JButton("View Student Report");
+		btnViewStudents.setBounds(50, 282, 154, 23);
+		btnViewStudents.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		add(btnViewStudents);
+
+		// Button & Logic for Teacher Addition
+		JButton btnAddTeacher = new JButton("Add Teacher");
+		btnAddTeacher.setBounds(415, 214, 156, 23);
+		btnAddTeacher.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddTeacher());
+			}
+		});
+		add(btnAddTeacher);
+
+		// Button & Logic for Teacher Removal
+		JButton btnRemoveTeacher = new JButton("Remove Teacher");
+		btnRemoveTeacher.setBounds(415, 248, 156, 23);
+		btnRemoveTeacher.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveTeacher());
+			}
+		});
+		add(btnRemoveTeacher);
+
+		// Button & Logic for Teacher Report
+		JButton btnViewTeachers = new JButton("View Teacher Report");
+		btnViewTeachers.setBounds(415, 282, 156, 23);
+		btnViewTeachers.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+			}
+		});
+		add(btnViewTeachers);
 
 		// Adds the login panel
 		JPanel loginPanel = new GUILoggedIn();
@@ -113,7 +178,8 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setForeground(Color.GRAY);
 		lblAdministration.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAdministration.setBounds(178, 96, 243, 23);
+		lblAdministration.setBounds(191, 97, 243, 23);
 		add(lblAdministration);
+
 	}
 }

@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUIRemove
 {
@@ -54,7 +56,7 @@ public class GUIRemove
 	private void initialize()
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 307, 117);
+		frame.setBounds(100, 100, 307, 107);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
@@ -67,10 +69,14 @@ public class GUIRemove
 		frame.getContentPane().add(txtpnAreYouSure);
 
 		JButton btnYes = new JButton("Yes");
-		btnYes.setBounds(10, 44, 89, 23);
+		btnYes.setBounds(10, 49, 100, 23);
 		frame.getContentPane().add(btnYes);
 
 		JButton btnNo = new JButton("No");
+		btnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNo.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -79,7 +85,7 @@ public class GUIRemove
 				frame.dispose();
 			}// end of mouseClicked
 		});// end of mouseListener
-		btnNo.setBounds(192, 42, 89, 23);
+		btnNo.setBounds(191, 49, 100, 23);
 		frame.getContentPane().add(btnNo);
 	}// end of main
 }// end of GUIremove

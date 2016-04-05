@@ -1,9 +1,8 @@
 /**
- * @author Alay Patel (leader)
- * Group 5 
+ * @author Fantastic Five (Alay Patel)
+ * This GUI displays all of the available courses that our University offers. 
  */
-
-package com.github.fantastic_five.GUI;
+package com.github.fantastic_five.GUIAdministrator;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -24,9 +23,6 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
 {
-	/**
-	 * This GUI displays the all available courses that our University offers.
-	 */
 	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
@@ -70,7 +66,7 @@ public class GUIViewCourses extends JPanel
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
 			}// end of mouseClicked
 		});// end of MouseListener
 		btnBack.setBounds(10, 386, 128, 23);

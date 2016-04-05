@@ -25,12 +25,12 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
-public class GUIRemoveClass extends JPanel
+public class GUIRemoveCourse extends JPanel
 {
 	// Private instance variables
 	private JTextField fieldCRN;
 
-	public GUIRemoveClass()
+	public GUIRemoveCourse()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
@@ -69,34 +69,34 @@ public class GUIRemoveClass extends JPanel
 				// Creates a pop-up window
 				JFrame popup = new JFrame("Confirmation");
 				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				popup.setPreferredSize(new Dimension(452, 186));
+				popup.setPreferredSize(new Dimension(307, 107));
 				popup.setResizable(false);
 
 				JPanel GUI = new JPanel();
 				GUI.setLayout(null);
 
 				// Confirmation label
-				JLabel lblAreYouSure = new JLabel("Are you sure? Cannot be undone!");
+				JLabel lblAreYouSure = new JLabel("Are you sure?");
 				lblAreYouSure.setForeground(Color.RED);
-				lblAreYouSure.setFont(new Font("Verdana", Font.BOLD, 16));
-				lblAreYouSure.setBounds(86, 24, 294, 52);
+				lblAreYouSure.setFont(new Font("Tahoma", Font.BOLD, 16));
+				lblAreYouSure.setBounds(86, 11, 127, 20);
 				GUI.add(lblAreYouSure);
 
-				// Yes button should remove the CRN from the list
-				JButton btnYes = new JButton("No");
-				btnYes.addActionListener(new ActionListener()
+				// No button should remove the CRN from the list
+				JButton btnNo = new JButton("No");
+				btnNo.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
 					{
 						popup.dispose();
 					}
 				});
-				btnYes.setBounds(234, 96, 89, 23);
-				GUI.add(btnYes);
+				btnNo.setBounds(191, 49, 100, 23);
+				GUI.add(btnNo);
 
-				// No button closes the window
-				JButton btnNo = new JButton("Yes");
-				btnNo.addActionListener(new ActionListener()
+				// Yes button closes the window
+				JButton btnYes = new JButton("Yes");
+				btnYes.addActionListener(new ActionListener()
 				{
 					public void actionPerformed(ActionEvent e)
 					{
@@ -104,8 +104,8 @@ public class GUIRemoveClass extends JPanel
 						popup.dispose();
 					}
 				});
-				btnNo.setBounds(135, 96, 89, 23);
-				GUI.add(btnNo);
+				btnYes.setBounds(10, 49, 100, 23);
+				GUI.add(btnYes);
 
 				// Finalizes the popup window
 				popup.getContentPane().add(GUI);
@@ -123,7 +123,7 @@ public class GUIRemoveClass extends JPanel
 		add(loginPanel);
 
 		// Panel Title, basically
-		JLabel lblCourseRemoval = new JLabel("Course Removal");
+		JLabel lblCourseRemoval = new JLabel("Remove Course");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);

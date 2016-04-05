@@ -14,6 +14,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -22,10 +24,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileLib;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -90,8 +93,8 @@ public class GUILogin extends JPanel
 		btnForgotPassword.setContentAreaFilled(false);
 		// Make the button borders invisible
 		btnForgotPassword.setBorderPainted(false);
-		// Make the text the color RED
-		btnForgotPassword.setForeground(Color.RED);
+		// Make the text the color BLUE
+		btnForgotPassword.setForeground(Color.GRAY);
 		// When button is clicked, GUIForgotPass is called
 		btnForgotPassword.addMouseListener(new MouseAdapter()
 		{
@@ -115,19 +118,75 @@ public class GUILogin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile user = UserProfileLib.getUserProfile(usernameField.getText(), passwordField.getPassword());
+				UserProfile user = UserProfileDatabase.getUserProfile(usernameField.getText(), passwordField.getPassword());
 				if (user != null)
 				{
 					StudentRegistrationMain.loggedIn.add(user);
-					StudentRegistrationMain.replaceMainWindowContents(UserProfileLib.getGUIFromPerm(user.getPermLevel()));
+					StudentRegistrationMain.replaceMainWindowContents(UserProfileDatabase.getGUIFromPerm(user.getPermLevel()));
+				}
+				else
+				{
+					passwordField.setText("");
+					JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
+					lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
+					lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
+					lblInvalidPassword.setForeground(new Color(255, 51, 0));
+					lblInvalidPassword.setBounds(164, 300, 280, 25);
+					add(lblInvalidPassword);
+					revalidate();
+					repaint();
 				}
 			}
 		});
 		// Add button to panel
 		add(btnLogin);
+		
+		// User can press enter after entering password and it will click Login
+		passwordField.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				{
+					btnLogin.doClick();
+				}
+			}
 
-		// Login is a new JButton object
-		// Login will show up as a button with "Login" inside it
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+		});
+		
+		// User can press enter after entering username and it will click Login
+		usernameField.addKeyListener(new KeyListener()
+		{
+            @Override
+            public void keyTyped(KeyEvent e)
+            {
+                if(e.getKeyChar()== KeyEvent.VK_ENTER)
+                {
+                	btnLogin.doClick();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {/**Do Nothing*/}
+
+            @Override
+            public void keyReleased(KeyEvent e) {/**Do Nothing*/}
+         });
+
+		// Guest is a new JButton object
+		// Guest will show up as a button with "Guest" inside it
 		JButton btnGuest = new JButton("Guest");
 		// Set the dimensions of the button
 		btnGuest.setBounds(316, 272, 90, 23);

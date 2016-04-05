@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import com.github.fantastic_five.GUI.GUIViewCourses;
 import com.github.fantastic_five.GUIAdministrator.GUIAdmin;
 import com.github.fantastic_five.GUIStudent.GUIStudent;
+import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 
-public class UserProfileLib
+public class UserProfileDatabase
 {
+	// The entire user list
 	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
 
 	/**
@@ -28,6 +30,19 @@ public class UserProfileLib
 				break;
 			}
 		}
+	}
+
+	/**
+	 * @param userID
+	 *            the UserID that needs to be
+	 * @return true if the user exists, false if it does not
+	 */
+	public static boolean hasUser(String userID)
+	{
+		for (UserProfile u : users)
+			if (u.getUserID().equalsIgnoreCase(userID))
+				return true;
+		return false;
 	}
 
 	/**
@@ -76,6 +91,8 @@ public class UserProfileLib
 			return new GUIViewCourses();
 		case 1:
 			return new GUIStudent();
+		case 2:
+			return new GUITeacherAssistant();// TODO: implement TA stuff
 		case 3:
 			return new GUITeacher();
 		case 4:

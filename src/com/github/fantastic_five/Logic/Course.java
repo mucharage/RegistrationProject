@@ -11,7 +11,7 @@ public class Course
 {
 	private String title;
 	private String description;
-	private String crn;
+	private int crn;
 	private int studentCap;
 	private HashSet<Day> days;
 	private Time startTime;
@@ -42,7 +42,7 @@ public class Course
 	 * @param endTimeMin
 	 *            A whole number less than 60, representing the minute of the hour at which the course ends
 	 */
-	public Course(String title, String description, String crn, int studentCap, HashSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
+	public Course(String title, String description, int crn, int studentCap, HashSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
 	{
 		this.title = title;
 		this.description = description;
@@ -84,7 +84,7 @@ public class Course
 	 * 
 	 * @return The crn of the course
 	 */
-	public String getCRN()
+	public int getCRN()
 	{
 		return crn;
 	}
@@ -321,6 +321,12 @@ public class Course
 
 			return rVal;
 		}
+		
+		@Override
+		public String toString()
+		{
+			return formatTime(24);
+		}
 	}
 
 	public static enum Day
@@ -355,19 +361,19 @@ public class Course
 		{
 			switch (name)
 			{
-			case "Monday":
+			case "MONDAY":
 				return MONDAY;
-			case "Tuesday":
+			case "TUESDAY":
 				return TUESDAY;
-			case "Wednesday":
+			case "WEDNESDAY":
 				return WEDNESDAY;
-			case "Thursday":
+			case "THURSDAY":
 				return THURSDAY;
-			case "Friday":
+			case "FRIDAY":
 				return FRIDAY;
-			case "Saturday":
+			case "SATURDAY":
 				return SATURDAY;
-			case "Sunday":
+			case "SUNDAY":
 				return SUNDAY;
 			default:
 				return null;
@@ -401,5 +407,11 @@ public class Course
 				return null;
 			}
 		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
 	}
 }
