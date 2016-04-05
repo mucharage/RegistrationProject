@@ -23,6 +23,7 @@ import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
+@SuppressWarnings("serial")
 public class GUIAddTeacher extends JPanel
 {
 	private JTextField firstnameTextField;
