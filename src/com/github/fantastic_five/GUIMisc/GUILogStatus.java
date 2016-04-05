@@ -18,12 +18,12 @@ import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUILoggedIn extends JPanel
+public class GUILogStatus extends JPanel
 {
 	/**
 	 * @return bar-style GUI for the current logged in user, including log-out button
 	 */
-	public GUILoggedIn()
+	public GUILogStatus()
 	{
 		// Quick and easy child class for the login bar - this will be added by EVERY GUI to avoid issues
 		setLayout(null);

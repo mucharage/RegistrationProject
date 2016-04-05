@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.GUIStudent.GUIStudent;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 
@@ -25,7 +25,7 @@ public class GUITeacherAssistant extends JPanel
 		setBounds(0, 0, 618, 434);
 
 		// Adds the login panel to this window
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 

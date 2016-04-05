@@ -24,7 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
 public class GUIViewReport extends JPanel
@@ -113,7 +113,7 @@ public class GUIViewReport extends JPanel
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
 
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 

@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.CourseDatabase;
@@ -172,7 +172,7 @@ public class GUIAddCourse extends JPanel
 		add(btnCreate);
 
 		// Adds the login panel to this window
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 	}
