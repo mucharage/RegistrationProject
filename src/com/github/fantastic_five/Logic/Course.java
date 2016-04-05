@@ -13,9 +13,11 @@ public class Course
 	private String description;
 	private int crn;
 	private int studentCap;
+	private int currentEnrolled;
 	private HashSet<Day> days;
 	private Time startTime;
 	private Time endTime;
+	private UserProfile teacher;
 
 	public static final int TWENTYFOUR_HR_CLOCK = Time.TWENTYFOUR_HR_CLOCK;
 	public static final int TWELVE_HR_CLOCK = Time.TWELVE_HR_CLOCK;
@@ -48,9 +50,11 @@ public class Course
 		this.description = description;
 		this.crn = crn;
 		this.studentCap = studentCap;
+		this.currentEnrolled = 0;
 		this.days = days;
 		startTime = new Time(startTimeHr, startTimeMin);
 		endTime = new Time(endTimeHr, endTimeMin);
+		teacher = null;
 		checkTimes();
 	}
 
@@ -97,6 +101,55 @@ public class Course
 	public int getStudentCap()
 	{
 		return studentCap;
+	}
+
+	/**
+	 * Returns the remaining quantity of students able to enroll
+	 * 
+	 * @return the remaining quantity of students able to enroll
+	 */
+	public int getRemainingCap()
+	{
+		return this.studentCap - this.currentEnrolled;
+	}
+
+	/**
+	 * Increases the number of students enrolled
+	 */
+	public void incrRemainingCap()
+	{
+		this.currentEnrolled++;
+	}
+
+	/**
+	 * Decreases the number of students enrolled
+	 */
+	public void decrRemainingCap()
+	{
+		this.currentEnrolled--;
+	}
+
+	/**
+	 * Sets the teacher for the class
+	 * 
+	 * @param user
+	 *            the person who is going to be the teacher
+	 */
+	public void setTeacher(UserProfile user)
+	{
+		this.teacher = user;
+	}
+
+	/**
+	 * Gets a formatted teacher name
+	 * 
+	 * @return a formatted teacher name
+	 */
+	public String getTeacherName()
+	{
+		if(this.teacher != null)
+			return (teacher.getFirstName() + " " + teacher.getLastName());
+		return "";
 	}
 
 	/**
@@ -321,7 +374,7 @@ public class Course
 
 			return rVal;
 		}
-		
+
 		@Override
 		public String toString()
 		{
@@ -408,7 +461,7 @@ public class Course
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString()
 	{
