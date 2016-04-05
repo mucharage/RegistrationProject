@@ -73,18 +73,14 @@ public class GUIRemove
 		frame.getContentPane().add(btnYes);
 
 		JButton btnNo = new JButton("No");
-		btnNo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNo.addMouseListener(new MouseAdapter()
+		btnNo.addActionListener(new ActionListener()
 		{
 			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				frame.dispose();
-			}// end of mouseClicked
-		});// end of mouseListener
+			}
+		});
 		btnNo.setBounds(191, 49, 100, 23);
 		frame.getContentPane().add(btnNo);
 	}// end of main
