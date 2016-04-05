@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.GUIStudent.GUIRemove;
 import javax.swing.JButton;
 
@@ -126,7 +126,7 @@ public class GUIAddRemoveClass extends JPanel
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		scrollPane.setViewportView(table);
 
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
