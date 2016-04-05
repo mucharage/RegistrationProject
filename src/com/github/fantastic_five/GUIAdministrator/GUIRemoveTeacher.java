@@ -24,6 +24,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
+@SuppressWarnings("serial")
 public class GUIRemoveTeacher extends JPanel
 {
 	private JTextField userIDTextField;
