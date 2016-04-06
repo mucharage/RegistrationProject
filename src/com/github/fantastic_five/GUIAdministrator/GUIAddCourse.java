@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,10 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
-import com.github.fantastic_five.Logic.CourseDatabase;
 
 @SuppressWarnings("serial")
 public class GUIAddCourse extends JPanel
@@ -162,8 +162,8 @@ public class GUIAddCourse extends JPanel
 
 				// Creates course and adds it to the course list
 				Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
-				CourseDatabase.addCourseToCourseList(c);
-
+				StudentRegistrationMain.mainCourseManager.addCourse(c);
+				
 				// Resets the fields
 				clearFields();
 			}
@@ -172,7 +172,7 @@ public class GUIAddCourse extends JPanel
 		add(btnCreate);
 
 		// Adds the login panel to this window
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 	}
@@ -199,9 +199,18 @@ public class GUIAddCourse extends JPanel
 		// Gets a value between 0 and 8999 (inclusive) then adds 1000
 		int ret = rand.nextInt(9000) + 1000;
 		// Recursive call to get a CRN that is available
-		if (!CourseDatabase.doesCRNExist(ret))
+		if (!doesCRNExist(ret))
 			return ret;
 		else
 			return getCRN();
+	}
+	
+	boolean doesCRNExist(int toTest)
+	{
+		TreeSet<Course> courses = StudentRegistrationMain.mainCourseManager.getCourses();
+		for(Course c : courses)
+			if(c.getCRN() == toTest)
+				return true;
+		return false;
 	}
 }

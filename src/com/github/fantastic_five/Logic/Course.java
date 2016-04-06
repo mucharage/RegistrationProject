@@ -13,9 +13,11 @@ public class Course
 	private String description;
 	private int crn;
 	private int studentCap;
+	private int currentEnrolled;
 	private HashSet<Day> days;
 	private Time startTime;
 	private Time endTime;
+	private UserProfile teacher;
 
 	public static final int TWENTYFOUR_HR_CLOCK = Time.TWENTYFOUR_HR_CLOCK;
 	public static final int TWELVE_HR_CLOCK = Time.TWELVE_HR_CLOCK;
@@ -48,10 +50,26 @@ public class Course
 		this.description = description;
 		this.crn = crn;
 		this.studentCap = studentCap;
+		this.currentEnrolled = 0;
 		this.days = days;
 		startTime = new Time(startTimeHr, startTimeMin);
 		endTime = new Time(endTimeHr, endTimeMin);
+		teacher = null;
 		checkTimes();
+	}
+	
+	public boolean equals(Object other)
+	{
+		boolean rVal;
+		if(other instanceof Course)
+		{			
+			rVal = (this.crn == ((Course)other).crn);
+		}
+		else
+		{
+			rVal = false;
+		}
+		return rVal;
 	}
 
 	/**
@@ -74,6 +92,10 @@ public class Course
 		return description;
 	}
 
+	/**
+	 * 
+	 * @param newDescription
+	 */
 	public void setDescription(String newDescription)
 	{
 		description = newDescription;
@@ -97,6 +119,55 @@ public class Course
 	public int getStudentCap()
 	{
 		return studentCap;
+	}
+
+	/**
+	 * Returns the remaining quantity of students able to enroll
+	 * 
+	 * @return the remaining quantity of students able to enroll
+	 */
+	public int getRemainingCap()
+	{
+		return this.studentCap - this.currentEnrolled;
+	}
+
+	/**
+	 * Increases the number of students enrolled
+	 */
+	public void incrRemainingCap()
+	{
+		this.currentEnrolled++;
+	}
+
+	/**
+	 * Decreases the number of students enrolled
+	 */
+	public void decrRemainingCap()
+	{
+		this.currentEnrolled--;
+	}
+
+	/**
+	 * Sets the teacher for the class
+	 * 
+	 * @param user
+	 *            the person who is going to be the teacher
+	 */
+	public void setTeacher(UserProfile user)
+	{
+		this.teacher = user;
+	}
+
+	/**
+	 * Gets a formatted teacher name
+	 * 
+	 * @return a formatted teacher name
+	 */
+	public String getTeacherName()
+	{
+		if(this.teacher != null)
+			return (teacher.getFirstName() + " " + teacher.getLastName());
+		return "";
 	}
 
 	/**
@@ -321,7 +392,7 @@ public class Course
 
 			return rVal;
 		}
-		
+
 		@Override
 		public String toString()
 		{
@@ -331,7 +402,7 @@ public class Course
 
 	public static enum Day
 	{
-		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "R"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "U");
+		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "TR"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "SU");
 
 		private Day(String name, String abbreviation)
 		{
@@ -359,25 +430,19 @@ public class Course
 		 */
 		public static Day getDayFromName(String name)
 		{
-			switch (name)
+			
+			Day rVal = null;
+			
+			for(Day e: Day.values())
 			{
-			case "MONDAY":
-				return MONDAY;
-			case "TUESDAY":
-				return TUESDAY;
-			case "WEDNESDAY":
-				return WEDNESDAY;
-			case "THURSDAY":
-				return THURSDAY;
-			case "FRIDAY":
-				return FRIDAY;
-			case "SATURDAY":
-				return SATURDAY;
-			case "SUNDAY":
-				return SUNDAY;
-			default:
-				return null;
+				if(e.name.equalsIgnoreCase(name))
+				{
+					rVal = e;
+					break;
+				}
 			}
+			
+			return rVal;
 		}
 
 		/**
@@ -387,28 +452,21 @@ public class Course
 		 */
 		public static Day getDayFromAbbreviation(String abbr)
 		{
-			switch (abbr)
+			Day rVal = null;
+			
+			for(Day e: Day.values())
 			{
-			case "M":
-				return MONDAY;
-			case "T":
-				return TUESDAY;
-			case "W":
-				return WEDNESDAY;
-			case "TR":
-				return THURSDAY;
-			case "F":
-				return FRIDAY;
-			case "S":
-				return SATURDAY;
-			case "U":
-				return SUNDAY;
-			default:
-				return null;
+				if(e.abbreviation.equalsIgnoreCase(abbr))
+				{
+					rVal = e;
+					break;
+				}
 			}
+			
+			return rVal;
 		}
 	}
-	
+
 	@Override
 	public String toString()
 	{
