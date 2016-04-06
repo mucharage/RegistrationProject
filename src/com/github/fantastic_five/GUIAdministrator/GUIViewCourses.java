@@ -108,7 +108,7 @@ public class GUIViewCourses extends JPanel
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
 			cells[row][4] = c.getTeacherName();
-			cells[row][5] = getDateString(c.getDays());
+			cells[row][5] = getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
@@ -122,9 +122,8 @@ public class GUIViewCourses extends JPanel
 	 *            the HashSet of days that needs to be formatted
 	 * @return a formatted string with all the days
 	 */
-	String getDateString(HashSet<Day> daySet)
+	String getDaysFormatted(HashSet<Day> daySet)
 	{
-		System.out.println("getDateString called");
 		String ret = "";
 		for (Day d : daySet)
 			ret += d.getAbbreviation() + " ";

@@ -402,7 +402,7 @@ public class Course
 
 	public static enum Day
 	{
-		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "R"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "U");
+		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "TR"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "SU");
 
 		private Day(String name, String abbreviation)
 		{
@@ -435,7 +435,7 @@ public class Course
 			
 			for(Day e: Day.values())
 			{
-				if(e.abbreviation.equalsIgnoreCase(name))
+				if(e.name.equalsIgnoreCase(name))
 				{
 					rVal = e;
 					break;

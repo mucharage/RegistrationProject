@@ -84,6 +84,8 @@ public class CourseManager
 			rVal = true;
 
 			courseOfferings.remove(dummy);
+			
+			updateCourseListFile();
 
 			network.removeIf(new Predicate<Connector>()
 			{
