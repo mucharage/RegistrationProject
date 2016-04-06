@@ -87,6 +87,7 @@ public class StudentRegistrationMain
 						String[] tempParts = lineParts[4].split("[\\W]");
 						for (String s : tempParts)
 						{
+							System.out.print(s);
 							if (Day.getDayFromName(s) != null)
 								days.add(Day.getDayFromName(s));
 						}
