@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.Course.Day;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
@@ -34,6 +38,22 @@ public class GUIRemoveCourse extends JPanel
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
+
+		// Table with auto-generated content!
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(41, 136, 545, 59);
+		add(scrollPane);
+
+		JTable table = new JTable();
+		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		});
+		scrollPane.setViewportView(table);
 
 		// Label for the CRN box
 		JLabel lblCrnToRemove = new JLabel("CRN:");
@@ -100,7 +120,21 @@ public class GUIRemoveCourse extends JPanel
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						System.out.println("Not yet implemented.");
+						// Removes the class
+						StudentRegistrationMain.mainCourseManager.removeCourse(Integer.parseInt(fieldCRN.getText()));
+						// Refreshes the table
+						table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+						{
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						scrollPane.setViewportView(table);
+						revalidate();
+						repaint();
+						// Removes the popup
 						popup.dispose();
 					}
 				});
@@ -136,17 +170,50 @@ public class GUIRemoveCourse extends JPanel
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 136, 545, 59);
-		add(scrollPane);
-
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
-		scrollPane.setViewportView(table);
-
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(41, 247, 545, 131);
 		add(scrollPane_1);
+
 	}
 
+	/**
+	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 */
+	public Object[][] getCourseTable()
+	{
+		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
+		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.getCourses();
+		int numCourses = StudentRegistrationMain.mainCourseManager.getCourses().size();
+		Object[][] table = new Object[numCourses][7];
+
+		int row = 0;
+		// Loops through all courses and sets the columns in each row appropriately
+		for (Course c : courseOfferings)
+		{
+			table[row][0] = c.getCRN();
+			table[row][1] = c.getTitle();
+			table[row][2] = c.getStudentCap();
+			table[row][3] = c.getRemainingCap();
+			table[row][4] = c.getTeacherName();
+			table[row][5] = getDaysFormatted(c.getDays());
+			table[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+
+		return table;
+	}
+
+	/**
+	 * 
+	 * @param daySet
+	 *            the HashSet of days that needs to be formatted
+	 * @return a formatted string with all the days
+	 */
+	String getDaysFormatted(HashSet<Day> daySet)
+	{
+		String ret = "";
+		for (Day d : daySet)
+			ret += d.getAbbreviation() + " ";
+		return ret;
+	}
 }

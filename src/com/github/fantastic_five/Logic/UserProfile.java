@@ -35,7 +35,7 @@ public class UserProfile
 		this.lastName = lastName;
 		this.currSchedule = new ArrayList<Course>();
 	}
-	
+
 	public boolean equals(UserProfile other)
 	{
 		boolean rVal = this.userID.equals(other.userID);
@@ -55,8 +55,7 @@ public class UserProfile
 	 */
 	public void addClass(int CRN)
 	{
-		if (CourseDatabase.getCourseByCRN(CRN) != null)
-			currSchedule.add(CourseDatabase.getCourseByCRN(CRN));
+		// TODO: New implementation using CourseManager?
 	}
 
 	/**

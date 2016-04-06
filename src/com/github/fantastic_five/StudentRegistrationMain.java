@@ -15,9 +15,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
-import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.CourseDatabase;
+import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.CourseManager;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
@@ -31,6 +31,7 @@ public class StudentRegistrationMain
 	public static JFrame mainWindow = new JFrame("FF Student Registration");
 	public static Dimension mainWindowDimension = new Dimension(618, 458);
 	public static ArrayList<UserProfile> loggedIn = new ArrayList<UserProfile>();
+	public static CourseManager mainCourseManager = new CourseManager();
 
 	public static void main(String[] args)
 	{
@@ -86,6 +87,7 @@ public class StudentRegistrationMain
 						String[] tempParts = lineParts[4].split("[\\W]");
 						for (String s : tempParts)
 						{
+							System.out.print(s);
 							if (Day.getDayFromName(s) != null)
 								days.add(Day.getDayFromName(s));
 						}
@@ -99,7 +101,7 @@ public class StudentRegistrationMain
 						int endMinute = Integer.parseInt(tempParts[1]);
 
 						Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
-						CourseDatabase.addCourseToCourseList(c);
+						mainCourseManager.addCourse(c);
 					}
 				}
 				courseIn.close();
