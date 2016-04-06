@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.CourseDatabase;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -89,19 +89,20 @@ public class GUIViewCourses extends JPanel
 
 	public Object[][] getCourseTable()
 	{
-		// "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room"
-		int entries = CourseDatabase.courseList.size();
-		Object[][] items = new Object[entries][6];
+		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.getCourses();
+		int numCourses = StudentRegistrationMain.mainCourseManager.getCourses().size();
+		Object[][] items = new Object[numCourses][6];
 
-		for (int i = 0; i < entries; i++)
+		int row = 0;
+		for (Course c : courseOfferings)
 		{
-			Course c = CourseDatabase.courseList.get(i);
-			items[i][0] = c.getCRN();
-			items[i][1] = c.getTitle();
-			items[i][2] = c.getStudentCap();
-			items[i][3] = c.getRemainingCap();
-			items[i][4] = c.getTeacherName();
-			items[i][5] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			items[row][0] = c.getCRN();
+			items[row][1] = c.getTitle();
+			items[row][2] = c.getStudentCap();
+			items[row][3] = c.getRemainingCap();
+			items[row][4] = c.getTeacherName();
+			items[row][5] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
 		}
 
 		return items;
