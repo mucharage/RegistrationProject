@@ -1,5 +1,8 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +13,7 @@ public class CourseManager
 {
 	private TreeSet<Course> courseOfferings;
 	private Set<Connector> network;
+	private PrintStream courseOutput;
 
 	public static final int COURSE_INSTRUCTOR_RELATIONSHIP = Connector.COURSE_INSTRUCTOR_RELATIONSHIP;
 	public static final int COURSE_LEARNER_RELATIONSHIP = Connector.COURSE_LEARNER_RELATIONSHIP;
@@ -116,6 +120,7 @@ public class CourseManager
 		{
 			rVal = true;
 			courseOfferings.add(addition);
+			updateCourseListFile();
 		}
 
 		return rVal;
@@ -376,6 +381,22 @@ public class CourseManager
 				rVal = false;
 			}
 			return rVal;
+		}
+	}
+
+	/**
+	 * Updates the course list file by resetting it and re-writing the contents
+	 */
+	public void updateCourseListFile()
+	{
+		try
+		{
+			courseOutput = new PrintStream(new File("courses.dat"));
+			for (Course c : courseOfferings)
+				courseOutput.println(c.toString());
+		}
+		catch (FileNotFoundException e)
+		{
 		}
 	}
 }
