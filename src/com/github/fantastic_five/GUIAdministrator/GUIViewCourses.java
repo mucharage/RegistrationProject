@@ -43,8 +43,14 @@ public class GUIViewCourses extends JPanel
 		 * 
 		 */
 		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(getCourseTable(), new String[]
-		{ "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room" }));
+		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		});
 		scrollPane.setViewportView(table);
 
 		/**
@@ -86,8 +92,8 @@ public class GUIViewCourses extends JPanel
 		// "CRN", "Class", "Capacity", "Remaining", "Teacher", "Time", "Room"
 		int entries = CourseDatabase.courseList.size();
 		Object[][] items = new Object[entries][6];
-		
-		for(int i = 0; i < entries; i++)
+
+		for (int i = 0; i < entries; i++)
 		{
 			Course c = CourseDatabase.courseList.get(i);
 			items[i][0] = c.getCRN();
@@ -95,9 +101,9 @@ public class GUIViewCourses extends JPanel
 			items[i][2] = c.getStudentCap();
 			items[i][3] = c.getRemainingCap();
 			items[i][4] = c.getTeacherName();
-			items[i][5] = c.getStartTime(Course.TWELVE_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			items[i][5] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 		}
-		
+
 		return items;
 	}
 }// end of JPanel extension of GuiViewCourses
