@@ -57,6 +57,20 @@ public class Course
 		teacher = null;
 		checkTimes();
 	}
+	
+	public boolean equals(Object other)
+	{
+		boolean rVal;
+		if(other instanceof Course)
+		{			
+			rVal = (this.crn == ((Course)other).crn);
+		}
+		else
+		{
+			rVal = false;
+		}
+		return rVal;
+	}
 
 	/**
 	 * Returns the title of the course
@@ -78,6 +92,10 @@ public class Course
 		return description;
 	}
 
+	/**
+	 * 
+	 * @param newDescription
+	 */
 	public void setDescription(String newDescription)
 	{
 		description = newDescription;
@@ -412,25 +430,39 @@ public class Course
 		 */
 		public static Day getDayFromName(String name)
 		{
-			switch (name)
+			
+			Day rVal = null;
+			
+			for(Day e: Day.values())
 			{
-			case "MONDAY":
-				return MONDAY;
-			case "TUESDAY":
-				return TUESDAY;
-			case "WEDNESDAY":
-				return WEDNESDAY;
-			case "THURSDAY":
-				return THURSDAY;
-			case "FRIDAY":
-				return FRIDAY;
-			case "SATURDAY":
-				return SATURDAY;
-			case "SUNDAY":
-				return SUNDAY;
-			default:
-				return null;
+				if(e.abbreviation.equalsIgnoreCase(name))
+				{
+					rVal = e;
+					break;
+				}
 			}
+			
+			return rVal;
+			
+//			switch (name)
+//			{
+//			case "MONDAY":
+//				return MONDAY;
+//			case "TUESDAY":
+//				return TUESDAY;
+//			case "WEDNESDAY":
+//				return WEDNESDAY;
+//			case "THURSDAY":
+//				return THURSDAY;
+//			case "FRIDAY":
+//				return FRIDAY;
+//			case "SATURDAY":
+//				return SATURDAY;
+//			case "SUNDAY":
+//				return SUNDAY;
+//			default:
+//				return null;
+//			}
 		}
 
 		/**
@@ -440,25 +472,37 @@ public class Course
 		 */
 		public static Day getDayFromAbbreviation(String abbr)
 		{
-			switch (abbr)
+			Day rVal = null;
+			
+			for(Day e: Day.values())
 			{
-			case "M":
-				return MONDAY;
-			case "T":
-				return TUESDAY;
-			case "W":
-				return WEDNESDAY;
-			case "TR":
-				return THURSDAY;
-			case "F":
-				return FRIDAY;
-			case "S":
-				return SATURDAY;
-			case "U":
-				return SUNDAY;
-			default:
-				return null;
+				if(e.abbreviation.equalsIgnoreCase(abbr))
+				{
+					rVal = e;
+					break;
+				}
 			}
+			
+			return rVal;
+//			switch (abbr)
+//			{
+//			case "M":
+//				return MONDAY;
+//			case "T":
+//				return TUESDAY;
+//			case "W":
+//				return WEDNESDAY;
+//			case "TR":
+//				return THURSDAY;
+//			case "F":
+//				return FRIDAY;
+//			case "S":
+//				return SATURDAY;
+//			case "U":
+//				return SUNDAY;
+//			default:
+//				return null;
+//			}
 		}
 	}
 
