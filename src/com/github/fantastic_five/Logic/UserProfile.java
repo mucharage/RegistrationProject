@@ -35,6 +35,12 @@ public class UserProfile
 		this.lastName = lastName;
 		this.currSchedule = new ArrayList<Course>();
 	}
+	
+	public boolean equals(UserProfile other)
+	{
+		boolean rVal = this.userID.equals(other.userID);
+		return rVal;
+	}
 
 	public ArrayList<Course> getStudentSchedule()
 	{
