@@ -443,26 +443,6 @@ public class Course
 			}
 			
 			return rVal;
-			
-//			switch (name)
-//			{
-//			case "MONDAY":
-//				return MONDAY;
-//			case "TUESDAY":
-//				return TUESDAY;
-//			case "WEDNESDAY":
-//				return WEDNESDAY;
-//			case "THURSDAY":
-//				return THURSDAY;
-//			case "FRIDAY":
-//				return FRIDAY;
-//			case "SATURDAY":
-//				return SATURDAY;
-//			case "SUNDAY":
-//				return SUNDAY;
-//			default:
-//				return null;
-//			}
 		}
 
 		/**
@@ -484,25 +464,6 @@ public class Course
 			}
 			
 			return rVal;
-//			switch (abbr)
-//			{
-//			case "M":
-//				return MONDAY;
-//			case "T":
-//				return TUESDAY;
-//			case "W":
-//				return WEDNESDAY;
-//			case "TR":
-//				return THURSDAY;
-//			case "F":
-//				return FRIDAY;
-//			case "S":
-//				return SATURDAY;
-//			case "U":
-//				return SUNDAY;
-//			default:
-//				return null;
-//			}
 		}
 	}
 
