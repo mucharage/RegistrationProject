@@ -1,14 +1,15 @@
+package com.github.fantastic_five.GUIAdministrator;
+
 /**
- * @author Fantastic Five (Alay Patel)
+ * @author Fantastic Five (Alay Patel & Jose Stovall)
  * This GUI displays all of the available courses that our University offers. 
  */
-package com.github.fantastic_five.GUIAdministrator;
+
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -22,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -108,25 +109,11 @@ public class GUIViewCourses extends JPanel
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
 			cells[row][4] = c.getTeacherName();
-			cells[row][5] = getDaysFormatted(c.getDays());
+			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 
 		return cells;
 	}
-
-	/**
-	 * 
-	 * @param daySet
-	 *            the HashSet of days that needs to be formatted
-	 * @return a formatted string with all the days
-	 */
-	String getDaysFormatted(HashSet<Day> daySet)
-	{
-		String ret = "";
-		for (Day d : daySet)
-			ret += d.getAbbreviation() + " ";
-		return ret;
-	}
-}// end of JPanel extension of GuiViewCourses
+}
