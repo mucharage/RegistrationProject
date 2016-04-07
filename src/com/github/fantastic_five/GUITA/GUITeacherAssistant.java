@@ -2,6 +2,7 @@ package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -65,13 +66,15 @@ public class GUITeacherAssistant extends JPanel
 	public void createStudentWindow()
 	{
 		JFrame studentView = new JFrame("Student Perspective");
+		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
+		startingLoc.translate(-40, 30);
 
 		studentView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		studentView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		studentView.setResizable(false);
 		studentView.pack();
 		studentView.setVisible(true);
-		studentView.setLocation(0, 133);
+		studentView.setLocation(startingLoc);
 		studentView.getContentPane().add(new GUIStudent());
 		studentView.pack();
 	}
@@ -79,12 +82,15 @@ public class GUITeacherAssistant extends JPanel
 	public void createTeacherWindow()
 	{
 		JFrame teacherView = new JFrame("Teacher Perspective");
+		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
+		startingLoc.translate(40, 20);
+		
 		teacherView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		teacherView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		teacherView.setResizable(false);
 		teacherView.pack();
 		teacherView.setVisible(true);
-		teacherView.setLocation(750,133);
+		teacherView.setLocation(startingLoc);
 		teacherView.getContentPane().add(new GUITeacher());
 		teacherView.pack();
 	}

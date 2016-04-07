@@ -93,7 +93,7 @@ public class GUIAddCourse extends JPanel
 		JLabel lblStudentCapacity = new JLabel("Student Capacity:");
 		lblStudentCapacity.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStudentCapacity.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblStudentCapacity.setBounds(102, 230, 111, 14);
+		lblStudentCapacity.setBounds(102, 224, 111, 14);
 		add(lblStudentCapacity);
 
 		fieldCapacity = new JTextField();
@@ -110,7 +110,7 @@ public class GUIAddCourse extends JPanel
 
 		fieldCourseDesc = new JTextArea();
 		fieldCourseDesc.setLineWrap(true);
-		fieldCourseDesc.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fieldCourseDesc.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		fieldCourseDesc.setColumns(10);
 		fieldCourseDesc.setBounds(240, 253, 217, 66);
 		fieldCourseDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
