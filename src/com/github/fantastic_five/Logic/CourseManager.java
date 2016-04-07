@@ -482,7 +482,6 @@ public class CourseManager
 	 */
 	public void updateCourseListFile()
 	{
-		System.out.println("Debug");
 		try
 		{
 			courseOutput = new PrintStream(new File(MiscUtils.getCoursesFileName()));
