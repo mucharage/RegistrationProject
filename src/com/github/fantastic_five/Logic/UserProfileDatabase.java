@@ -20,6 +20,21 @@ public class UserProfileDatabase
 	private static PrintStream userOutput;
 
 	/**
+	 * checks for conflicting User ID's
+	 * 
+	 * @param id
+	 *            the User ID to test for
+	 * @return true if it already exists, false otherwise
+	 */
+	public static boolean doesUserIDExist(String id)
+	{
+		for (UserProfile u : users)
+			if (u.getUserID().equalsIgnoreCase(id))
+				return true;
+		return false;
+	}
+
+	/**
 	 * @param profile
 	 *            the user profile that needs to be added to the course list
 	 */
