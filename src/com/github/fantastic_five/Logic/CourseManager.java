@@ -393,7 +393,7 @@ public class CourseManager
 	{
 		try
 		{
-			courseOutput = new PrintStream(new File("courses.dat"));
+			courseOutput = new PrintStream(new File(MiscUtils.getCoursesFileName()));
 			for (Course c : courseOfferings)
 				courseOutput.println(c.toString());
 		}

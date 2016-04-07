@@ -83,7 +83,7 @@ public class MiscUtils
 	 */
 	public static void loadCoursesFromFile()
 	{
-		File coursesFile = new File("courses.dat");
+		File coursesFile = new File(getCoursesFileName());
 		if (coursesFile != null)
 		{
 			try
@@ -136,7 +136,7 @@ public class MiscUtils
 	 */
 	public static void loadUsersFromFile()
 	{
-		File usersFile = new File("users.dat");
+		File usersFile = new File(getUsersFileName());
 		if (usersFile != null)
 		{
 			try
@@ -178,5 +178,39 @@ public class MiscUtils
 	public static UserProfile getCurrentLoggedInUser()
 	{
 		return StudentRegistrationMain.loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
+	}
+
+	public static String getCoursesFileName()
+	{
+		// Gets the OS name
+		String OS = System.getProperty("os.name").toLowerCase();
+
+		// Puts the file in %appdata% if Windows
+		if (OS.indexOf("win") >= 0)
+			return System.getenv("APPDATA") + File.separator + "courses.dat";
+		// Puts the file in Application Support if OSX
+		else if (OS.indexOf("mac") >= 0)
+			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Student Registration" + File.separator + "courses.dat";
+		// else if(OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
+		// TODO: implement Linux support
+		else
+			return "courses.dat";
+	}
+
+	public static String getUsersFileName()
+	{
+		// Gets the OS name
+		String OS = System.getProperty("os.name").toLowerCase();
+
+		// Puts the file in %appdata% if Windows
+		if (OS.indexOf("win") >= 0)
+			return System.getenv("APPDATA") + File.separator + "users.dat";
+		// Puts the file in Application Support if OSX
+		else if (OS.indexOf("mac") >= 0)
+			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Student Registration" + File.separator + "users.dat";
+		// else if(OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
+		// TODO: implement Linux support
+		else
+			return "users.dat";
 	}
 }

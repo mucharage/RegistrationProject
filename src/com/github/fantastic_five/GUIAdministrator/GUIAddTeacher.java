@@ -22,6 +22,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
+import javax.swing.JCheckBox;
 
 @SuppressWarnings("serial")
 public class GUIAddTeacher extends JPanel
@@ -31,6 +32,7 @@ public class GUIAddTeacher extends JPanel
 	private JTextField lastnameTextField;
 	private JTextField userIDTextField;
 	private JTextField passwordTextField;
+	private JCheckBox checkBoxIsTA;
 
 	public GUIAddTeacher()
 	{
@@ -110,6 +112,18 @@ public class GUIAddTeacher extends JPanel
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
 
+		// Is TA checkbox
+		JLabel labelIsTA = new JLabel("Is Teacher TA?:");
+		labelIsTA.setHorizontalAlignment(SwingConstants.LEFT);
+		labelIsTA.setFont(new Font("Tahoma", Font.BOLD, 12));
+		labelIsTA.setBounds(102, 296, 128, 14);
+		add(labelIsTA);
+		
+		checkBoxIsTA = new JCheckBox("");
+		checkBoxIsTA.setBounds(248, 290, 21, 23);
+		add(checkBoxIsTA);
+
+
 		// Back Button
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
@@ -128,12 +142,13 @@ public class GUIAddTeacher extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				int permLvl = checkBoxIsTA.isSelected() ? UserProfile.TA : UserProfile.TEACHER;
 				String fName = firstnameTextField.getText();
 				String mName = middlenameTextField.getText();
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				UserProfileDatabase.addUser(new UserProfile(userID, pwd, 3, fName, mName, lName));
+				UserProfileDatabase.addUser(new UserProfile(userID, pwd, permLvl, fName, mName, lName));
 				clearFields();
 			}
 		});
@@ -174,5 +189,6 @@ public class GUIAddTeacher extends JPanel
 		lastnameTextField.setText("");
 		userIDTextField.setText("");
 		passwordTextField.setText("");
+		checkBoxIsTA.setSelected(false);
 	}
 }

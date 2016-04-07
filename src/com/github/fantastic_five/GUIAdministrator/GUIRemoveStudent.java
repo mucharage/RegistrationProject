@@ -12,27 +12,49 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIRemoveStudent extends JPanel
 {
 	private JTextField userIDTextField;
+	private JTable table;
 
 	public GUIRemoveStudent()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 116, 587, 259);
+		add(scrollPane);
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		});
+		scrollPane.setViewportView(table);
+
 
 		// Adds the login panel to this window
 		JPanel loginPanel = new GUILogStatus();
@@ -40,22 +62,22 @@ public class GUIRemoveStudent extends JPanel
 		add(loginPanel);
 
 		// Panel Label
-		JLabel lblCreateTeacher = new JLabel("Remove Student Account");
-		lblCreateTeacher.setForeground(Color.GRAY);
-		lblCreateTeacher.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblCreateTeacher.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateTeacher.setBounds(188, 44, 243, 21);
-		add(lblCreateTeacher);
+		JLabel lblCreateStudent = new JLabel("Remove Student Account");
+		lblCreateStudent.setForeground(Color.GRAY);
+		lblCreateStudent.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblCreateStudent.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCreateStudent.setBounds(188, 44, 227, 21);
+		add(lblCreateStudent);
 
 		// User ID Label & Field
 		JLabel lblUserID = new JLabel("User ID To Remove:");
 		lblUserID.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserID.setBounds(242, 152, 128, 37);
+		lblUserID.setBounds(49, 76, 128, 37);
 		add(lblUserID);
 
 		userIDTextField = new JTextField();
-		userIDTextField.setBounds(212, 200, 190, 20);
+		userIDTextField.setBounds(188, 85, 227, 20);
 		userIDTextField.setColumns(10);
 		add(userIDTextField);
 
@@ -102,6 +124,17 @@ public class GUIRemoveStudent extends JPanel
 					{
 						UserProfileDatabase.removeUser(userIDTextField.getText());
 						userIDTextField.setText("");
+						table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
+						{
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						scrollPane.setViewportView(table);
+						revalidate();
+						repaint();
 						popup.dispose();
 					}
 				});
@@ -115,7 +148,7 @@ public class GUIRemoveStudent extends JPanel
 				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 			}
 		});
-		btnRemove.setBounds(212, 286, 190, 23);
+		btnRemove.setBounds(429, 84, 96, 23);
 		add(btnRemove);
 
 		// Allows the user to hit "Enter" from the text box to continue
@@ -154,5 +187,33 @@ public class GUIRemoveStudent extends JPanel
 			}
 		});
 		add(btnBack);
+	}
+	
+	/**
+	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 */
+	public Object[][] getTable()
+	{
+		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
+		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
+		Object[][] cells = new Object[allUsers.size()][7];
+
+		int row = 0;
+		// Loops through all courses and sets the columns in each row appropriately
+		for (UserProfile u : allUsers)
+		{
+			if (u.getPermLevel() == UserProfile.STUDENT)
+			{
+				cells[row][0] = u.getUserID();
+				cells[row][1] = u.getLastName();
+				cells[row][2] = u.getFirstName();
+				cells[row][3] = u.getMiddleName();
+				// TODO: needs a way to actually check pay status
+				cells[row][4] = "\u2713";
+				row++;
+			}
+		}
+
+		return cells;
 	}
 }

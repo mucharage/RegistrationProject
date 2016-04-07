@@ -40,7 +40,7 @@ public class GUIViewTeachers extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Courses", "Avail." })
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "User ID", "Courses", "Avail." })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -90,14 +90,15 @@ public class GUIViewTeachers extends JPanel
 		// Loops through all courses and sets the columns in each row appropriately
 		for (UserProfile u : allUsers)
 		{
-			if (u.getPermLevel() == UserProfile.TEACHER)
+			if (u.getPermLevel() == UserProfile.TEACHER || u.getPermLevel() == UserProfile.TA)
 			{
 				cells[row][0] = u.getLastName();
 				cells[row][1] = u.getFirstName();
+				cells[row][2] = u.getUserID();
 				// TODO: needs a way to actually access CRNs teacher teaches
-				cells[row][2] = "WIP";
+				cells[row][3] = "WIP";
 				// TODO: needs a way to actually check availability
-				cells[row][3] = "\u2713";
+				cells[row][4] = "\u2713";
 				row++;
 			}
 		}
