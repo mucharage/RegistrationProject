@@ -44,17 +44,13 @@ public class StudentRegistrationMain
 			public void run()
 			{
 				MiscUtils.loadCoursesFromFile();
-				MiscUtils.createBaseUsers();
+				MiscUtils.loadUsersFromFile();
 				createMainWindow();
 				replaceMainWindowContents(new GUILogin());
 			}
 		};
 		SwingUtilities.invokeLater(r);
 	}
-
-
-
-
 
 	/**
 	 * Creates the main window with required functionality

@@ -40,7 +40,14 @@ public class GUIViewTeachers extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Courses", "Avail." }));
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Courses", "Avail." })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		});
 		scrollPane.setViewportView(table);
 
 		// Back button to return to previous GUI
@@ -50,7 +57,7 @@ public class GUIViewTeachers extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());				
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
 			}
 		});
 		btnBack.setBounds(10, 386, 128, 23);
@@ -87,7 +94,9 @@ public class GUIViewTeachers extends JPanel
 			{
 				cells[row][0] = u.getLastName();
 				cells[row][1] = u.getFirstName();
+				// TODO: needs a way to actually access CRNs teacher teaches
 				cells[row][2] = "WIP";
+				// TODO: needs a way to actually check availability
 				cells[row][3] = "\u2713";
 				row++;
 			}
