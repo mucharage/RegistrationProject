@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.GUIStudent.GUIStudent;
 
 @SuppressWarnings("serial")
 public class GUIViewCourse extends JPanel
@@ -61,15 +62,13 @@ public class GUIViewCourse extends JPanel
 		// adds a back button
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter()
-		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
 			public void mouseClicked(MouseEvent arg0)
-			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-			} // end of mouseClicked
-		}); // end of MouseListener
+			}// end of mouseClicked
+		});// end of MouseListener		
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
