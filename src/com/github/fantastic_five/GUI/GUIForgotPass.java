@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
+import com.github.fantastic_five.StudentRegistrationMain;
+
 public class GUIForgotPass
 {
 
@@ -57,7 +59,7 @@ public class GUIForgotPass
 		frame.setBounds(100, 100, 303, 141);
 		// When the frame is closed, it simply goes away
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 

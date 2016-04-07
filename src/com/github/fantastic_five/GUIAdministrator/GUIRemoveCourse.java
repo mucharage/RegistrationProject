@@ -144,7 +144,7 @@ public class GUIRemoveCourse extends JPanel
 				popup.getContentPane().add(GUI);
 				popup.pack();
 				popup.setVisible(true);
-				popup.setLocationRelativeTo(null);
+				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 			}
 		});
 		btnRemoveCourseOffering.setBounds(479, 67, 107, 23);
