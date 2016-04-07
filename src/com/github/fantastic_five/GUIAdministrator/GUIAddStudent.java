@@ -139,8 +139,14 @@ public class GUIAddStudent extends JPanel
 				}
 				else
 				{
-					userIDTextField.setText("User ID already exists");
-					userIDTextField.setBackground(Color.RED);
+					JLabel lblUserAlreadyExists = new JLabel("User ID already exists");
+					lblUserAlreadyExists.setFont(new Font("Monospaced", Font.PLAIN, 12));
+					lblUserAlreadyExists.setHorizontalAlignment(SwingConstants.CENTER);
+					lblUserAlreadyExists.setForeground(new Color(255, 51, 0));
+					lblUserAlreadyExists.setBounds(252, 278, 217, 20);
+					add(lblUserAlreadyExists);
+					revalidate();
+					repaint();
 				}
 			}
 		});
