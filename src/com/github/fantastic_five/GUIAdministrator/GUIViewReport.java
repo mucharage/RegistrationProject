@@ -6,13 +6,8 @@ package com.github.fantastic_five.GUIAdministrator;
  */
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,7 +34,6 @@ public class GUIViewReport extends JPanel
 	 * @return JPanel with contents for a table containing available classes
 	 * 
 	 */
-	@SuppressWarnings({ "resource", "rawtypes", "null" })
 	public GUIViewReport(JPanel previousPanel)
 	{
 		setBounds(0, 0, 618, 434);
@@ -47,35 +41,7 @@ public class GUIViewReport extends JPanel
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
-		add(scrollPane);		
-		
-		Vector<String> data = null;
-		String Line;
-		Vector<String> listing = new Vector<String>();
-		
-		try{
-			FileInputStream fs = new FileInputStream("course.dat");
-			BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-			StringTokenizer st = new StringTokenizer(fs.toString(),"_");	
-			while(st.hasMoreTokens())
-			{
-				listing.addElement(st.nextToken());
-			}
-			while ((Line = st.toString()) != null)
-			{
-				StringTokenizer st1 = new StringTokenizer(Line, "_");
-				while(st1.hasMoreTokens())
-				{
-					data.addElement(st1.nextToken());
-				}
-				br.close();
-			}
-		}	
-                
-             
-		catch (Exception e) {
-			
-		}
+		add(scrollPane);
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
@@ -95,10 +61,10 @@ public class GUIViewReport extends JPanel
 		scrollPane.setViewportView(table);
 
 		JButton btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(previousPanel);
 			}

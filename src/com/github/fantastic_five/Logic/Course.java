@@ -58,6 +58,20 @@ public class Course
 		checkTimes();
 	}
 
+	public boolean equals(Object other)
+	{
+		boolean rVal;
+		if (other instanceof Course)
+		{
+			rVal = (this.crn == ((Course) other).crn);
+		}
+		else
+		{
+			rVal = false;
+		}
+		return rVal;
+	}
+
 	/**
 	 * Returns the title of the course
 	 * 
@@ -78,6 +92,10 @@ public class Course
 		return description;
 	}
 
+	/**
+	 * 
+	 * @param newDescription
+	 */
 	public void setDescription(String newDescription)
 	{
 		description = newDescription;
@@ -147,7 +165,7 @@ public class Course
 	 */
 	public String getTeacherName()
 	{
-		if(this.teacher != null)
+		if (this.teacher != null)
 			return (teacher.getFirstName() + " " + teacher.getLastName());
 		return "";
 	}
@@ -384,16 +402,23 @@ public class Course
 
 	public static enum Day
 	{
-		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "R"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "U");
+		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "TR", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "SU", 6);
 
-		private Day(String name, String abbreviation)
+		private Day(String name, String abbreviation, int order)
 		{
 			this.name = name;
 			this.abbreviation = abbreviation;
+			this.order = order;
 		}
 
 		private String name;
 		private String abbreviation;
+		private int order;
+
+		public int getOrder()
+		{
+			return order;
+		}
 
 		public String getName()
 		{
@@ -412,25 +437,19 @@ public class Course
 		 */
 		public static Day getDayFromName(String name)
 		{
-			switch (name)
+
+			Day rVal = null;
+
+			for (Day e : Day.values())
 			{
-			case "MONDAY":
-				return MONDAY;
-			case "TUESDAY":
-				return TUESDAY;
-			case "WEDNESDAY":
-				return WEDNESDAY;
-			case "THURSDAY":
-				return THURSDAY;
-			case "FRIDAY":
-				return FRIDAY;
-			case "SATURDAY":
-				return SATURDAY;
-			case "SUNDAY":
-				return SUNDAY;
-			default:
-				return null;
+				if (e.name.equalsIgnoreCase(name))
+				{
+					rVal = e;
+					break;
+				}
 			}
+
+			return rVal;
 		}
 
 		/**
@@ -440,25 +459,18 @@ public class Course
 		 */
 		public static Day getDayFromAbbreviation(String abbr)
 		{
-			switch (abbr)
+			Day rVal = null;
+
+			for (Day e : Day.values())
 			{
-			case "M":
-				return MONDAY;
-			case "T":
-				return TUESDAY;
-			case "W":
-				return WEDNESDAY;
-			case "TR":
-				return THURSDAY;
-			case "F":
-				return FRIDAY;
-			case "S":
-				return SATURDAY;
-			case "U":
-				return SUNDAY;
-			default:
-				return null;
+				if (e.abbreviation.equalsIgnoreCase(abbr))
+				{
+					rVal = e;
+					break;
+				}
 			}
+
+			return rVal;
 		}
 	}
 

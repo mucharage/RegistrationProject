@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
@@ -35,15 +38,31 @@ public class GUIRemoveCourse extends JPanel
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
 
+		// Table with auto-generated content!
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(41, 95, 545, 283);
+		add(scrollPane);
+
+		JTable table = new JTable();
+		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+		});
+		scrollPane.setViewportView(table);
+
 		// Label for the CRN box
 		JLabel lblCrnToRemove = new JLabel("CRN:");
 		lblCrnToRemove.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCrnToRemove.setBounds(41, 98, 46, 14);
+		lblCrnToRemove.setBounds(327, 70, 46, 14);
 		add(lblCrnToRemove);
 
 		// The box where the CRN entered should be accessed
 		fieldCRN = new JTextField();
-		fieldCRN.setBounds(99, 96, 176, 20);
+		fieldCRN.setBounds(383, 68, 86, 20);
 		add(fieldCRN);
 		fieldCRN.setColumns(10);
 
@@ -100,7 +119,21 @@ public class GUIRemoveCourse extends JPanel
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						System.out.println("Not yet implemented.");
+						// Removes the class
+						StudentRegistrationMain.mainCourseManager.removeCourse(Integer.parseInt(fieldCRN.getText()));
+						// Refreshes the table
+						table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+						{
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						scrollPane.setViewportView(table);
+						revalidate();
+						repaint();
+						// Removes the popup
 						popup.dispose();
 					}
 				});
@@ -111,10 +144,10 @@ public class GUIRemoveCourse extends JPanel
 				popup.getContentPane().add(GUI);
 				popup.pack();
 				popup.setVisible(true);
-				popup.setLocationRelativeTo(null);
+				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 			}
 		});
-		btnRemoveCourseOffering.setBounds(212, 206, 190, 23);
+		btnRemoveCourseOffering.setBounds(479, 67, 107, 23);
 		add(btnRemoveCourseOffering);
 
 		// Adds the loginPanel to our panel
@@ -130,23 +163,38 @@ public class GUIRemoveCourse extends JPanel
 		lblCourseRemoval.setBounds(188, 26, 243, 23);
 		add(lblCourseRemoval);
 
-		JLabel lblSearchBy = new JLabel("Search By:");
-		lblSearchBy.setBounds(41, 67, 116, 20);
-		lblSearchBy.setForeground(Color.GRAY);
-		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
-		add(lblSearchBy);
+		JLabel lblAllClasses = new JLabel("All Classes:");
+		lblAllClasses.setBounds(41, 66, 116, 20);
+		lblAllClasses.setForeground(Color.GRAY);
+		lblAllClasses.setFont(new Font("Verdana", Font.BOLD, 13));
+		add(lblAllClasses);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 136, 545, 59);
-		add(scrollPane);
-
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
-		scrollPane.setViewportView(table);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(41, 247, 545, 131);
-		add(scrollPane_1);
 	}
 
+	/**
+	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 */
+	public Object[][] getCourseTable()
+	{
+		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
+		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.getCourses();
+		int numCourses = StudentRegistrationMain.mainCourseManager.getCourses().size();
+		Object[][] table = new Object[numCourses][7];
+
+		int row = 0;
+		// Loops through all courses and sets the columns in each row appropriately
+		for (Course c : courseOfferings)
+		{
+			table[row][0] = c.getCRN();
+			table[row][1] = c.getTitle();
+			table[row][2] = c.getStudentCap();
+			table[row][3] = c.getRemainingCap();
+			table[row][4] = c.getTeacherName();
+			table[row][5] = MiscUtils.getDaysFormatted(c.getDays());
+			table[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+
+		return table;
+	}
 }
