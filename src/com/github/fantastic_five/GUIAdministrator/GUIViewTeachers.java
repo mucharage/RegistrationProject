@@ -7,8 +7,8 @@ package com.github.fantastic_five.GUIAdministrator;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -45,21 +45,23 @@ public class GUIViewTeachers extends JPanel
 
 		// Back button to return to previous GUI
 		JButton btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent arg0)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());				
 			}
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
+		// Adds the log in panel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
+		// Panel label
 		JLabel lblCourseRemoval = new JLabel("View Teacher Staff");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));

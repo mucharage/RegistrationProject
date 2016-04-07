@@ -5,11 +5,10 @@ package com.github.fantastic_five.GUIAdministrator;
  * This GUI displays all of the available courses that our University offers. 
  */
 
-
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -33,18 +32,14 @@ public class GUIViewCourses extends JPanel
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
-		/**
-		 * Adds a ScrollPane
-		 */
+		// Adds a ScrollPane
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
-		/**
-		 * Adds a table displaying important details for each courses.
-		 * 
-		 */
+		// Adds a table displaying important details for each courses.
+
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
 		{
@@ -56,39 +51,33 @@ public class GUIViewCourses extends JPanel
 		});
 		scrollPane.setViewportView(table);
 
-		/**
-		 * Button & Logic for View Schedule
-		 */
+		// Button & Logic for View Schedule
 		JButton btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}// end of mouseClicked
-		});// end of MouseListener
+			}
+		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
-		/**
-		 * Adds a login Panel
-		 */
+		// Adds a login Panel
+
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		/**
-		 * Adds a Label named View Courses.
-		 */
+		// Adds a Label named View Courses.
 		JLabel lblCourseRemoval = new JLabel("View Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
-
-	}// end of GuiViewCourses()
+	}
 
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
