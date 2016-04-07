@@ -71,7 +71,7 @@ public class MiscUtils
 	 */
 	public static boolean doesCRNExist(int toTest)
 	{
-		TreeSet<Course> courses = StudentRegistrationMain.mainCourseManager.getCourses();
+		TreeSet<Course> courses = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
 		for (Course c : courses)
 			if (c.getCRN() == toTest)
 				return true;
