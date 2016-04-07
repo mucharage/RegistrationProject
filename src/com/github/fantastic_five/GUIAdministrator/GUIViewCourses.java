@@ -85,8 +85,8 @@ public class GUIViewCourses extends JPanel
 	public Object[][] getCourseTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.getCourses();
-		int numCourses = StudentRegistrationMain.mainCourseManager.getCourses().size();
+		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
+		int numCourses = courseOfferings.size();
 		Object[][] cells = new Object[numCourses][7];
 
 		int row = 0;
