@@ -79,7 +79,7 @@ public class MiscUtils
 	}
 
 	/**
-	 * initializes course variables using data stored in our .dat files
+	 * initializes Course variables using data stored in our .dat files
 	 */
 	public static void loadCoursesFromFile()
 	{
@@ -132,7 +132,7 @@ public class MiscUtils
 	}
 
 	/**
-	 * initializes userprofile variables using data stored in our .dat files
+	 * initializes UserProfile variables using data stored in our .dat files
 	 */
 	public static void loadUsersFromFile()
 	{
@@ -170,5 +170,13 @@ public class MiscUtils
 				// doing nothing with this because no file found is to be expected at least once
 			}
 		}
+	}
+
+	/**
+	 * @return a UserProfile object of who is currently logged in, null if no user is logged in (shouldn't be, but just in case)
+	 */
+	public static UserProfile getCurrentLoggedInUser()
+	{
+		return StudentRegistrationMain.loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
 	}
 }
