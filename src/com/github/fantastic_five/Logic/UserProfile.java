@@ -30,7 +30,7 @@ public class UserProfile
 		this.middleName = middleName;
 		this.lastName = lastName;
 	}
-	
+
 	public boolean equals(UserProfile other)
 	{
 		boolean rVal = this.userID.equals(other.userID);
@@ -118,4 +118,9 @@ public class UserProfile
 		return success;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.userID + "_" + this.password + "_" + this.permLevel + "_" + this.firstName + "_" + this.middleName + "_" + this.lastName;
+	}
 }
