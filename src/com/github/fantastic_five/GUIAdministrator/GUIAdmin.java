@@ -81,7 +81,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
 			}
 		});
 		add(btnViewEnrolledStudents);
@@ -93,7 +93,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeacher());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeachers());
 			}
 		});
 		add(btnViewTeacher);

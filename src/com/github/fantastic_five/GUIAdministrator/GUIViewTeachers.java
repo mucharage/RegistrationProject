@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,14 +21,16 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
-public class GUIViewTeacher extends JPanel
+public class GUIViewTeachers extends JPanel
 {
 	// Private instance variable
 	private JTable table;
 
-	public GUIViewTeacher()
+	public GUIViewTeachers()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
@@ -37,20 +40,7 @@ public class GUIViewTeacher extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null,
-						null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null },
-				{ null, null, null, null, null, null, null }, }, new String[]
-		{ "Last", "First", "Courses", "Availability" }));
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Courses", "Avail." }));
 		scrollPane.setViewportView(table);
 
 		// Back button to return to previous GUI
@@ -76,5 +66,31 @@ public class GUIViewTeacher extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
+	}
+
+	/**
+	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 */
+	public Object[][] getTable()
+	{
+		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
+		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
+		Object[][] cells = new Object[allUsers.size()][7];
+
+		int row = 0;
+		// Loops through all courses and sets the columns in each row appropriately
+		for (UserProfile u : allUsers)
+		{
+			if (u.getPermLevel() == UserProfile.TEACHER)
+			{
+				cells[row][0] = u.getLastName();
+				cells[row][1] = u.getFirstName();
+				cells[row][2] = "WIP";
+				cells[row][3] = "\u2713";
+				row++;
+			}
+		}
+
+		return cells;
 	}
 }

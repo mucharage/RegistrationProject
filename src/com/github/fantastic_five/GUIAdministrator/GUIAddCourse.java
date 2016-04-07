@@ -10,8 +10,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
-import java.util.Random;
-import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,6 +23,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIAddCourse extends JPanel
@@ -41,7 +40,7 @@ public class GUIAddCourse extends JPanel
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
-		
+
 		// Course Name
 		JLabel lblCourseName = new JLabel("Course Name:");
 		lblCourseName.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -72,7 +71,7 @@ public class GUIAddCourse extends JPanel
 		lblTimeStart.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTimeStart.setBounds(102, 162, 111, 14);
 		add(lblTimeStart);
-		
+
 		fieldTimeStart = new JTextField();
 		fieldTimeStart.setColumns(10);
 		fieldTimeStart.setBounds(240, 160, 217, 20);
@@ -84,7 +83,7 @@ public class GUIAddCourse extends JPanel
 		lblTimeEnd.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTimeEnd.setBounds(102, 193, 111, 14);
 		add(lblTimeEnd);
-		
+
 		fieldTimeEnd = new JTextField();
 		fieldTimeEnd.setColumns(10);
 		fieldTimeEnd.setBounds(240, 191, 217, 20);
@@ -108,7 +107,7 @@ public class GUIAddCourse extends JPanel
 		lblCourseDesc.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCourseDesc.setBounds(102, 255, 128, 14);
 		add(lblCourseDesc);
-		
+
 		fieldCourseDesc = new JTextArea();
 		fieldCourseDesc.setLineWrap(true);
 		fieldCourseDesc.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -146,7 +145,7 @@ public class GUIAddCourse extends JPanel
 				// Temporary Variables for creating the course object
 				String title = fieldCourseName.getText();
 				String description = fieldCourseDesc.getText();
-				int CRN = getCRN();
+				int CRN = MiscUtils.getCRN();
 				int studentCap = Integer.parseInt(fieldCapacity.getText());
 				HashSet<Day> days = new HashSet<>();
 				String[] startTimeParts = fieldTimeStart.getText().split("[\\W]");
@@ -163,7 +162,7 @@ public class GUIAddCourse extends JPanel
 				// Creates course and adds it to the course list
 				Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
 				StudentRegistrationMain.mainCourseManager.addCourse(c);
-				
+
 				// Resets the fields
 				clearFields();
 			}
@@ -188,29 +187,5 @@ public class GUIAddCourse extends JPanel
 		fieldTimeStart.setText("");
 		fieldTimeEnd.setText("");
 		fieldCapacity.setText("");
-	}
-
-	/**
-	 * @return A random, non-conflicting CRN from 1000 - 9999
-	 */
-	int getCRN()
-	{
-		Random rand = new Random();
-		// Gets a value between 0 and 8999 (inclusive) then adds 1000
-		int ret = rand.nextInt(9000) + 1000;
-		// Recursive call to get a CRN that is available
-		if (!doesCRNExist(ret))
-			return ret;
-		else
-			return getCRN();
-	}
-	
-	boolean doesCRNExist(int toTest)
-	{
-		TreeSet<Course> courses = StudentRegistrationMain.mainCourseManager.getCourses();
-		for(Course c : courses)
-			if(c.getCRN() == toTest)
-				return true;
-		return false;
 	}
 }
