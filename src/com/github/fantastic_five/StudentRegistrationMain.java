@@ -92,6 +92,7 @@ public class StudentRegistrationMain
 		{
 			mainWindow.getContentPane().removeAll();
 			mainWindow.getContentPane().add(newComponent);
+			mainWindow.getContentPane().requestFocusInWindow();
 			mainWindow.pack();
 		}
 		// Else they are a TA and will have multiple windows open
@@ -107,6 +108,7 @@ public class StudentRegistrationMain
 					// Does the same thing as above, but to the currently active window instead
 					tempFrame.getContentPane().removeAll();
 					tempFrame.getContentPane().add(newComponent);
+					tempFrame.getContentPane().requestFocusInWindow();
 					tempFrame.pack();
 				}
 			}

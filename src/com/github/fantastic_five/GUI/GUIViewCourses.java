@@ -8,8 +8,8 @@ package com.github.fantastic_five.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -59,14 +59,13 @@ public class GUIViewCourses extends JPanel
 		 * Button & Logic for View Schedule
 		 */
 		JButton btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
-			}// end of mouseClicked
-		});// end of MouseListener
+			}
+		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
