@@ -61,13 +61,15 @@ public class GUIViewCourse extends JPanel
 		// adds a back button
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
 			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-			}
-		});
+			} // end of mouseClicked
+		}); // end of MouseListener
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
