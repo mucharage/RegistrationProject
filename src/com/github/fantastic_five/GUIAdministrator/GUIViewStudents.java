@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -83,23 +84,29 @@ public class GUIViewStudents extends JPanel
 	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
-		Object[][] cells = new Object[allUsers.size()][7];
+		ArrayList<UserProfile> studentUsers = (ArrayList<UserProfile>) UserProfileDatabase.users.clone();
+		studentUsers.removeIf(new Predicate<UserProfile>()
+		{
+			@Override
+			public boolean test(UserProfile t)
+			{
+				return !(t.getPermLevel() == UserProfile.STUDENT);
+			}
+		});
+		Object[][] cells = new Object[studentUsers.size()][7];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
-		for (UserProfile u : allUsers)
+		for (UserProfile u : studentUsers)
 		{
-			if (u.getPermLevel() == UserProfile.STUDENT)
-			{
-				cells[row][0] = u.getLastName();
-				cells[row][1] = u.getFirstName();
-				cells[row][2] = u.getMiddleName();
-				cells[row][3] = u.getUserID();
-				// TODO: needs a way to actually check pay status
-				cells[row][4] = "\u2713";
-				row++;
-			}
+			cells[row][0] = u.getLastName();
+			cells[row][1] = u.getFirstName();
+			cells[row][2] = u.getMiddleName();
+			cells[row][3] = u.getUserID();
+			// TODO: needs a way to actually check pay status
+			cells[row][4] = "\u2713";
+	
+			row++;
 		}
 
 		return cells;
