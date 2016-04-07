@@ -3,6 +3,7 @@ package com.github.fantastic_five;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -44,6 +45,9 @@ public class StudentRegistrationMain
 			@Override
 			public void run()
 			{
+				// Sets the icon ;D
+				mainWindow.setIconImage(Toolkit.getDefaultToolkit().createImage(ClassLoader.getSystemResource("com/github/fantastic_five/Resources/Icon.png")));
+				
 				MiscUtils.loadCoursesFromFile();
 				MiscUtils.loadUsersFromFile();
 				initAdminUser();
