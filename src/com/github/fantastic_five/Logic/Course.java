@@ -57,13 +57,13 @@ public class Course
 		teacher = null;
 		checkTimes();
 	}
-	
+
 	public boolean equals(Object other)
 	{
 		boolean rVal;
-		if(other instanceof Course)
-		{			
-			rVal = (this.crn == ((Course)other).crn);
+		if (other instanceof Course)
+		{
+			rVal = (this.crn == ((Course) other).crn);
 		}
 		else
 		{
@@ -165,7 +165,7 @@ public class Course
 	 */
 	public String getTeacherName()
 	{
-		if(this.teacher != null)
+		if (this.teacher != null)
 			return (teacher.getFirstName() + " " + teacher.getLastName());
 		return "";
 	}
@@ -402,16 +402,23 @@ public class Course
 
 	public static enum Day
 	{
-		MONDAY("Monday", "M"), TUESDAY("Tuesday", "T"), WEDNESDAY("Wednesday", "W"), THURSDAY("Thursday", "TR"), FRIDAY("Friday", "F"), SATURDAY("Saturday", "S"), SUNDAY("Sunday", "SU");
+		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "TR", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "SU", 6);
 
-		private Day(String name, String abbreviation)
+		private Day(String name, String abbreviation, int order)
 		{
 			this.name = name;
 			this.abbreviation = abbreviation;
+			this.order = order;
 		}
 
 		private String name;
 		private String abbreviation;
+		private int order;
+
+		public int getOrder()
+		{
+			return order;
+		}
 
 		public String getName()
 		{
@@ -430,18 +437,18 @@ public class Course
 		 */
 		public static Day getDayFromName(String name)
 		{
-			
+
 			Day rVal = null;
-			
-			for(Day e: Day.values())
+
+			for (Day e : Day.values())
 			{
-				if(e.name.equalsIgnoreCase(name))
+				if (e.name.equalsIgnoreCase(name))
 				{
 					rVal = e;
 					break;
 				}
 			}
-			
+
 			return rVal;
 		}
 
@@ -453,16 +460,16 @@ public class Course
 		public static Day getDayFromAbbreviation(String abbr)
 		{
 			Day rVal = null;
-			
-			for(Day e: Day.values())
+
+			for (Day e : Day.values())
 			{
-				if(e.abbreviation.equalsIgnoreCase(abbr))
+				if (e.abbreviation.equalsIgnoreCase(abbr))
 				{
 					rVal = e;
 					break;
 				}
 			}
-			
+
 			return rVal;
 		}
 	}

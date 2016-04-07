@@ -2,6 +2,7 @@ package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -64,27 +65,38 @@ public class GUITeacherAssistant extends JPanel
 
 	public void createStudentWindow()
 	{
+		// Makes a new window
 		JFrame studentView = new JFrame("Student Perspective");
+		// Finds a starting point for it to be put at
+		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
+		startingLoc.translate(-40, 30);
 
+		// Basic pop-up window initialization
 		studentView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		studentView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		studentView.setResizable(false);
 		studentView.pack();
 		studentView.setVisible(true);
-		studentView.setLocation(0, 133);
+		studentView.setLocation(startingLoc);
 		studentView.getContentPane().add(new GUIStudent());
 		studentView.pack();
 	}
 
 	public void createTeacherWindow()
 	{
+		// Makes a new window
 		JFrame teacherView = new JFrame("Teacher Perspective");
+		// Finds a starting point for it to be put at
+		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
+		startingLoc.translate(40, 20);
+
+		// Basic pop-up window initialization
 		teacherView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		teacherView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		teacherView.setResizable(false);
 		teacherView.pack();
 		teacherView.setVisible(true);
-		teacherView.setLocation(750,133);
+		teacherView.setLocation(startingLoc);
 		teacherView.getContentPane().add(new GUITeacher());
 		teacherView.pack();
 	}

@@ -112,7 +112,7 @@ public class GUIRemoveTeacher extends JPanel
 				popup.getContentPane().add(GUI);
 				popup.pack();
 				popup.setVisible(true);
-				popup.setLocationRelativeTo(null);
+				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 			}
 		});
 		btnRemove.setBounds(212, 286, 190, 23);

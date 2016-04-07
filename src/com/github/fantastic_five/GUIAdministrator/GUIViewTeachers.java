@@ -1,15 +1,15 @@
 package com.github.fantastic_five.GUIAdministrator;
 
 /**
- * @author Fantastic Five (Alay Patel & Jose Stovall)
- * This GUI displays all of the available courses that our University offers. 
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel displaying all teachers in the university
  */
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.TreeSet;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,27 +21,26 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
-public class GUIViewCourses extends JPanel
+public class GUIViewTeachers extends JPanel
 {
-	public GUIViewCourses()
+	// Private instance variable
+	private JTable table;
+
+	public GUIViewTeachers()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
-
-		// Adds a ScrollPane
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
-		// Adds a table displaying important details for each courses.
-
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+		table = new JTable();
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Courses", "Avail." })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -51,12 +50,12 @@ public class GUIViewCourses extends JPanel
 		});
 		scrollPane.setViewportView(table);
 
-		// Button & Logic for View Schedule
+		// Back button to return to previous GUI
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(ActionEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
 			}
@@ -64,14 +63,13 @@ public class GUIViewCourses extends JPanel
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
-		// Adds a login Panel
-
+		// Adds the log in panel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// Adds a Label named View Courses.
-		JLabel lblCourseRemoval = new JLabel("View Courses");
+		// Panel label
+		JLabel lblCourseRemoval = new JLabel("View Teacher Staff");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,25 +80,26 @@ public class GUIViewCourses extends JPanel
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
 	 */
-	public Object[][] getCourseTable()
+	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.getCourses();
-		int numCourses = StudentRegistrationMain.mainCourseManager.getCourses().size();
-		Object[][] cells = new Object[numCourses][7];
+		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
+		Object[][] cells = new Object[allUsers.size()][7];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
-		for (Course c : courseOfferings)
+		for (UserProfile u : allUsers)
 		{
-			cells[row][0] = c.getCRN();
-			cells[row][1] = c.getTitle();
-			cells[row][2] = c.getStudentCap();
-			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = c.getTeacherName();
-			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
-			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
-			row++;
+			if (u.getPermLevel() == UserProfile.TEACHER)
+			{
+				cells[row][0] = u.getLastName();
+				cells[row][1] = u.getFirstName();
+				// TODO: needs a way to actually access CRNs teacher teaches
+				cells[row][2] = "WIP";
+				// TODO: needs a way to actually check availability
+				cells[row][3] = "\u2713";
+				row++;
+			}
 		}
 
 		return cells;

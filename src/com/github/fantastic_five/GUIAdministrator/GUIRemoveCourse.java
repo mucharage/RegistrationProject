@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -26,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
@@ -41,7 +40,7 @@ public class GUIRemoveCourse extends JPanel
 
 		// Table with auto-generated content!
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 136, 545, 59);
+		scrollPane.setBounds(41, 95, 545, 283);
 		add(scrollPane);
 
 		JTable table = new JTable();
@@ -58,12 +57,12 @@ public class GUIRemoveCourse extends JPanel
 		// Label for the CRN box
 		JLabel lblCrnToRemove = new JLabel("CRN:");
 		lblCrnToRemove.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCrnToRemove.setBounds(41, 98, 46, 14);
+		lblCrnToRemove.setBounds(327, 70, 46, 14);
 		add(lblCrnToRemove);
 
 		// The box where the CRN entered should be accessed
 		fieldCRN = new JTextField();
-		fieldCRN.setBounds(99, 96, 176, 20);
+		fieldCRN.setBounds(383, 68, 86, 20);
 		add(fieldCRN);
 		fieldCRN.setColumns(10);
 
@@ -145,10 +144,10 @@ public class GUIRemoveCourse extends JPanel
 				popup.getContentPane().add(GUI);
 				popup.pack();
 				popup.setVisible(true);
-				popup.setLocationRelativeTo(null);
+				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 			}
 		});
-		btnRemoveCourseOffering.setBounds(212, 206, 190, 23);
+		btnRemoveCourseOffering.setBounds(479, 67, 107, 23);
 		add(btnRemoveCourseOffering);
 
 		// Adds the loginPanel to our panel
@@ -164,15 +163,11 @@ public class GUIRemoveCourse extends JPanel
 		lblCourseRemoval.setBounds(188, 26, 243, 23);
 		add(lblCourseRemoval);
 
-		JLabel lblSearchBy = new JLabel("Search By:");
-		lblSearchBy.setBounds(41, 67, 116, 20);
-		lblSearchBy.setForeground(Color.GRAY);
-		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
-		add(lblSearchBy);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(41, 247, 545, 131);
-		add(scrollPane_1);
+		JLabel lblAllClasses = new JLabel("All Classes:");
+		lblAllClasses.setBounds(41, 66, 116, 20);
+		lblAllClasses.setForeground(Color.GRAY);
+		lblAllClasses.setFont(new Font("Verdana", Font.BOLD, 13));
+		add(lblAllClasses);
 
 	}
 
@@ -195,25 +190,11 @@ public class GUIRemoveCourse extends JPanel
 			table[row][2] = c.getStudentCap();
 			table[row][3] = c.getRemainingCap();
 			table[row][4] = c.getTeacherName();
-			table[row][5] = getDaysFormatted(c.getDays());
+			table[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			table[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 
 		return table;
-	}
-
-	/**
-	 * 
-	 * @param daySet
-	 *            the HashSet of days that needs to be formatted
-	 * @return a formatted string with all the days
-	 */
-	String getDaysFormatted(HashSet<Day> daySet)
-	{
-		String ret = "";
-		for (Day d : daySet)
-			ret += d.getAbbreviation() + " ";
-		return ret;
 	}
 }
