@@ -2,7 +2,7 @@ package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
- * A JPanel which removes a student UserProfile from the UserProfileDatabase
+ * A JPanel which removes a teacher UserProfile from the UserProfileDatabase
  */
 
 import java.awt.Color;
