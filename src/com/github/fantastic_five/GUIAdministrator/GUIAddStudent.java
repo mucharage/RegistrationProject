@@ -132,8 +132,16 @@ public class GUIAddStudent extends JPanel
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				UserProfileDatabase.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
-				clearFields();
+				if (!UserProfileDatabase.doesUserIDExist(userID))
+				{
+					UserProfileDatabase.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					clearFields();
+				}
+				else
+				{
+					userIDTextField.setText("User ID already exists");
+					userIDTextField.setBackground(Color.RED);
+				}
 			}
 		});
 		add(btnCreate);
