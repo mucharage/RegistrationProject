@@ -78,6 +78,41 @@ public class UserProfile
 	}
 
 	/**
+	 * Sets the users first name
+	 * 
+	 * @param newName
+	 *            The new first name to be set
+	 */
+	public void setFirstName(String newName)
+	{
+		this.firstName = newName;
+	}
+
+
+	/**
+	 * Sets the users middle name
+	 * 
+	 * @param newName
+	 *            The new middle name to be set
+	 */
+	public void setMiddleName(String newName)
+	{
+		this.middleName = newName;
+	}
+
+
+	/**
+	 * Sets the users last name
+	 * 
+	 * @param newName
+	 *            The new last name to be set
+	 */
+	public void setLastName(String newName)
+	{
+		this.lastName = newName;
+	}
+
+	/**
 	 * Returns the user's permission level. This value is equal to GUEST, STUDENT, TEACHER, or ADMIN, depending on which of those the user is.
 	 * 
 	 * @return the user's permission level.
