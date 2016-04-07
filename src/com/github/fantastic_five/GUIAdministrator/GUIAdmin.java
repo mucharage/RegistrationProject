@@ -28,7 +28,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.setBounds(233, 180, 156, 23);
+		btnView.setBounds(233, 180, 154, 23);
 		btnView.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -40,7 +40,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for adding classes
 		JButton btnCreateCourseOffering = new JButton("Add Course");
-		btnCreateCourseOffering.setBounds(233, 214, 156, 23);
+		btnCreateCourseOffering.setBounds(233, 214, 154, 23);
 		btnCreateCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -51,32 +51,20 @@ public class GUIAdmin extends JPanel
 		add(btnCreateCourseOffering);
 
 		// Button & logic for removing courses
-		JButton btnRemoveCourseOffering = new JButton("Remove Course");
-		btnRemoveCourseOffering.setBounds(233, 248, 156, 23);
-		btnRemoveCourseOffering.addActionListener(new ActionListener()
+		JButton btnRemoveCourse = new JButton("Remove Course");
+		btnRemoveCourse.setBounds(233, 248, 154, 23);
+		btnRemoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveCourse());
 			}
 		});
-		add(btnRemoveCourseOffering);
-
-		// Button & Logic for reports view
-		JButton btnViewReport = new JButton("View Course Report");
-		btnViewReport.setBounds(233, 282, 156, 23);
-		btnViewReport.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(new GUIAdmin()));
-			}
-		});
-		add(btnViewReport);
+		add(btnRemoveCourse);
 
 		// Button & Logic for Enrolled Student View
 		JButton btnViewEnrolledStudents = new JButton("View Enrolled Students");
-		btnViewEnrolledStudents.setBounds(48, 180, 156, 23);
+		btnViewEnrolledStudents.setBounds(48, 180, 154, 23);
 		btnViewEnrolledStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -88,7 +76,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Teacher Staff View
 		JButton btnViewTeacher = new JButton("View Teacher Staff");
-		btnViewTeacher.setBounds(415, 180, 156, 23);
+		btnViewTeacher.setBounds(415, 180, 154, 23);
 		btnViewTeacher.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -112,7 +100,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Student Removal
 		JButton btnRemoveStudent = new JButton("Remove Student");
-		btnRemoveStudent.setBounds(50, 248, 154, 23);
+		btnRemoveStudent.setBounds(48, 248, 154, 23);
 		btnRemoveStudent.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -124,7 +112,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Student Report
 		JButton btnViewStudents = new JButton("View Student Report");
-		btnViewStudents.setBounds(50, 282, 154, 23);
+		btnViewStudents.setBounds(138, 282, 154, 23);
 		btnViewStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -135,7 +123,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Teacher Addition
 		JButton btnAddTeacher = new JButton("Add Teacher");
-		btnAddTeacher.setBounds(415, 214, 156, 23);
+		btnAddTeacher.setBounds(415, 214, 154, 23);
 		btnAddTeacher.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -147,7 +135,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Teacher Removal
 		JButton btnRemoveTeacher = new JButton("Remove Teacher");
-		btnRemoveTeacher.setBounds(415, 248, 156, 23);
+		btnRemoveTeacher.setBounds(415, 248, 154, 23);
 		btnRemoveTeacher.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -159,7 +147,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for Teacher Report
 		JButton btnViewTeachers = new JButton("View Teacher Report");
-		btnViewTeachers.setBounds(415, 282, 156, 23);
+		btnViewTeachers.setBounds(323, 282, 154, 23);
 		btnViewTeachers.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -186,7 +174,6 @@ public class GUIAdmin extends JPanel
 	/**
 	 * - View Student Report
 	 * - View Teacher Report
-	 * - View Course Report (what does this need to be?)
 	 * - View Enrolled Students needs a way to see if they've paid
 	 * - View Enrolled Teachers - needs to find availability, and is the "Courses" heading req'd?
 	 */

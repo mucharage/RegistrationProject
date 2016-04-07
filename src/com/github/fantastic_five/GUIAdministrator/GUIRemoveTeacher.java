@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -194,23 +195,29 @@ public class GUIRemoveTeacher extends JPanel
 	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
-		Object[][] cells = new Object[allUsers.size()][7];
-
+		ArrayList<UserProfile> teacherUsers = (ArrayList<UserProfile>) UserProfileDatabase.users.clone();
+		teacherUsers.removeIf(new Predicate<UserProfile>()
+		{
+			@Override
+			public boolean test(UserProfile t)
+			{
+				return !(t.getPermLevel() == UserProfile.TEACHER || t.getPermLevel() == UserProfile.TA);
+			}
+		});
+		Object[][] cells = new Object[teacherUsers.size()][7];
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
-		for (UserProfile u : allUsers)
+		for (UserProfile u : teacherUsers)
 		{
-			if (u.getPermLevel() == UserProfile.TEACHER || u.getPermLevel() == UserProfile.TA)
-			{
-				cells[row][0] = u.getUserID();
-				cells[row][1] = u.getLastName();
-				cells[row][2] = u.getFirstName();
-				// TODO: Needs to check their availability and course scheduling
-				cells[row][3] = "WIP";
-				cells[row][4] = "\u2713";
-				row++;
-			}
+			cells[row][0] = u.getUserID();
+			cells[row][1] = u.getLastName();
+			cells[row][2] = u.getFirstName();
+			// TODO: needs a way to actually access CRNs teacher teaches
+			cells[row][3] = "WIP";
+			// TODO: needs a way to actually check availability
+			cells[row][4] = "\u2713";
+			row++;
+
 		}
 
 		return cells;

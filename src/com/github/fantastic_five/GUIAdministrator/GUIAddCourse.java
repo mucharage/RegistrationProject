@@ -124,6 +124,23 @@ public class GUIAddCourse extends JPanel
 		lblCreateCourse.setBounds(214, 44, 243, 21);
 		add(lblCreateCourse);
 
+		// Example Labels
+		JLabel lblExampleDays = new JLabel("(ex. M T W TR F S SU)");
+		lblExampleDays.setForeground(Color.GRAY);
+		lblExampleDays.setHorizontalAlignment(SwingConstants.CENTER);
+		lblExampleDays.setBounds(467, 132, 107, 14);
+		add(lblExampleDays);
+
+		JLabel lblhrFormatEx = new JLabel("(24hr format, ex: 13:00)");
+		lblhrFormatEx.setForeground(Color.GRAY);
+		lblhrFormatEx.setBounds(467, 163, 141, 14);
+		add(lblhrFormatEx);
+
+		JLabel lblhrFormatEx2 = new JLabel("(24hr format, ex: 13:00)");
+		lblhrFormatEx2.setForeground(Color.GRAY);
+		lblhrFormatEx2.setBounds(467, 194, 141, 14);
+		add(lblhrFormatEx2);
+
 		// Back button & implementation
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener()
@@ -142,29 +159,7 @@ public class GUIAddCourse extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// Temporary Variables for creating the course object
-				String title = fieldCourseName.getText();
-				String description = fieldCourseDesc.getText();
-				int CRN = MiscUtils.getCRN();
-				int studentCap = Integer.parseInt(fieldCapacity.getText());
-				HashSet<Day> days = new HashSet<>();
-				String[] startTimeParts = fieldTimeStart.getText().split("[\\W]");
-				int startHour = Integer.parseInt(startTimeParts[0]);
-				int startMinute = Integer.parseInt(startTimeParts[1]);
-				String[] endTimeParts = fieldTimeEnd.getText().split("[\\W]");
-				int endHour = Integer.parseInt(endTimeParts[0]);
-				int endMinute = Integer.parseInt(endTimeParts[1]);
-
-				String[] dayParts = fieldDays.getText().split(" ");
-				for (String s : dayParts)
-					days.add(Day.getDayFromAbbreviation(s));
-
-				// Creates course and adds it to the course list
-				Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
-				StudentRegistrationMain.mainCourseManager.addCourse(c);
-
-				// Resets the fields
-				clearFields();
+				parseFields();
 			}
 		});
 		btnCreate.setBounds(240, 330, 217, 23);
@@ -177,9 +172,79 @@ public class GUIAddCourse extends JPanel
 	}
 
 	/**
+	 * Takes all text fields and properly tries to create a course object from their contents, catching errors along the way
+	 */
+	void parseFields()
+	{
+		// Temporary Variables for creating the course object
+		String title = fieldCourseName.getText();
+		String description = fieldCourseDesc.getText();
+		int CRN = MiscUtils.getCRN();
+		int studentCap = -1;
+		try
+		{
+			studentCap = Integer.parseInt(fieldCapacity.getText());
+		}
+		catch (NumberFormatException numberException)
+		{
+			displayError(this.fieldCapacity);
+			return;
+		}
+		// Handles the starting time
+		String[] startTimeParts = fieldTimeStart.getText().split(":");
+		String[] endTimeParts = fieldTimeEnd.getText().split(":");
+
+		if (startTimeParts.length != 2 || endTimeParts.length != 2)
+		{
+			displayError(this.fieldTimeStart);
+			displayError(this.fieldTimeEnd);
+			return;
+		}
+
+		int startHour = Integer.parseInt(startTimeParts[0]);
+		int startMinute = Integer.parseInt(startTimeParts[1]);
+		// Handles the ending time
+		int endHour = Integer.parseInt(endTimeParts[0]);
+		int endMinute = Integer.parseInt(endTimeParts[1]);
+		// Handles the days of the week
+		HashSet<Day> days = new HashSet<>();
+		String[] dayParts = fieldDays.getText().split(" ");
+		for (String s : dayParts)
+		{
+			if (Day.getDayFromAbbreviation(s) != null)
+			{
+				days.add(Day.getDayFromAbbreviation(s));
+			}
+			else
+			{
+				displayError(this.fieldDays);
+				return;
+			}
+		}
+
+		// Creates course and adds it to the course list
+		Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
+		StudentRegistrationMain.mainCourseManager.addCourse(c);
+
+		// Resets the fields
+		resetFields();
+	}
+
+	/**
+	 * Sets the background of the passed text field to be red to alert the user
+	 * 
+	 * @param erroredField
+	 *            The text field to set the background red of
+	 */
+	void displayError(JTextField erroredField)
+	{
+		erroredField.setBackground(Color.RED);
+	}
+
+	/**
 	 * Clears all of the text fields in the window
 	 */
-	void clearFields()
+	void resetFields()
 	{
 		fieldCourseName.setText("");
 		fieldCourseDesc.setText("");
@@ -187,5 +252,11 @@ public class GUIAddCourse extends JPanel
 		fieldTimeStart.setText("");
 		fieldTimeEnd.setText("");
 		fieldCapacity.setText("");
+
+		fieldCourseName.setBackground(Color.WHITE);
+		fieldDays.setBackground(Color.WHITE);
+		fieldTimeStart.setBackground(Color.WHITE);
+		fieldCapacity.setBackground(Color.WHITE);
+		fieldTimeEnd.setBackground(Color.WHITE);
 	}
 }
