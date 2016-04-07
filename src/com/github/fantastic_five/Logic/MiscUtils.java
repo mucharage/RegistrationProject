@@ -191,8 +191,9 @@ public class MiscUtils
 		// Puts the file in Application Support if OSX
 		else if (OS.indexOf("mac") >= 0)
 			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Student Registration" + File.separator + "courses.dat";
-		// else if(OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
-		// TODO: implement Linux support
+		// Puts the file in Temp if Linux
+		else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
+			return "/tmp/courses.dat";
 		else
 			return "courses.dat";
 	}
@@ -208,8 +209,9 @@ public class MiscUtils
 		// Puts the file in Application Support if OSX
 		else if (OS.indexOf("mac") >= 0)
 			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Student Registration" + File.separator + "users.dat";
-		// else if(OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
-		// TODO: implement Linux support
+		// Puts the file in Temp if Linux
+		else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
+			return "/tmp/users.dat";
 		else
 			return "users.dat";
 	}
