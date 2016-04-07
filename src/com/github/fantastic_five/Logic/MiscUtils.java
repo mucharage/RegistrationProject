@@ -14,7 +14,6 @@ import com.github.fantastic_five.Logic.Course.Day;
 public class MiscUtils
 {
 	/**
-	 * 
 	 * @param daySet
 	 *            the HashSet of days that needs to be formatted
 	 * @return a formatted string with all the days in proper order
@@ -80,7 +79,7 @@ public class MiscUtils
 	}
 
 	/**
-	 * initializes variables using data stored in our .dat files
+	 * initializes course variables using data stored in our .dat files
 	 */
 	public static void loadCoursesFromFile()
 	{
@@ -89,7 +88,7 @@ public class MiscUtils
 		{
 			try
 			{
-				Scanner courseIn = new Scanner(new File("courses.dat"));
+				Scanner courseIn = new Scanner(coursesFile);
 				while (courseIn.hasNextLine())
 				{
 					// Separates the output file into smaller bits
@@ -133,18 +132,43 @@ public class MiscUtils
 	}
 
 	/**
-	 * Creates a default user profile set that is absolutely necessary
+	 * initializes userprofile variables using data stored in our .dat files
 	 */
-	// TODO: most of this is temporary. Users need to be stored (and loaded) from another .dat
-	public static void createBaseUsers()
+	public static void loadUsersFromFile()
 	{
-		UserProfile teacherUser = new UserProfile("teacher", "pass", UserProfile.TEACHER, "Group", "Five", "Teacher");
-		UserProfile studentUser = new UserProfile("student", "pass", UserProfile.STUDENT, "Group", "Five", "Student");
-		UserProfile taUser = new UserProfile("ta", "pass", UserProfile.TA, "Group", "Five", "Teaching Assistant");
-		UserProfile adminUser = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Administrator");
-		UserProfileDatabase.addUser(teacherUser);
-		UserProfileDatabase.addUser(studentUser);
-		UserProfileDatabase.addUser(taUser);
-		UserProfileDatabase.addUser(adminUser);
+		File usersFile = new File("users.dat");
+		if (usersFile != null)
+		{
+			try
+			{
+				Scanner userIn = new Scanner(usersFile);
+				while (userIn.hasNextLine())
+				{
+
+					// Separates the output file into smaller bits
+					String line = userIn.nextLine();
+					String[] lineParts = line.split("_");
+					if (lineParts.length == 6)
+					{
+						// Handles all parts of a user profile
+						String userID = lineParts[0];
+						String password = lineParts[1];
+						int permLevel = Integer.parseInt(lineParts[2]);
+						String firstName = lineParts[3];
+						String middleName = lineParts[4];
+						String lastName = lineParts[5];
+
+						// Creates a temporary userprofile
+						UserProfile u = new UserProfile(userID, password, permLevel, firstName, middleName, lastName);
+						UserProfileDatabase.addUser(u);
+					}
+				}
+				userIn.close();
+			}
+			catch (FileNotFoundException e)
+			{
+				// doing nothing with this because no file found is to be expected at least once
+			}
+		}
 	}
 }

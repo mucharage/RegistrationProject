@@ -1,5 +1,8 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -14,6 +17,17 @@ public class UserProfileDatabase
 {
 	// The entire user list
 	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
+	private static PrintStream userOutput;
+
+	/**
+	 * @param profile
+	 *            the user profile that needs to be added to the course list
+	 */
+	public static void addUser(UserProfile profile)
+	{
+		users.add(profile);
+		updateUserDatabaseFile();
+	}
 
 	/**
 	 * @param userID
@@ -27,6 +41,7 @@ public class UserProfileDatabase
 			{
 				// TODO: implement output for .dat file
 				users.remove(i);
+				updateUserDatabaseFile();
 				break;
 			}
 		}
@@ -68,16 +83,6 @@ public class UserProfileDatabase
 	}
 
 	/**
-	 * @param profile
-	 *            the user profile that needs to be added to the course list
-	 */
-	public static void addUser(UserProfile profile)
-	{
-		// TODO: implement output for .dat file
-		users.add(profile);
-	}
-
-	/**
 	 * 
 	 * @param permLevel
 	 *            the permission level of the user
@@ -92,13 +97,29 @@ public class UserProfileDatabase
 		case 1:
 			return new GUIStudent();
 		case 2:
-			return new GUITeacherAssistant();// TODO: implement TA stuff
+			return new GUITeacherAssistant();
 		case 3:
 			return new GUITeacher();
 		case 4:
 			return new GUIAdmin();
 		default:
 			return new GUIViewCourses();
+		}
+	}
+
+	/**
+	 * Updates the user database list file by resetting it and re-writing the contents
+	 */
+	public static void updateUserDatabaseFile()
+	{
+		try
+		{
+			userOutput = new PrintStream(new File("users.dat"));
+			for (UserProfile u : users)
+				userOutput.println(u.toString());
+		}
+		catch (FileNotFoundException e)
+		{
 		}
 	}
 }

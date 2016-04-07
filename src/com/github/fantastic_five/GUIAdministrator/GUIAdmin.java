@@ -180,6 +180,14 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(191, 97, 243, 23);
 		add(lblAdministration);
-
 	}
+
+	// TODO list below:
+	/**
+	 * - View Student Report
+	 * - View Teacher Report
+	 * - View Course Report (what does this need to be?)
+	 * - View Enrolled Students needs a way to see if they've paid
+	 * - View Enrolled Teachers - needs to find availability, and is the "Courses" heading req'd?
+	 */
 }
