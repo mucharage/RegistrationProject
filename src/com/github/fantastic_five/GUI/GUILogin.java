@@ -18,11 +18,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -100,7 +103,31 @@ public class GUILogin extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				{
-					GUIForgotPass.main(null);
+					// Initialize frame as a new JFrame
+					JFrame frame = new JFrame("Password Recovery");
+					// Set the dimensions of the frame
+					frame.setBounds(100, 100, 303, 141);
+					// When the frame is closed, it simply goes away
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					frame.getContentPane().setLayout(null);
+					frame.setResizable(false);
+					frame.setVisible(true);
+
+					// Create a text area to go inside the frame
+					JTextArea txtpnPleaseContactThe = new JTextArea();
+					// Making the font "Tahoma", plain text, size 15
+					txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					// Menu is the color of the text area background
+					txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
+					// Make the text not editable by the user
+					txtpnPleaseContactThe.setEditable(false);
+					// The text that is displayed
+					txtpnPleaseContactThe.setText("Please contact the System\r\n  Administration Office to\r\n   obtain your password.\r\n          Thank you.");
+					// Set the dimensions of the frame
+					txtpnPleaseContactThe.setBounds(57, 11, 178, 80);
+					// add the text area to the pane and frame
+					frame.getContentPane().add(txtpnPleaseContactThe);
 				}
 			}
 		});
