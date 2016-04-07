@@ -39,7 +39,6 @@ public class UserProfileDatabase
 		{
 			if (users.get(i).getUserID().equalsIgnoreCase(userID))
 			{
-				// TODO: implement output for .dat file
 				users.remove(i);
 				updateUserDatabaseFile();
 				break;
@@ -114,7 +113,7 @@ public class UserProfileDatabase
 	{
 		try
 		{
-			userOutput = new PrintStream(new File("users.dat"));
+			userOutput = new PrintStream(new File(MiscUtils.getUsersFileName()));
 			for (UserProfile u : users)
 				userOutput.println(u.toString());
 		}
