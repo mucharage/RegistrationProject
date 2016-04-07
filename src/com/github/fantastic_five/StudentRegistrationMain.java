@@ -14,6 +14,7 @@ import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.CourseManager;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 /**
  * @author Fantastic Five (Jose Stovall)
@@ -45,6 +46,7 @@ public class StudentRegistrationMain
 			{
 				MiscUtils.loadCoursesFromFile();
 				MiscUtils.loadUsersFromFile();
+				initAdminUser();
 				createMainWindow();
 				replaceMainWindowContents(new GUILogin());
 			}
@@ -65,6 +67,16 @@ public class StudentRegistrationMain
 		mainWindow.pack();
 		mainWindow.setVisible(true);
 		mainWindow.setLocationRelativeTo(null);
+	}
+
+	/**
+	 * Creates a default administrator user if one doesn't exist
+	 */
+	private static void initAdminUser()
+	{
+		UserProfile admin = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Admin");
+		if (!UserProfileDatabase.hasUser("admin"))
+			UserProfileDatabase.addUser(admin);
 	}
 
 	/**
