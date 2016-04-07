@@ -65,10 +65,13 @@ public class GUITeacherAssistant extends JPanel
 
 	public void createStudentWindow()
 	{
+		// Makes a new window
 		JFrame studentView = new JFrame("Student Perspective");
+		// Finds a starting point for it to be put at
 		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
 		startingLoc.translate(-40, 30);
 
+		// Basic pop-up window initialization
 		studentView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		studentView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		studentView.setResizable(false);
@@ -81,10 +84,13 @@ public class GUITeacherAssistant extends JPanel
 
 	public void createTeacherWindow()
 	{
+		// Makes a new window
 		JFrame teacherView = new JFrame("Teacher Perspective");
+		// Finds a starting point for it to be put at
 		Point startingLoc = StudentRegistrationMain.mainWindow.getLocation();
 		startingLoc.translate(40, 20);
-		
+
+		// Basic pop-up window initialization
 		teacherView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		teacherView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
 		teacherView.setResizable(false);
