@@ -17,7 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIAdministrator.GUIViewStudents;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
 public class GUITeacher extends JPanel
@@ -56,8 +57,8 @@ public class GUITeacher extends JPanel
 		add(btnView);
 
 		// Button & logic for removing courses
-		JButton btnAddremoveCourse = new JButton("Add / Remove Course");
-		btn.btnAddRemoveCourse.addActionListener(new ActionListener()
+		JButton btnAddRemoveCourse = new JButton("Add / Remove Course");
+		btnAddRemoveCourse.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -65,17 +66,10 @@ public class GUITeacher extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveClass());
 			}
 		});
-		btnAddremoveCourse.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveClass());
-			}
-		});
 
-		btnAddremoveCourse.setBounds(178, 220, 243, 23);
-		add(btnAddremoveCourse);
+
+		btnAddRemoveCourse.setBounds(178, 220, 243, 23);
+		add(btnAddRemoveCourse);
 
 		// Button for viewing schedules
 		JButton btnViewSchedule = new JButton("View Schedule");
@@ -101,15 +95,6 @@ public class GUITeacher extends JPanel
 			}
 		});
 		
-		btnViewStudents.aaddMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());;
-			}
-		});
-		
 		// Panel label
 		JLabel lblTeacher = new JLabel("Teacher");
 		lblTeacher.setBounds(232, 78, 46, 14);
@@ -120,7 +105,7 @@ public class GUITeacher extends JPanel
 		add(lblTeacher);
 		
 		// Adds the login panel
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 	}

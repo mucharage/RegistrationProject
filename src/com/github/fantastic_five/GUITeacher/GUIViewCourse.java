@@ -7,8 +7,8 @@ package com.github.fantastic_five.GUITeacher;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILoggedIn;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
 public class GUIViewCourse extends JPanel
@@ -60,7 +60,7 @@ public class GUIViewCourse extends JPanel
 
 		// adds a back button
 		JButton btnBack = new JButton("Back");
-		btnback.addActionListener(new ActionListener()
+		btnBack.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -68,20 +68,12 @@ public class GUIViewCourse extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
 			}
 		});
-		
-		btnBack.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent arg0)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-			}
-		});
+
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
 		// adds a log in panel
-		JPanel loginPanel = new GUILoggedIn();
+		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
