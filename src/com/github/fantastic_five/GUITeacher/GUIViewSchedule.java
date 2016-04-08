@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
 public class GUIViewSchedule extends JPanel
@@ -52,6 +52,15 @@ public class GUIViewSchedule extends JPanel
 		 */
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
+		btnBack.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
+			}
+		});
+		
 		btnBack.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -85,7 +94,7 @@ public class GUIViewSchedule extends JPanel
 		/**
 		 * adds a login GUI
 		 */
-		JPanel loginPanel = new GUILogStatus();
+		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
