@@ -90,7 +90,7 @@ public class GUITeacher extends JPanel
 		btnViewSchedule.setBounds(178, 254, 243, 23);
 		add(btnViewSchedule);
 		
-		// Button for viewing students currently enrolled in classes you are teaching
+		// Button & logic for viewing students currently enrolled in classes you are teaching
 		JButton btnViewStudents = new JButton("View Students");
 		btnViewStudents.addActionListener(new ActionListener()
 		{
