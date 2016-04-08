@@ -1,5 +1,6 @@
 package com.github.fantastic_five.GUIMisc;
 
+import java.awt.Color;
 import java.awt.Frame;
 /**
  * @author Fantastic Five (Jose Stovall)
@@ -12,9 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
+import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -65,10 +68,26 @@ public class GUILogStatus extends JPanel
 		});
 		add(btnLogOut);
 
-		UserProfile u = StudentRegistrationMain.loggedIn.get(0);
-		JLabel lblCurrentLoggedIn = new JLabel("Current Logged In User: " + u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
-		lblCurrentLoggedIn.setBounds(10, 4, 517, 14);
-		add(lblCurrentLoggedIn);
+		JLabel currentLoggedInPrefix = new JLabel("Current Logged In User: ");
+		currentLoggedInPrefix.setBounds(10, 4, 120, 14);
+		add(currentLoggedInPrefix);
+
+		UserProfile u = MiscUtils.getCurrentLoggedInUser();
+		JButton currentLoggedIn = new JButton(u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
+		currentLoggedIn.setHorizontalAlignment(SwingConstants.LEFT);
+		currentLoggedIn.setContentAreaFilled(false);
+		currentLoggedIn.setBorderPainted(false);
+		currentLoggedIn.setForeground(Color.BLUE);
+		currentLoggedIn.setBounds(114, 4, 413, 14);
+		currentLoggedIn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIChangeDetails());
+			}
+		});
+		add(currentLoggedIn);
 	}
 
 	public String getPermDescriptionFromInt(int level)
