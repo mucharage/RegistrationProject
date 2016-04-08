@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
-import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.GUIMisc.GUILoggedIn;
 
 @SuppressWarnings("serial")
 public class GUITeacher extends JPanel
@@ -34,6 +34,15 @@ public class GUITeacher extends JPanel
 
 		// Button & Logic for View Course
 		JButton btnView = new JButton("View Course");
+		btnView.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourse());
+			}
+		});
+		
 		btnView.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -48,6 +57,14 @@ public class GUITeacher extends JPanel
 
 		// Button & logic for removing courses
 		JButton btnAddremoveCourse = new JButton("Add / Remove Course");
+		btn.btnAddRemoveCourse.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveClass());
+			}
+		});
 		btnAddremoveCourse.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -64,6 +81,7 @@ public class GUITeacher extends JPanel
 		JButton btnViewSchedule = new JButton("View Schedule");
 		btnViewSchedule.addActionListener(new ActionListener()
 		{
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIViewSchedule());
@@ -71,7 +89,27 @@ public class GUITeacher extends JPanel
 		});
 		btnViewSchedule.setBounds(178, 254, 243, 23);
 		add(btnViewSchedule);
-
+		
+		// Button for viewing students currently enrolled in classes you are teaching
+		JButton btnViewStudents = new JButton("View Students");
+		btnViewStudents.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());;
+			}
+		});
+		
+		btnViewStudents.aaddMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());;
+			}
+		});
+		
 		// Panel label
 		JLabel lblTeacher = new JLabel("Teacher");
 		lblTeacher.setBounds(232, 78, 46, 14);
@@ -82,7 +120,7 @@ public class GUITeacher extends JPanel
 		add(lblTeacher);
 		
 		// Adds the login panel
-		JPanel loginPanel = new GUILogStatus();
+		JPanel loginPanel = new GUILoggedIn();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 	}
