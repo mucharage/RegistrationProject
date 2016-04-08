@@ -138,9 +138,10 @@ public class GUILogin extends JPanel
 							frame.dispose();
 						}
 					});
+					// Dispose if esc key is pressed
 					btnNo.addKeyListener(new KeyAdapter() {
 						 public void keyPressed(KeyEvent ke) {  // handler
-							    if(ke.getKeyCode() == ke.VK_ESCAPE) {
+							    if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
 							      System.out.println("escaped ?");
 							      frame.dispose();
 							      } 
