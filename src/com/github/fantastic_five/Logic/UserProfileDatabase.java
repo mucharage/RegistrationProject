@@ -48,7 +48,7 @@ public class UserProfileDatabase
 	 * @param userID
 	 *            the user ID that needs to be removed from the master course list
 	 */
-	public static void removeUser(String userID)
+	public static boolean removeUser(String userID)
 	{
 		for (int i = 0; i < users.size(); i++)
 		{
@@ -56,9 +56,10 @@ public class UserProfileDatabase
 			{
 				users.remove(i);
 				updateUserDatabaseFile();
-				break;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	/**

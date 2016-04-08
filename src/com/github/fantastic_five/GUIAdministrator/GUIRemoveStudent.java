@@ -81,6 +81,13 @@ public class GUIRemoveStudent extends JPanel
 		userIDTextField.setColumns(10);
 		add(userIDTextField);
 
+		// Adds the confirmation area
+		JLabel confirmation = new JLabel("");
+		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmation.setBounds(450, 84, 217, 20);
+		add(confirmation);
+
 		// Remove Course Button and all of its actions
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener()
@@ -122,17 +129,26 @@ public class GUIRemoveStudent extends JPanel
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						UserProfileDatabase.removeUser(userIDTextField.getText());
-						userIDTextField.setText("");
-						table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
+						if (UserProfileDatabase.removeUser(userIDTextField.getText()))
 						{
-							@Override
-							public boolean isCellEditable(int row, int column)
+							userIDTextField.setText("");
+							table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
 							{
-								return false;
-							}
-						});
-						scrollPane.setViewportView(table);
+								@Override
+								public boolean isCellEditable(int row, int column)
+								{
+									return false;
+								}
+							});
+							scrollPane.setViewportView(table);
+							confirmation.setText("\u2713");
+							confirmation.setForeground(Color.GREEN);
+						}
+						else
+						{
+							confirmation.setText("\u2717");
+							confirmation.setForeground(Color.RED);
+						}
 						revalidate();
 						repaint();
 						popup.dispose();

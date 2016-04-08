@@ -166,7 +166,7 @@ public class GUIAddCourse extends JPanel
 		btnCreate.setBounds(240, 330, 217, 23);
 		add(btnCreate);
 
-		// Adds the confirmation window
+		// Adds the confirmation area
 		confirmation = new JLabel("");
 		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
