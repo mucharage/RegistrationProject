@@ -6,7 +6,7 @@ https://www.youtube.com/watch?v=hkxGxZjAAXg
 
 How to set up Eclipse with this GitHub Repo:
 
-https://www.youtube.com/watch?v=jIa7S8OgGJ0
+https://youtu.be/ilBOv4YMQ1A
 
 Getting started with Java GUIs:
 
