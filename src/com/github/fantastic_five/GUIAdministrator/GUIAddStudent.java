@@ -110,6 +110,12 @@ public class GUIAddStudent extends JPanel
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
 
+		// Confirmation thingy
+		JLabel confirmation = new JLabel("");
+		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmation.setBounds(252, 280, 217, 20);
+		add(confirmation);
+
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
 		btnBack.addActionListener(new ActionListener()
@@ -132,22 +138,22 @@ public class GUIAddStudent extends JPanel
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				if (!UserProfileDatabase.doesUserIDExist(userID))
+				if (!UserProfileDatabase.doesUserIDExist(userID) && areFieldsPopulated())
 				{
 					UserProfileDatabase.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+					confirmation.setText("\u2713");
+					confirmation.setForeground(Color.GREEN);
 					clearFields();
 				}
 				else
 				{
-					JLabel lblUserAlreadyExists = new JLabel("User ID already exists");
-					lblUserAlreadyExists.setFont(new Font("Monospaced", Font.PLAIN, 12));
-					lblUserAlreadyExists.setHorizontalAlignment(SwingConstants.CENTER);
-					lblUserAlreadyExists.setForeground(new Color(255, 51, 0));
-					lblUserAlreadyExists.setBounds(252, 278, 217, 20);
-					add(lblUserAlreadyExists);
-					revalidate();
-					repaint();
+					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
+					confirmation.setForeground(Color.RED);
+					confirmation.setText("User ID already exists");
 				}
+				revalidate();
+				repaint();
 			}
 		});
 		add(btnCreate);
@@ -175,6 +181,16 @@ public class GUIAddStudent extends JPanel
 				/** Do Nothing */
 			}
 		});
+	}
+	
+	/**
+	 * Checks to see that all the text fields have SOMETHING in them..
+	 * 
+	 * @return True if all fields are populated, false otherwise
+	 */
+	boolean areFieldsPopulated()
+	{
+		return firstnameTextField.getText().length() > 0 && middlenameTextField.getText().length() > 0 && lastnameTextField.getText().length() > 0 && userIDTextField.getText().length() > 0 && passwordTextField.getText().length() > 0;
 	}
 
 	/**

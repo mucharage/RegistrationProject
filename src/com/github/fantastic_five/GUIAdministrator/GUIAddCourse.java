@@ -35,6 +35,7 @@ public class GUIAddCourse extends JPanel
 	private JTextField fieldTimeStart;
 	private JTextField fieldCapacity;
 	private JTextField fieldTimeEnd;
+	private JLabel confirmation;
 
 	public GUIAddCourse()
 	{
@@ -165,6 +166,13 @@ public class GUIAddCourse extends JPanel
 		btnCreate.setBounds(240, 330, 217, 23);
 		add(btnCreate);
 
+		// Adds the confirmation area
+		confirmation = new JLabel("");
+		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmation.setBounds(240, 364, 217, 20);
+		add(confirmation);
+
 		// Adds the login panel to this window
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
@@ -225,20 +233,49 @@ public class GUIAddCourse extends JPanel
 		// Creates course and adds it to the course list
 		Course c = new Course(title, description, CRN, studentCap, days, startHour, startMinute, endHour, endMinute);
 		StudentRegistrationMain.mainCourseManager.addCourse(c);
+		displaySuccess();
 
 		// Resets the fields
 		resetFields();
 	}
 
 	/**
-	 * Sets the background of the passed text field to be red to alert the user
+	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
 	 * 
 	 * @param erroredField
 	 *            The text field to set the background red of
 	 */
 	void displayError(JTextField erroredField)
 	{
+		resetFieldColors();
 		erroredField.setBackground(Color.RED);
+		confirmation.setText("\u2717");
+		confirmation.setForeground(Color.RED);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * Shows a green notifier to the user that the class was added okay
+	 */
+	void displaySuccess()
+	{
+		confirmation.setText("\u2713");
+		confirmation.setForeground(Color.GREEN);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * sets all field colors to white - separate because sometimes I need their colors reset but not their text
+	 */
+	void resetFieldColors()
+	{
+		fieldCourseName.setBackground(Color.WHITE);
+		fieldDays.setBackground(Color.WHITE);
+		fieldTimeStart.setBackground(Color.WHITE);
+		fieldCapacity.setBackground(Color.WHITE);
+		fieldTimeEnd.setBackground(Color.WHITE);
 	}
 
 	/**
@@ -252,11 +289,6 @@ public class GUIAddCourse extends JPanel
 		fieldTimeStart.setText("");
 		fieldTimeEnd.setText("");
 		fieldCapacity.setText("");
-
-		fieldCourseName.setBackground(Color.WHITE);
-		fieldDays.setBackground(Color.WHITE);
-		fieldTimeStart.setBackground(Color.WHITE);
-		fieldCapacity.setBackground(Color.WHITE);
-		fieldTimeEnd.setBackground(Color.WHITE);
+		resetFieldColors();
 	}
 }
