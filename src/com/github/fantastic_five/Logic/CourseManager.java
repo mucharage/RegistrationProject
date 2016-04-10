@@ -480,7 +480,7 @@ public class CourseManager
 	/**
 	 * Updates the course list file by resetting it and re-writing the contents
 	 */
-	public void updateCourseListFile()
+	private void updateCourseListFile()
 	{
 		try
 		{

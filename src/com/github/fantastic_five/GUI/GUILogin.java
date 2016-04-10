@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -128,6 +129,31 @@ public class GUILogin extends JPanel
 					txtpnPleaseContactThe.setBounds(57, 11, 178, 80);
 					// add the text area to the pane and frame
 					frame.getContentPane().add(txtpnPleaseContactThe);
+					JButton btnNo = new JButton("No");
+					btnNo.addActionListener(new ActionListener()
+					{
+						@Override
+						public void actionPerformed(ActionEvent e)
+						{
+							frame.dispose();
+						}
+					});
+					btnNo.addKeyListener(new KeyAdapter()
+					{
+						public void keyPressed(KeyEvent ke)
+						{ // handler
+							if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
+							{
+								System.out.println("escaped ?");
+								frame.dispose();
+							}
+							else
+							{
+								System.out.println("not escaped");
+							}
+						}
+					});
+					frame.getContentPane().add(btnNo);
 				}
 			}
 		});
@@ -165,7 +191,7 @@ public class GUILogin extends JPanel
 		});
 		// Add button to panel
 		add(btnLogin);
-		
+
 		// User can press enter after entering password and it will click Login
 		passwordField.addKeyListener(new KeyListener()
 		{
@@ -190,25 +216,31 @@ public class GUILogin extends JPanel
 				/** Do Nothing */
 			}
 		});
-		
+
 		// User can press enter after entering username and it will click Login
 		usernameField.addKeyListener(new KeyListener()
 		{
-            @Override
-            public void keyTyped(KeyEvent e)
-            {
-                if(e.getKeyChar()== KeyEvent.VK_ENTER)
-                {
-                	btnLogin.doClick();
-                }
-            }
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				{
+					btnLogin.doClick();
+				}
+			}
 
-            @Override
-            public void keyPressed(KeyEvent e) {/**Do Nothing*/}
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
 
-            @Override
-            public void keyReleased(KeyEvent e) {/**Do Nothing*/}
-         });
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+		});
 
 		// Guest is a new JButton object
 		// Guest will show up as a button with "Guest" inside it

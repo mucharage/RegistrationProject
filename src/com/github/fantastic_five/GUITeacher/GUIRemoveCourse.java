@@ -23,24 +23,22 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
-public class GUIAddRemoveClass extends JPanel
+public class GUIRemoveCourse extends JPanel
 {
 	/**
 	 * private instant variables.
 	 */
 	private JTextField textField;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btnRemoveCourse;
 	private JButton btnBack;
 	private JLabel lblCrn;
-	private JTable table_1;
 	private JTable table;
 
 	/**
 	 * This GUI class displays the panel for adding and removing courses that the teacher is teaching. Here teacher can search course by CRN that he/she wants to add or remove, and would allow them to do so.
 	 *
 	 */
-	public GUIAddRemoveClass()
+	public GUIRemoveCourse()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
@@ -50,28 +48,18 @@ public class GUIAddRemoveClass extends JPanel
 		add(textField);
 		textField.setColumns(10);
 
-		// Button & Logic for Add courses
-		btnNewButton = new JButton("Add");
-		btnNewButton.setBounds(180, 183, 254, 23);
-		btnNewButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-			}
-		});
-		add(btnNewButton);
-
-		// Button & Logic for Remove Courses
-		btnNewButton_1 = new JButton("Remove");
-		btnNewButton_1.setBounds(180, 345, 254, 23);
-		btnNewButton_1.addActionListener(new ActionListener()
+		// Button & Logic for Remove Course
+		btnRemoveCourse = new JButton("Remove Course");
+		btnRemoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				
 			}
 		});
-		add(btnNewButton_1);
+		btnRemoveCourse.setBounds(180, 310, 254, 23);
+		add(btnRemoveCourse);
+
 
 		// adds a back button
 		btnBack = new JButton("Back");
@@ -98,30 +86,14 @@ public class GUIAddRemoveClass extends JPanel
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(41, 227, 540, 107);
-		add(scrollPane_1);
-
-		// adds a table
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
-		
-		scrollPane_1.setViewportView(table_1);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 113, 539, 59);
+		scrollPane.setBounds(41, 113, 539, 187);
 		add(scrollPane);
 
-		// adds another table
+		// adds a table
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -130,13 +102,13 @@ public class GUIAddRemoveClass extends JPanel
 			}
 		});
 		scrollPane.setViewportView(table);
-
+		
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// adds a label named "Add or Remove Courses
-		JLabel lblCourseRemoval = new JLabel("Add or Remove Courses");
+		// adds a label named "Remove Courses"
+		JLabel lblCourseRemoval = new JLabel("Remove Course");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);

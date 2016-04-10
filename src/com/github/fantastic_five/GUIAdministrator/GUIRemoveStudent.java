@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,7 +40,7 @@ public class GUIRemoveStudent extends JPanel
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 116, 587, 259);
 		add(scrollPane);
@@ -54,7 +55,6 @@ public class GUIRemoveStudent extends JPanel
 			}
 		});
 		scrollPane.setViewportView(table);
-
 
 		// Adds the login panel to this window
 		JPanel loginPanel = new GUILogStatus();
@@ -80,6 +80,13 @@ public class GUIRemoveStudent extends JPanel
 		userIDTextField.setBounds(188, 85, 227, 20);
 		userIDTextField.setColumns(10);
 		add(userIDTextField);
+
+		// Adds the confirmation area
+		JLabel confirmation = new JLabel("");
+		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmation.setBounds(450, 84, 217, 20);
+		add(confirmation);
 
 		// Remove Course Button and all of its actions
 		JButton btnRemove = new JButton("Remove");
@@ -122,17 +129,26 @@ public class GUIRemoveStudent extends JPanel
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						UserProfileDatabase.removeUser(userIDTextField.getText());
-						userIDTextField.setText("");
-						table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
+						if (UserProfileDatabase.removeUser(userIDTextField.getText()))
 						{
-							@Override
-							public boolean isCellEditable(int row, int column)
+							userIDTextField.setText("");
+							table.setModel(new DefaultTableModel(getTable(), new String[] { "User ID", "Last", "First", "Middle", "Paid" })
 							{
-								return false;
-							}
-						});
-						scrollPane.setViewportView(table);
+								@Override
+								public boolean isCellEditable(int row, int column)
+								{
+									return false;
+								}
+							});
+							scrollPane.setViewportView(table);
+							confirmation.setText("\u2713");
+							confirmation.setForeground(Color.GREEN);
+						}
+						else
+						{
+							confirmation.setText("\u2717");
+							confirmation.setForeground(Color.RED);
+						}
 						revalidate();
 						repaint();
 						popup.dispose();
@@ -188,30 +204,36 @@ public class GUIRemoveStudent extends JPanel
 		});
 		add(btnBack);
 	}
-	
+
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
 	 */
 	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		ArrayList<UserProfile> allUsers = UserProfileDatabase.users;
-		Object[][] cells = new Object[allUsers.size()][7];
+		ArrayList<UserProfile> studentUsers = (ArrayList<UserProfile>) UserProfileDatabase.users.clone();
+		studentUsers.removeIf(new Predicate<UserProfile>()
+		{
+			@Override
+			public boolean test(UserProfile t)
+			{
+				return !(t.getPermLevel() == UserProfile.STUDENT);
+			}
+		});
+		Object[][] cells = new Object[studentUsers.size()][7];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
-		for (UserProfile u : allUsers)
+		for (UserProfile u : studentUsers)
 		{
-			if (u.getPermLevel() == UserProfile.STUDENT)
-			{
-				cells[row][0] = u.getUserID();
-				cells[row][1] = u.getLastName();
-				cells[row][2] = u.getFirstName();
-				cells[row][3] = u.getMiddleName();
-				// TODO: needs a way to actually check pay status
-				cells[row][4] = "\u2713";
-				row++;
-			}
+			cells[row][0] = u.getUserID();
+			cells[row][1] = u.getLastName();
+			cells[row][2] = u.getFirstName();
+			cells[row][3] = u.getMiddleName();
+			// TODO: needs a way to actually check pay status
+			cells[row][4] = "\u2713";
+
+			row++;
 		}
 
 		return cells;
