@@ -1,7 +1,10 @@
 package com.github.fantastic_five.Logic;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Random;
@@ -214,5 +217,28 @@ public class MiscUtils
 			return "/tmp/users.dat";
 		else
 			return "users.dat";
+	}
+	
+	public static CourseManager loadCourseManager()
+	{
+		CourseManager rVal = null;
+		try
+		{
+			FileInputStream fileIn = new FileInputStream("maincoursemanager.dat");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			rVal = (CourseManager) in.readObject();
+			in.close();
+			fileIn.close();
+		}
+		catch( IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return rVal;
 	}
 }
