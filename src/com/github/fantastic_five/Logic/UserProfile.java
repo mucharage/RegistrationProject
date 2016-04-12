@@ -1,13 +1,17 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.Serializable;
+
 /**
  * The account information for a person registered with the school.
  * 
  * @author Clark Stephen Group 5
  *
  */
-public class UserProfile
+public class UserProfile implements Serializable
 {
+	private static final long serialVersionUID = 543076885881532463L;
+	
 	public static final int GUEST = 0;
 	public static final int STUDENT = 1;
 	public static final int TA = 2;

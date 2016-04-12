@@ -3,6 +3,7 @@ package com.github.fantastic_five.Logic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -13,7 +14,7 @@ import com.github.fantastic_five.GUIStudent.GUIStudent;
 import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 
-public class UserProfileDatabase
+public class UserProfileDatabase implements Serializable
 {
 	// The entire user list
 	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
