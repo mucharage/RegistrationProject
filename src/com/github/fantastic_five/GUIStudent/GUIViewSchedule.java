@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -52,14 +50,13 @@ public class GUIViewSchedule extends JPanel
 		 */
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}// end of mouseClicked
-		});// end of MouseListener
+			}
+		});
 		add(btnBack);
 
 		/**
