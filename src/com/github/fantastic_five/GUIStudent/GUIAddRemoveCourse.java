@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
@@ -76,14 +74,13 @@ public class GUIAddRemoveCourse extends JPanel
 		 */
 		btnBack = new JButton("Back");
 		btnBack.setBounds(41, 389, 128, 23);
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}// end of mouseClicked
-		});// end of addMouseListener
+			}
+		});
 		add(btnBack);
 
 		/**

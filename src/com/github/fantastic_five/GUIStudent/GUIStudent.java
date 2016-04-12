@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,14 +36,13 @@ public class GUIStudent extends JPanel
 		 * Button & Logic for View Courses
 		 */
 		JButton btnView = new JButton("View Courses");
-		btnView.addMouseListener(new MouseAdapter()
+		btnView.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourses());
-			}// end of mouseClicked
-		});// end of addMouseListener
+			}
+		});
 		btnView.setBounds(178, 186, 243, 23);
 		add(btnView);
 
@@ -53,14 +50,13 @@ public class GUIStudent extends JPanel
 		 * Button & Logic for Add or Remove Course
 		 */
 		JButton btnAddremoveCourse = new JButton("Add / Remove Course");
-		btnAddremoveCourse.addMouseListener(new MouseAdapter()
+		btnAddremoveCourse.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveCourse());
-			}// end of mouseClicked
-		});// end of addMouseListener
+			}
+		});
 		btnAddremoveCourse.setBounds(178, 220, 243, 23);
 		add(btnAddremoveCourse);
 
