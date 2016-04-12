@@ -2,15 +2,21 @@ package com.github.fantastic_five.Logic;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
-public class CourseManager
+public class CourseManager implements Serializable
 {
+	private static final long serialVersionUID = 217804861480820004L;
+
 	private TreeSet<Course> courseOfferings;
 	private Set<Connector> network;
 	private PrintStream courseOutput;
@@ -25,14 +31,7 @@ public class CourseManager
 	 */
 	public CourseManager()
 	{
-		courseOfferings = new TreeSet<>(new Comparator<Course>()
-		{
-			public int compare(Course arg0, Course arg1)
-			{
-				int rVal = Integer.compare(arg0.getCRN(), arg1.getCRN());
-				return rVal;
-			}
-		});
+		courseOfferings = new TreeSet<>(new CourseComparator());
 
 		network = new HashSet<>();
 	}
@@ -94,6 +93,8 @@ public class CourseManager
 					return (connector.courseCRN == crn);
 				}
 			});
+			
+			serializeThis();
 		}
 
 		return rVal;
@@ -115,6 +116,7 @@ public class CourseManager
 			rVal = true;
 			courseOfferings.add(addition);
 			updateCourseListFile();
+			serializeThis();
 		}
 
 		return rVal;
@@ -129,7 +131,7 @@ public class CourseManager
 	 */
 	public Course getCourse(int crn)
 	{
-		Course rVal;
+		Course rVal = null;
 
 		Course testKey = dummyCourse(crn);
 		Course possibleRVal = courseOfferings.floor(testKey);
@@ -137,10 +139,6 @@ public class CourseManager
 		if (possibleRVal.equals(testKey))
 		{
 			rVal = possibleRVal;
-		}
-		else
-		{
-			rVal = null;
 		}
 
 		return rVal;
@@ -155,7 +153,7 @@ public class CourseManager
 	 */
 	public Set<Course> getCoursesWithLearner(UserProfile learner)
 	{
-		Set<Course> rVal;
+		Set<Course> rVal = null;
 
 		if ((learner.getPermLevel() == UserProfile.STUDENT) || (learner.getPermLevel() == UserProfile.TA))
 		{
@@ -172,11 +170,7 @@ public class CourseManager
 				}
 			}
 		}
-		else
-		{
-			rVal = null;
-		}
-
+		
 		return rVal;
 	}
 
@@ -189,7 +183,7 @@ public class CourseManager
 	 */
 	public Set<Course> getCoursesWithInstructor(UserProfile instructor)
 	{
-		Set<Course> rVal;
+		Set<Course> rVal = null;
 
 		if ((instructor.getPermLevel() >= UserProfile.TA) && (instructor.getPermLevel() <= UserProfile.ADMIN))
 		{
@@ -206,11 +200,7 @@ public class CourseManager
 				}
 			}
 		}
-		else
-		{
-			rVal = null;
-		}
-
+		
 		return rVal;
 	}
 
@@ -223,7 +213,7 @@ public class CourseManager
 	 */
 	public Set<UserProfile> getLearnersWithCourse(int courseCRN)
 	{
-		Set<UserProfile> rVal;
+		Set<UserProfile> rVal = null;
 
 		if (containsCourse(courseCRN))
 		{
@@ -240,10 +230,6 @@ public class CourseManager
 				}
 			}
 		}
-		else
-		{
-			rVal = null;
-		}
 
 		return rVal;
 	}
@@ -257,7 +243,7 @@ public class CourseManager
 	 */
 	public Set<UserProfile> getInstructorsWithCourse(int courseCRN)
 	{
-		Set<UserProfile> rVal;
+		Set<UserProfile> rVal = null;
 
 		if (containsCourse(courseCRN))
 		{
@@ -273,10 +259,6 @@ public class CourseManager
 					}
 				}
 			}
-		}
-		else
-		{
-			rVal = null;
 		}
 
 		return rVal;
@@ -310,15 +292,12 @@ public class CourseManager
 					{
 						rVal = true;
 						network.add(connector);
+						serializeThis();
 					}
 				}
 			}
 		}
 
-		if (rVal)
-		{
-			// update network file
-		}
 		return rVal;
 	}
 
@@ -340,12 +319,9 @@ public class CourseManager
 		{
 			rVal = true;
 			network.remove(connector);
+			serializeThis();
 		}
 
-		if (rVal)
-		{
-			// update network file
-		}
 		return rVal;
 	}
 
@@ -371,14 +347,10 @@ public class CourseManager
 				{
 					rVal = true;
 					network.add(connector);
+					serializeThis();
 				}
 
 			}
-		}
-
-		if (rVal)
-		{
-			// update network data file
 		}
 		return rVal;
 	}
@@ -401,11 +373,7 @@ public class CourseManager
 		{
 			rVal = true;
 			network.remove(connector);
-		}
-
-		if (rVal)
-		{
-			// update network file
+			serializeThis();
 		}
 		return rVal;
 	}
@@ -436,14 +404,25 @@ public class CourseManager
 		return rVal;
 	}
 
+	/**
+	 * Creates a course whose only meaningful value is its crn
+	 * 
+	 * @param crn
+	 *            The crn of the dummy course
+	 * @return The dummy course
+	 */
 	private Course dummyCourse(int crn)
 	{
 		Course rVal = new Course(null, null, crn, 0, null, 0, 0, 0, 1);
 		return rVal;
 	}
 
-	private static class Connector
+	private static class Connector implements Serializable
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1125763548284346166L;
 		public final int relationship;
 		public final int courseCRN;
 		public final UserProfile person;
@@ -477,6 +456,17 @@ public class CourseManager
 		}
 	}
 
+	private static class CourseComparator implements Comparator<Course>, Serializable
+	{
+		private static final long serialVersionUID = -3870133739880141697L;
+
+		public int compare(Course arg0, Course arg1)
+		{
+			return Integer.compare(arg0.getCRN(), arg1.getCRN());
+		}
+
+	}
+	
 	/**
 	 * Updates the course list file by resetting it and re-writing the contents
 	 */
@@ -490,6 +480,26 @@ public class CourseManager
 		}
 		catch (FileNotFoundException e)
 		{
+		}
+	}
+	
+	private void serializeThis()
+	{
+		try
+		{
+			FileOutputStream fileOut = new FileOutputStream("maincoursemanager.dat");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(this);
+			fileOut.close();
+			out.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 

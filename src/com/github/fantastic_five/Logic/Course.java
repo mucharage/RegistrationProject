@@ -1,5 +1,6 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.Serializable;
 /**
  * @author Clark Stephen
  * Group 5
@@ -7,8 +8,9 @@ package com.github.fantastic_five.Logic;
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 
-public class Course
+public class Course implements Serializable
 {
+	private static final long serialVersionUID = -1827693919442282177L;
 	private String title;
 	private String description;
 	private int crn;
@@ -268,8 +270,9 @@ public class Course
 	 * @author Fantastic Five
 	 *
 	 */
-	private class Time implements Comparable<Time>
+	private class Time implements Comparable<Time>, Serializable
 	{
+		private static final long serialVersionUID = 5493607733966799493L;
 		private int hr;
 		private int min;
 
