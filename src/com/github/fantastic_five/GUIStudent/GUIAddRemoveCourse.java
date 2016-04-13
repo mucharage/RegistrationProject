@@ -9,8 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
@@ -76,14 +74,13 @@ public class GUIAddRemoveCourse extends JPanel
 		 */
 		btnBack = new JButton("Back");
 		btnBack.setBounds(41, 389, 128, 23);
-		btnBack.addMouseListener(new MouseAdapter()
+		btnBack.addActionListener(new ActionListener()
 		{
-			@Override
-			public void mouseClicked(MouseEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}// end of mouseClicked
-		});// end of addMouseListener
+			}
+		});
 		add(btnBack);
 
 		/**
@@ -107,7 +104,7 @@ public class GUIAddRemoveCourse extends JPanel
 		 * Adds a ScrollPane
 		 */
 		JScrollPane searchScrollPane = new JScrollPane();
-		searchScrollPane.setBounds(41, 227, 540, 107);
+		searchScrollPane.setBounds(41, 132, 539, 50);
 		add(searchScrollPane);
 
 		/**
@@ -158,21 +155,32 @@ public class GUIAddRemoveCourse extends JPanel
 		 * Creates an another ScrollPane
 		 */
 		JScrollPane addedScrollPane = new JScrollPane();
-		addedScrollPane.setBounds(41, 113, 539, 59);
+		addedScrollPane.setBounds(41, 227, 540, 107);
 		add(addedScrollPane);
 
 		/**
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
+		addedTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room"
+			}
+		));
 		addedScrollPane.setViewportView(addedTable);
 
 		/**
 		 * Button & Logic for Add Courses to list below.
 		 */
 		btnAdd = new JButton("Add");
-		btnAdd.setBounds(180, 183, 254, 23);
+		btnAdd.setBounds(180, 193, 254, 23);
 		btnAdd.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
