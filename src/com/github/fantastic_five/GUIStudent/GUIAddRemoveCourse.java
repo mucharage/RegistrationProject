@@ -198,6 +198,7 @@ public class GUIAddRemoveCourse extends JPanel
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
+
 			public void actionPerformed(ActionEvent e)
 			{
 				try
@@ -217,10 +218,20 @@ public class GUIAddRemoveCourse extends JPanel
 				}
 				catch (NumberFormatException exception)
 				{
-					searchField.setText("CRN Must be numbers only");
+					JLabel notNumbers = new JLabel();
+					notNumbers.setForeground(Color.RED);
+					notNumbers.setText("CRN Must be Numbers Only");
+					notNumbers.setBounds(88, 102, 206, 20);
+					revalidate();
+					repaint();
+					add(notNumbers);
+//					searchField.setText("CRN Must be Numbers Only");		
+					
+					//TODO: Also needs to notify if searched CRN is wrong!!
 				}
 			}
 		});
+			
 		add(btnSearch);
 
 		/**
