@@ -231,13 +231,14 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
-	/**
+	/** 
 	 * Returns a set of UserProfiles representing the people who are teaching the course with a specified CRN
 	 * 
 	 * @param courseCRN
 	 *            The CRN of the course that is being looked at
 	 * @return A set of UserProfiles representing the people who are teaching the course with a specified CRN, or null iff (!this.containsCourse(courseCRN))
 	 */
+	@Deprecated
 	public Set<UserProfile> getInstructorsWithCourse(int courseCRN)
 	{
 		Set<UserProfile> rVal = null;
@@ -261,6 +262,34 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
+	/**
+	 * Returns a set of UserProfiles representing the people who are teaching the course with a specified CRN
+	 * 
+	 * @param courseCRN
+	 *            The CRN of the course that is being looked at
+	 * @return A set of UserProfiles representing the people who are teaching the course with a specified CRN, or null iff (!this.containsCourse(courseCRN))
+	 */
+	public UserProfile getInstructorWithCourse(int courseCRN)
+	{
+		UserProfile rVal = null;
+
+		if (containsCourse(courseCRN))
+		{
+			for (Connector e : network)
+			{
+				if (e.relationship == COURSE_INSTRUCTOR_RELATIONSHIP)
+				{
+					if (e.courseCRN == courseCRN)
+					{
+						rVal = e.person;
+					}
+				}
+			}
+		}
+
+		return rVal;
+	}
+	
 	/**
 	 * Attempts to enroll a specified person in a course with a specified crn. Fails if the learner's permLevel is not STUDENT or TA, no courses with the CRN exist in the catalog, the person is already enrolled in the maximum number of classes allowed, or the desired course is full.
 	 * 
