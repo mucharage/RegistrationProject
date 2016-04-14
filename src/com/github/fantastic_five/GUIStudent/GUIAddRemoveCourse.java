@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
@@ -47,7 +48,6 @@ public class GUIAddRemoveCourse extends JPanel
 	private JTable addedTable;
 
 	private int CRNToSearch;
-	private int rowTally = 0;
 	ArrayList<Course> courseSearchResult;
 
 	/**
@@ -62,6 +62,13 @@ public class GUIAddRemoveCourse extends JPanel
 		searchField.setBounds(88, 82, 206, 20);
 		add(searchField);
 		searchField.setColumns(10);
+
+		/**
+		 * Creates an another ScrollPane
+		 */
+		JScrollPane addedScrollPane = new JScrollPane();
+		addedScrollPane.setBounds(41, 227, 540, 107);
+		add(addedScrollPane);
 
 		/**
 		 * Button & Logic for Remove for the list below
@@ -98,10 +105,17 @@ public class GUIAddRemoveCourse extends JPanel
 						if (rowSel > -1)
 						{
 							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
-							for (int i = 0; i < 7; i++)
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 							{
-								addedTable.getModel().setValueAt(null, rowSel, i);
-							}
+								@Override
+								public boolean isCellEditable(int row, int column)
+								{
+									return false;
+								}
+							});
+							addedScrollPane.setViewportView(addedTable);
+							revalidate();
+							repaint();
 						}
 						popup.dispose();
 					}
@@ -209,13 +223,6 @@ public class GUIAddRemoveCourse extends JPanel
 		add(btnSearch);
 
 		/**
-		 * Creates an another ScrollPane
-		 */
-		JScrollPane addedScrollPane = new JScrollPane();
-		addedScrollPane.setBounds(41, 227, 540, 107);
-		add(addedScrollPane);
-
-		/**
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
@@ -234,20 +241,23 @@ public class GUIAddRemoveCourse extends JPanel
 				int rowSel = searchTable.getSelectedRow();
 
 				// TODO: also add check for "is user taking CRN already"
-				if (rowSel > -1 && rowTally < 6)
+				if (rowSel > -1)
 				{
 					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+					{
+						@Override
+						public boolean isCellEditable(int row, int column)
+						{
+							return false;
+						}
+					});
+					addedScrollPane.setViewportView(addedTable);
+					revalidate();
+					repaint();
 					// TODO: table model for "Added" should actually be searching through all the student's enrolled classes.
 					// TODO: changed addedTable to have an Object[][] looping through the student's classes
 					// TODO: this area should simply remove the student from the class and redraw the table
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 0), rowTally, 0);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 1), rowTally, 1);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 2), rowTally, 2);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 3), rowTally, 3);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 4), rowTally, 4);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 5), rowTally, 5);
-					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 6), rowTally, 6);
-					rowTally++;
 				}
 			}// end of the actionPerformed
 		});// end of the addActionListener
@@ -303,7 +313,21 @@ public class GUIAddRemoveCourse extends JPanel
 
 	private Object[][] getClassTable()
 	{
-		return null;
+		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(MiscUtils.getCurrentLoggedInUser());
+		Object[][] cells = new Object[enrolledCourses.size()][7];
+		int row = 0;
+		for (Course c : enrolledCourses)
+		{
+			cells[row][0] = c.getCRN();
+			cells[row][1] = c.getTitle();
+			cells[row][2] = c.getStudentCap();
+			cells[row][3] = c.getRemainingCap();
+			cells[row][4] = c.getTeacherName();
+			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
+			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+		return cells;
 	}
 
 	/**
