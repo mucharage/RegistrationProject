@@ -5,7 +5,6 @@ package com.github.fantastic_five.GUIStudent;
  * This GUI displays all of the available courses that our University offers. 
  */
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,6 +23,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -103,11 +103,12 @@ public class GUIViewCourses extends JPanel
 		// Loops through all courses and sets the columns in each row appropriately
 		for (Course c : courseOfferings)
 		{
+			UserProfile teacher = StudentRegistrationMain.mainCourseManager.getInstructorWithCourse(c.getCRN());
 			cells[row][0] = c.getCRN();
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = c.getTeacherName();
+			cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
