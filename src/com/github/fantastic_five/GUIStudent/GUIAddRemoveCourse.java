@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,6 +47,7 @@ public class GUIAddRemoveCourse extends JPanel
 	private JTable addedTable;
 
 	private int CRNToSearch;
+	private int rowTally = 0;
 	ArrayList<Course> courseSearchResult;
 
 	/**
@@ -71,7 +73,52 @@ public class GUIAddRemoveCourse extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				GUIRemove.main(null);
+				JFrame popup = new JFrame("Confirmation");
+				popup.setBounds(100, 100, 307, 107);
+				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				popup.setLocationRelativeTo(null);
+				popup.getContentPane().setLayout(null);
+				popup.setResizable(false);
+				popup.setVisible(true);
+				JLabel txtpnAreYouSure = new JLabel();
+				txtpnAreYouSure.setText("Are you sure?");
+				txtpnAreYouSure.setForeground(Color.RED);
+				txtpnAreYouSure.setFont(new Font("Verdana", Font.BOLD, 16));
+				txtpnAreYouSure.setBounds(86, 11, 127, 20);
+				popup.getContentPane().add(txtpnAreYouSure);
+
+				JButton btnYes = new JButton("Yes");
+				btnYes.setBounds(10, 49, 100, 23);
+				btnYes.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						int rowSel = addedTable.getSelectedRow();
+						if (rowSel > -1)
+						{
+							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
+							for (int i = 0; i < 7; i++)
+							{
+								addedTable.getModel().setValueAt(null, rowSel, i);
+							}
+						}
+						popup.dispose();
+					}
+				});
+				popup.getContentPane().add(btnYes);
+
+				JButton btnNo = new JButton("No");
+				btnNo.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						popup.dispose();
+					}
+				});
+				btnNo.setBounds(191, 49, 100, 23);
+				popup.getContentPane().add(btnNo);
 			}// end of the actionPerformed
 		});// end of the actionPerformed
 		add(btnRemove);
@@ -184,7 +231,24 @@ public class GUIAddRemoveCourse extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO: needs something here? Not sure...
+				int rowSel = searchTable.getSelectedRow();
+
+				// TODO: also add check for "is user taking CRN already"
+				if (rowSel > -1 && rowTally < 6)
+				{
+					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+					// TODO: table model for "Added" should actually be searching through all the student's enrolled classes.
+					// TODO: changed addedTable to have an Object[][] looping through the student's classes
+					// TODO: this area should simply remove the student from the class and redraw the table
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 0), rowTally, 0);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 1), rowTally, 1);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 2), rowTally, 2);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 3), rowTally, 3);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 4), rowTally, 4);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 5), rowTally, 5);
+					addedTable.getModel().setValueAt(searchTable.getModel().getValueAt(rowSel, 6), rowTally, 6);
+					rowTally++;
+				}
 			}// end of the actionPerformed
 		});// end of the addActionListener
 		add(btnAdd);
