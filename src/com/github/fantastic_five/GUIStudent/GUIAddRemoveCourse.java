@@ -219,7 +219,7 @@ public class GUIAddRemoveCourse extends JPanel
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null }, { null, null, null, null, null, null, null, null }, }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		addedScrollPane.setViewportView(addedTable);
 
 		/**
@@ -301,38 +301,15 @@ public class GUIAddRemoveCourse extends JPanel
 
 	}// end of GUIAddorRemoveCourse()
 
-	public Object[][] getCourseTable()
+	private Object[][] getClassTable()
 	{
-		if (courseSearchResult != null)
-		{
-			// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-			int numCourses = courseSearchResult.size();
-			Object[][] table = new Object[numCourses][1];
-
-			int row = 0;
-			// Loops through all courses and sets the columns in each row appropriately
-			for (Course c : courseSearchResult)
-			{
-				table[row][0] = c.getCRN();
-				table[row][1] = c.getTitle();
-				table[row][2] = c.getStudentCap();
-				table[row][3] = c.getRemainingCap();
-				table[row][4] = c.getTeacherName();
-				table[row][5] = MiscUtils.getDaysFormatted(c.getDays());
-				table[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
-				row++;
-			}
-
-			return table;
-		}
-		System.out.println("debug");
-		return new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null }, };
+		return null;
 	}
 
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
 	 */
-	public Object[][] getSearchResultTable(int CRN)
+	private Object[][] getSearchResultTable(int CRN)
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
