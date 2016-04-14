@@ -19,7 +19,6 @@ public class CourseManager implements Serializable
 
 	private TreeSet<Course> courseOfferings;
 	private Set<Connector> network;
-	private PrintStream courseOutput;
 
 	private static final int COURSE_INSTRUCTOR_RELATIONSHIP = Connector.COURSE_INSTRUCTOR_RELATIONSHIP;
 	private static final int COURSE_LEARNER_RELATIONSHIP = Connector.COURSE_LEARNER_RELATIONSHIP;
@@ -32,7 +31,7 @@ public class CourseManager implements Serializable
 	public CourseManager()
 	{
 		courseOfferings = new TreeSet<>(new CourseComparator());
-
+		
 		network = new HashSet<>();
 	}
 
@@ -84,8 +83,7 @@ public class CourseManager implements Serializable
 			rVal = true;
 
 			courseOfferings.remove(dummy);
-			updateCourseListFile();
-			
+
 			network.removeIf(new Predicate<Connector>()
 			{
 				public boolean test(Connector connector)
@@ -115,7 +113,6 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			courseOfferings.add(addition);
-			updateCourseListFile();
 			serializeThis();
 		}
 
@@ -417,7 +414,7 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
-	private static class Connector implements Serializable
+	public static class Connector implements Serializable
 	{
 		/**
 		 * 
@@ -456,7 +453,7 @@ public class CourseManager implements Serializable
 		}
 	}
 
-	private static class CourseComparator implements Comparator<Course>, Serializable
+	public static class CourseComparator implements Comparator<Course>, Serializable
 	{
 		private static final long serialVersionUID = -3870133739880141697L;
 
@@ -466,22 +463,7 @@ public class CourseManager implements Serializable
 		}
 
 	}
-	
-	/**
-	 * Updates the course list file by resetting it and re-writing the contents
-	 */
-	private void updateCourseListFile()
-	{
-		try
-		{
-			courseOutput = new PrintStream(new File(MiscUtils.getCoursesFileName()));
-			for (Course c : courseOfferings)
-				courseOutput.println(c.toString());
-		}
-		catch (FileNotFoundException e)
-		{
-		}
-	}
+
 	
 	private void serializeThis()
 	{

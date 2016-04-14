@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 
-public class Course implements Serializable
+public class Course implements Serializable, Comparable<Course>
 {
 	private static final long serialVersionUID = -1827693919442282177L;
 	private String title;
@@ -19,7 +19,6 @@ public class Course implements Serializable
 	private HashSet<Day> days;
 	private Time startTime;
 	private Time endTime;
-	private UserProfile teacher;
 
 	public static final int TWENTYFOUR_HR_CLOCK = Time.TWENTYFOUR_HR_CLOCK;
 	public static final int TWELVE_HR_CLOCK = Time.TWELVE_HR_CLOCK;
@@ -56,7 +55,6 @@ public class Course implements Serializable
 		this.days = days;
 		startTime = new Time(startTimeHr, startTimeMin);
 		endTime = new Time(endTimeHr, endTimeMin);
-		teacher = null;
 		checkTimes();
 	}
 
@@ -147,29 +145,6 @@ public class Course implements Serializable
 	public void decrRemainingCap()
 	{
 		this.currentEnrolled--;
-	}
-
-	/**
-	 * Sets the teacher for the class
-	 * 
-	 * @param user
-	 *            the person who is going to be the teacher
-	 */
-	public void setTeacher(UserProfile user)
-	{
-		this.teacher = user;
-	}
-
-	/**
-	 * Gets a formatted teacher name
-	 * 
-	 * @return a formatted teacher name
-	 */
-	public String getTeacherName()
-	{
-		if (this.teacher != null)
-			return (teacher.getFirstName() + " " + teacher.getLastName());
-		return "";
 	}
 
 	/**
@@ -403,7 +378,7 @@ public class Course implements Serializable
 		}
 	}
 
-	public static enum Day
+	public static enum Day implements Serializable
 	{
 		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "TR", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "SU", 6);
 
@@ -481,5 +456,10 @@ public class Course implements Serializable
 	public String toString()
 	{
 		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
+	}
+	
+	public int compareTo(Course other)
+	{
+		return Integer.compare(this.crn, other.crn);
 	}
 }
