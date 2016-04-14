@@ -97,7 +97,7 @@ public class GUIViewCourses extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = c.getTeacherName();
+			cells[row][4] = StudentRegistrationMain.mainCourseManager.getInstructorWithCourse(c.getCRN());
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
