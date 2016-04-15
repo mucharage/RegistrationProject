@@ -191,7 +191,8 @@ public class GUIRemoveCourse extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			if (teacher != null)
+				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
