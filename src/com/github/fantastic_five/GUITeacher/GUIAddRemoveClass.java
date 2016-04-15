@@ -1,4 +1,4 @@
-ckage com.github.fantastic_five.GUITeacher;
+package com.github.fantastic_five.GUITeacher;
 
 /**
  * @author Christian Phillips
