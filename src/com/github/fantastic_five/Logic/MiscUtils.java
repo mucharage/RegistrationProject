@@ -52,21 +52,6 @@ public class MiscUtils
 	}
 
 	/**
-	 * @return A random, non-conflicting CRN from 1000 - 9999
-	 */
-	public static int getCRN()
-	{
-		Random rand = new Random();
-		// Gets a value between 0 and 8999 (inclusive) then adds 1000
-		int ret = rand.nextInt(9000) + 1000;
-		// Recursive call to get a CRN that is available
-		if (!doesCRNExist(ret))
-			return ret;
-		else
-			return getCRN();
-	}
-
-	/**
 	 * 
 	 * @param toTest
 	 *            the CRN to confirm has been used

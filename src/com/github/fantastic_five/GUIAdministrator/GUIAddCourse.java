@@ -23,7 +23,6 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
-import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIAddCourse extends JPanel
@@ -187,7 +186,7 @@ public class GUIAddCourse extends JPanel
 		// Temporary Variables for creating the course object
 		String title = fieldCourseName.getText();
 		String description = fieldCourseDesc.getText();
-		int CRN = MiscUtils.getCRN();
+		int CRN = StudentRegistrationMain.mainCourseManager.generateNewCRN(1000, 9999);
 		int studentCap = -1;
 		try
 		{
@@ -198,22 +197,40 @@ public class GUIAddCourse extends JPanel
 			displayError(this.fieldCapacity);
 			return;
 		}
-		// Handles the starting time
 		String[] startTimeParts = fieldTimeStart.getText().split(":");
 		String[] endTimeParts = fieldTimeEnd.getText().split(":");
 
+		// Catches exceptions for time field formatting
 		if (startTimeParts.length != 2 || endTimeParts.length != 2)
 		{
-			displayError(this.fieldTimeStart);
-			displayError(this.fieldTimeEnd);
+			displayError(this.fieldTimeStart, this.fieldTimeEnd);
 			return;
 		}
 
+		// Makes sure times are formated as HH:MM
+		for (int i = 0; i < 2; i++)
+		{
+			if (startTimeParts[i].length() != 2 || endTimeParts[i].length() != 2)
+			{
+				displayError(this.fieldTimeStart, this.fieldTimeEnd);
+				return;
+			}
+		}
+
+		// Handles the starting time
 		int startHour = Integer.parseInt(startTimeParts[0]);
 		int startMinute = Integer.parseInt(startTimeParts[1]);
 		// Handles the ending time
 		int endHour = Integer.parseInt(endTimeParts[0]);
 		int endMinute = Integer.parseInt(endTimeParts[1]);
+
+		// Sanity check for times. Consider that time is meant to be 24HR
+		if (endHour > 24 || startHour > 24 || endHour < startHour || (endHour == startHour && endMinute <= startMinute))
+		{
+			displayError(this.fieldTimeStart, this.fieldTimeEnd);
+			return;
+		}
+
 		// Handles the days of the week
 		HashSet<Day> days = new HashSet<>();
 		String[] dayParts = fieldDays.getText().split(" ");
@@ -242,13 +259,14 @@ public class GUIAddCourse extends JPanel
 	/**
 	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
 	 * 
-	 * @param erroredField
-	 *            The text field to set the background red of
+	 * @param erroredFields
+	 *            The text field to set the background red of. Can be passed multiple fields to set red
 	 */
-	void displayError(JTextField erroredField)
+	void displayError(JTextField... erroredFields)
 	{
 		resetFieldColors();
-		erroredField.setBackground(Color.RED);
+		for (JTextField field : erroredFields)
+			field.setBackground(Color.RED);
 		confirmation.setText("\u2717");
 		confirmation.setForeground(Color.RED);
 		revalidate();

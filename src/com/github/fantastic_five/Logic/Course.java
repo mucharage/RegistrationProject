@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 
-public class Course implements Serializable, Comparable<Course>
+public class Course implements Serializable
 {
 	private static final long serialVersionUID = -1827693919442282177L;
 	private String title;
@@ -456,10 +456,5 @@ public class Course implements Serializable, Comparable<Course>
 	public String toString()
 	{
 		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
-	}
-	
-	public int compareTo(Course other)
-	{
-		return Integer.compare(this.crn, other.crn);
 	}
 }
