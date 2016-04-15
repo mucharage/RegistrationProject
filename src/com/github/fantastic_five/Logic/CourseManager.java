@@ -352,7 +352,7 @@ public class CourseManager implements Serializable
 	}
 
 	/**
-	 * Attempts to register a specified person to teach a course with a specified crn. Fails if the instructors's permLevel is not TA, TEACHER, or ADMIN, or no courses with the CRN exist in the catalog.
+	 * Attempts to register a specified person to teach a course with a specified crn. Fails if the instructors's permLevel is not TA, TEACHER, or ADMIN, no courses with the CRN exist in the catalog, or the course already has an instructor.
 	 * 
 	 * @param instructor
 	 *            The person who is being registered to teach
@@ -367,15 +367,17 @@ public class CourseManager implements Serializable
 		{
 			if (!containsCourse(courseCRN))
 			{
-				Connector connector = new Connector(COURSE_INSTRUCTOR_RELATIONSHIP, courseCRN, instructor);
-
-				if (!network.contains(connector) && !network.contains(new Connector(COURSE_LEARNER_RELATIONSHIP, courseCRN, instructor)))
+				if(getInstructorWithCourse(courseCRN) == null)
 				{
-					rVal = true;
-					network.add(connector);
-					serializeThis();
-				}
+					Connector connector = new Connector(COURSE_INSTRUCTOR_RELATIONSHIP, courseCRN, instructor);
 
+					if (!network.contains(connector) && !network.contains(new Connector(COURSE_LEARNER_RELATIONSHIP, courseCRN, instructor)))
+					{
+						rVal = true;
+						network.add(connector);
+						serializeThis();
+					}
+				}
 			}
 		}
 		return rVal;
