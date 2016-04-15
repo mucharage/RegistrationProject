@@ -20,6 +20,7 @@ import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
+@SuppressWarnings("serial")
 public class GUIChangeDetails extends JPanel
 {
 	private JTextField fieldFirstName;
@@ -27,7 +28,6 @@ public class GUIChangeDetails extends JPanel
 	private JTextField fieldLastName;
 	private JPasswordField originalPass;
 	private JPasswordField newPass;
-	private JPasswordField newPassConfirmed;
 	private JPasswordField confPass;
 
 	public GUIChangeDetails()
@@ -177,7 +177,8 @@ public class GUIChangeDetails extends JPanel
 			{
 				String newPassString = new String(newPass.getPassword());
 				String newPassStringConf = new String(confPass.getPassword());
-				if (newPassString.equals(newPassStringConf))
+				// Confirms that at least ONE of the new passwords is filled and the other one has to match IT, so only check once
+				if (newPassString.length() > 0 && newPassString.equals(newPassStringConf))
 				{
 					if (MiscUtils.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
 					{
