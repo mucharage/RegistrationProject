@@ -10,6 +10,8 @@
 
 - [ ] Make sure UserProfileDatabase / CourseManager + Connectors can handle TA being teacher AND student
 
+- [ ] Needs to display notifications if searched result is not avilable. 
+
 **Administration:**
 
 - [ ] Finish "View Student Report"
