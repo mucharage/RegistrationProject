@@ -1,80 +1,80 @@
 package com.github.fantastic_five.Logic;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.TreeSet;
 
-import javax.swing.JPanel;
-
-import com.github.fantastic_five.GUI.GUIViewCourses;
-import com.github.fantastic_five.GUIAdministrator.GUIAdmin;
-import com.github.fantastic_five.GUIStudent.GUIStudent;
-import com.github.fantastic_five.GUITA.GUITeacherAssistant;
-import com.github.fantastic_five.GUITeacher.GUITeacher;
-
+/**
+ * A database of UserProfiles with unique IDs. The UserProfiles are accessed by their IDs.
+ * 
+ * @author Owner
+ *
+ */
 public class UserProfileDatabase implements Serializable
 {
 	private static final long serialVersionUID = -8052666172712131697L;
 	// The entire user list
-	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
-	private static PrintStream userOutput;
-
+	private TreeSet<UserProfile> users;
+	
 	/**
-	 * checks for conflicting User ID's
-	 * 
-	 * @param id
-	 *            the User ID to test for
-	 * @return true if it already exists, false otherwise
+	 * Constructs a new UserProfileDatabase
 	 */
-	public static boolean doesUserIDExist(String id)
+	public UserProfileDatabase()
 	{
-		for (UserProfile u : users)
-			if (u.getUserID().equalsIgnoreCase(id))
-				return true;
-		return false;
+		users = new TreeSet<UserProfile>(new UserProfileComparator());
 	}
 
 	/**
 	 * @param profile
 	 *            the user profile that needs to be added to the course list
 	 */
-	public static void addUser(UserProfile profile)
+	public boolean addUser(UserProfile addition)
 	{
-		users.add(profile);
-		updateUserDatabaseFile();
-	}
+		boolean rVal = false;
 
-	/**
-	 * @param userID
-	 *            the user ID that needs to be removed from the master course list
-	 */
-	public static boolean removeUser(String userID)
-	{
-		for (int i = 0; i < users.size(); i++)
+		if (!users.contains(addition))
 		{
-			if (users.get(i).getUserID().equalsIgnoreCase(userID))
-			{
-				users.remove(i);
-				updateUserDatabaseFile();
-				return true;
-			}
+			rVal = true;
+			users.add(addition);
+			DatabaseIO.serializeEverything();
 		}
-		return false;
+
+		return rVal;
 	}
 
 	/**
+	 * Checks to see if the database contains a UserProfile with the specified ID
 	 * @param userID
 	 *            the UserID that needs to be
 	 * @return true if the user exists, false if it does not
 	 */
-	public static boolean hasUser(String userID)
+	public boolean hasUser(String userID)
 	{
-		for (UserProfile u : users)
-			if (u.getUserID().equalsIgnoreCase(userID))
-				return true;
+		UserProfile dummy = dummyUser(userID);
+		
 		return false;
+	}
+
+		
+	/**
+	 * Returns the UserProfile object that matches with the userID
+	 * @param userID
+	 *            the userID to check for
+	 * @return the UserProfile object that matches with the userID
+	 */
+	public UserProfile getUserProfile(String userID)
+	{
+		UserProfile rVal = null;
+		UserProfile dummy = dummyUser(userID);
+		
+		UserProfile possibleRVal = users.floor(dummy);
+
+		if (possibleRVal.equals(dummy))
+		{
+			rVal = possibleRVal;
+		}
+		
+		return rVal;
 	}
 
 	/**
@@ -85,7 +85,8 @@ public class UserProfileDatabase implements Serializable
 	 *            the password to test against
 	 * @return the UserProfile object that matches with the username & password
 	 */
-	public static UserProfile getUserProfile(String userID, char[] password)
+	@Deprecated
+	public UserProfile getUserProfile(String userID, char[] password)
 	{
 		for (UserProfile u : users)
 		{
@@ -98,45 +99,19 @@ public class UserProfileDatabase implements Serializable
 		}
 		return null;
 	}
-
-	/**
-	 * 
-	 * @param permLevel
-	 *            the permission level of the user
-	 * @return the GUI that should be shown based on perm level
-	 */
-	public static JPanel getGUIFromPerm(int permLevel)
+	
+	private static class UserProfileComparator implements Serializable, Comparator<UserProfile>
 	{
-		switch (permLevel)
+		private static final long serialVersionUID = -7658316379215204578L;
+
+		public int compare(UserProfile arg0, UserProfile arg1)
 		{
-		case 0:
-			return new GUIViewCourses();
-		case 1:
-			return new GUIStudent();
-		case 2:
-			return new GUITeacherAssistant();
-		case 3:
-			return new GUITeacher();
-		case 4:
-			return new GUIAdmin();
-		default:
-			return new GUIViewCourses();
-		}
+			return arg0.getUserID().compareTo(arg1.getUserID());
+		}	
 	}
-
-	/**
-	 * Updates the user database list file by resetting it and re-writing the contents
-	 */
-	public static void updateUserDatabaseFile()
+	
+	private UserProfile dummyUser(String userID)
 	{
-		try
-		{
-			userOutput = new PrintStream(new File(MiscUtils.getUsersFileName()));
-			for (UserProfile u : users)
-				userOutput.println(u.toString());
-		}
-		catch (FileNotFoundException e)
-		{
-		}
+		return new UserProfile(userID, null, 0, null, null, null);
 	}
 }

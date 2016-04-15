@@ -40,7 +40,9 @@ public class DatabaseIO
 			in.close();
 			fileIn.close();
 			
-			//initialize the databases in the rest of the program
+			StudentRegistrationMain.profiles = databases.profiles;
+			StudentRegistrationMain.mainCourseManager = databases.courseManager;
+			StudentRegistrationMain.financialRecords = databases.financialRecords;
 		}
 		catch (IOException i)
 		{
