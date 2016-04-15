@@ -96,7 +96,7 @@ public class GUIAddRemoveClass extends JPanel
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeInstrictorFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
+							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
 							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 							{
 								@Override
