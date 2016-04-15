@@ -7,23 +7,32 @@ import java.util.TreeSet;
 /**
  * A database of UserProfiles with unique IDs. The UserProfiles are accessed by their IDs.
  * 
- * @author Owner
+ * @author Fantastic Five (Stephen Clark)
  *
  */
 public class UserProfileDatabase implements Serializable
 {
 	private static final long serialVersionUID = -8052666172712131697L;
 	// The entire user list
-	private TreeSet<UserProfile> users;
+	private TreeSet<UserProfile> userProfiles;
 	
 	/**
 	 * Constructs a new UserProfileDatabase
 	 */
 	public UserProfileDatabase()
 	{
-		users = new TreeSet<UserProfile>(new UserProfileComparator());
+		userProfiles = new TreeSet<UserProfile>(new UserProfileComparator());
 	}
 
+	/**
+	 * Returns a set of the UserProfiles in the database, sorted by their IDs.
+	 * @return A set of the UserProfiles in the database, sorted by their IDs.
+	 */
+	public TreeSet<UserProfile> copyUserProfiles()
+	{
+		return (TreeSet<UserProfile>) userProfiles.clone();
+	}
+	
 	/**
 	 * @param profile
 	 *            the user profile that needs to be added to the course list
@@ -32,10 +41,10 @@ public class UserProfileDatabase implements Serializable
 	{
 		boolean rVal = false;
 
-		if (!users.contains(addition))
+		if (!userProfiles.contains(addition))
 		{
 			rVal = true;
-			users.add(addition);
+			userProfiles.add(addition);
 			DatabaseIO.serializeEverything();
 		}
 
@@ -67,7 +76,7 @@ public class UserProfileDatabase implements Serializable
 		UserProfile rVal = null;
 		UserProfile dummy = dummyUser(userID);
 		
-		UserProfile possibleRVal = users.floor(dummy);
+		UserProfile possibleRVal = userProfiles.floor(dummy);
 
 		if (possibleRVal.equals(dummy))
 		{
