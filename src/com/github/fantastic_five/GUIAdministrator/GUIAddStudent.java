@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIAddStudent extends JPanel
@@ -138,9 +137,9 @@ public class GUIAddStudent extends JPanel
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				if (!UserProfileDatabase.doesUserIDExist(userID) && areFieldsPopulated())
+				if (!StudentRegistrationMain.profiles.hasUser(userID) && areFieldsPopulated())
 				{
-					UserProfileDatabase.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
 					confirmation.setForeground(Color.GREEN);

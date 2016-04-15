@@ -34,7 +34,6 @@ import com.github.fantastic_five.GUIStudent.GUIStudent;
 import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -173,23 +172,27 @@ public class GUILogin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile user = UserProfileDatabase.getUserProfile(usernameField.getText(), passwordField.getPassword());
+				UserProfile user = StudentRegistrationMain.profiles.getUserProfile(usernameField.getText());
+
 				if (user != null)
 				{
-					StudentRegistrationMain.loggedIn.add(user);
-					StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
-				}
-				else
-				{
-					passwordField.setText("");
-					JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
-					lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
-					lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
-					lblInvalidPassword.setForeground(new Color(255, 51, 0));
-					lblInvalidPassword.setBounds(164, 300, 280, 25);
-					add(lblInvalidPassword);
-					revalidate();
-					repaint();
+					if (user.passwordIs(new String(passwordField.getPassword())))
+					{
+						StudentRegistrationMain.loggedIn.add(user);
+						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
+					}
+					else
+					{
+						passwordField.setText("");
+						JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
+						lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
+						lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
+						lblInvalidPassword.setForeground(new Color(255, 51, 0));
+						lblInvalidPassword.setBounds(164, 300, 280, 25);
+						add(lblInvalidPassword);
+						revalidate();
+						repaint();
+					}
 				}
 			}
 		});
@@ -261,7 +264,7 @@ public class GUILogin extends JPanel
 		// Add button to panel
 		add(btnGuest);
 	}
-	
+
 	/**
 	 * 
 	 * @param permLevel

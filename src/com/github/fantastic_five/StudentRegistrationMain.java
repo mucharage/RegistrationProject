@@ -84,8 +84,8 @@ public class StudentRegistrationMain
 	private static void initAdminUser()
 	{
 		UserProfile admin = new UserProfile("admin", "pass", UserProfile.ADMIN, "Group", "Five", "Admin");
-		if (!UserProfileDatabase.hasUser("admin"))
-			UserProfileDatabase.addUser(admin);
+		if (!profiles.hasUser("admin"))
+			profiles.addUser(admin);
 	}
 
 	/**
