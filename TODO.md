@@ -6,9 +6,9 @@
 
 - [ ] Implement some interface for Financial Records Office
 
-- [ ] Implement print methods where necessary
+- [x] Implement print methods where necessary
 
-- [ ] Make sure UserProfileDatabase / CourseManager + Connectors can handle TA being teacher AND student
+- [x] Make sure UserProfileDatabase / CourseManager + Connectors can handle TA being teacher AND student
 
 - [ ] Needs to display notifications if searched result is not available. 
 
@@ -21,6 +21,8 @@
 - [ ] Implement teacher availibity checkmark properly
 
 - [ ] Implement student payment checkmark properly
+
+- [ ] Remove ability to remove users from UserProfileDatabase
 
 - [x] Catch Time Exception for Create Class
 
@@ -36,4 +38,4 @@
 
 **Student:**
 
-- [ ] Finish Add/Remove course (should be mostly working?)
+- [x] Finish Add/Remove course (should be mostly working?)
