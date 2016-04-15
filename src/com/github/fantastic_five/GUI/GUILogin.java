@@ -29,6 +29,10 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUIAdministrator.GUIAdmin;
+import com.github.fantastic_five.GUIStudent.GUIStudent;
+import com.github.fantastic_five.GUITA.GUITeacherAssistant;
+import com.github.fantastic_five.GUITeacher.GUITeacher;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
@@ -173,7 +177,7 @@ public class GUILogin extends JPanel
 				if (user != null)
 				{
 					StudentRegistrationMain.loggedIn.add(user);
-					StudentRegistrationMain.replaceMainWindowContents(UserProfileDatabase.getGUIFromPerm(user.getPermLevel()));
+					StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 				}
 				else
 				{
@@ -256,5 +260,30 @@ public class GUILogin extends JPanel
 		});
 		// Add button to panel
 		add(btnGuest);
+	}
+	
+	/**
+	 * 
+	 * @param permLevel
+	 *            the permission level of the user
+	 * @return the GUI that should be shown based on perm level
+	 */
+	JPanel getGUIFromPerm(int permLevel)
+	{
+		switch (permLevel)
+		{
+		case 0:
+			return new GUIViewCourses();
+		case 1:
+			return new GUIStudent();
+		case 2:
+			return new GUITeacherAssistant();
+		case 3:
+			return new GUITeacher();
+		case 4:
+			return new GUIAdmin();
+		default:
+			return new GUIViewCourses();
+		}
 	}
 }
