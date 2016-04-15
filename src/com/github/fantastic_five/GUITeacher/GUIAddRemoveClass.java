@@ -291,7 +291,7 @@ public class GUIAddRemoveClass extends JPanel
 	
 	private Object[][] getClassTable()
 	{
-		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(MiscUtils.getCurrentLoggedInUser());
+		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(MiscUtils.getCurrentLoggedInUser());
 		Object[][] cells = new Object[enrolledCourses.size()][7];
 		int row = 0;
 		for (Course c : enrolledCourses)
