@@ -26,6 +26,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
@@ -179,22 +180,24 @@ public class GUIRemoveCourse extends JPanel
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
 		int numCourses = courseOfferings.size();
-		Object[][] table = new Object[numCourses][7];
+		Object[][] cells = new Object[numCourses][7];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
 		for (Course c : courseOfferings)
 		{
-			table[row][0] = c.getCRN();
-			table[row][1] = c.getTitle();
-			table[row][2] = c.getStudentCap();
-			table[row][3] = c.getRemainingCap();
-			table[row][4] = c.getTeacherName();
-			table[row][5] = MiscUtils.getDaysFormatted(c.getDays());
-			table[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			UserProfile teacher = StudentRegistrationMain.mainCourseManager.getInstructorWithCourse(c.getCRN());
+			cells[row][0] = c.getCRN();
+			cells[row][1] = c.getTitle();
+			cells[row][2] = c.getStudentCap();
+			cells[row][3] = c.getRemainingCap();
+			if (teacher != null)
+				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
+			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 
-		return table;
+		return cells;
 	}
 }

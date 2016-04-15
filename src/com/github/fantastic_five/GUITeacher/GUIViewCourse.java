@@ -23,25 +23,26 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourse extends JPanel
 {
 	// Private instance variables
 	private JTable table;
-	
+
 	// This GUI shall display all the available courses that our University offers.
 	public GUIViewCourse()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
-		
-		 // Adds a ScrollPane	 
+
+		// Adds a ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
-		//Adds a table displaying important details for each courses.
+		// Adds a table displaying important details for each courses.
 		JTable table = new JTable();
 		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
 		{
@@ -53,7 +54,7 @@ public class GUIViewCourse extends JPanel
 		});
 		scrollPane.setViewportView(table);
 
-		//Button & Logic for View Schedule
+		// Button & Logic for View Schedule
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener()
 		{
@@ -65,7 +66,7 @@ public class GUIViewCourse extends JPanel
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-		
+
 		// Adds a lgin panel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
@@ -95,11 +96,13 @@ public class GUIViewCourse extends JPanel
 		// Loops through all courses and sets the columns in each row appropriately
 		for (Course c : courseOfferings)
 		{
+			UserProfile teacher = StudentRegistrationMain.mainCourseManager.getInstructorWithCourse(c.getCRN());
 			cells[row][0] = c.getCRN();
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = c.getTeacherName();
+			if (teacher != null)
+				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
