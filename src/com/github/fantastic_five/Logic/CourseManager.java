@@ -415,7 +415,7 @@ public class CourseManager implements Serializable
 	 */
 	public int generateNewCRN(int min, int max)
 	{
-		if (max >= min)
+		if (max <= min)
 		{
 			throw new IllegalArgumentException("max must be greater than min");
 		}
