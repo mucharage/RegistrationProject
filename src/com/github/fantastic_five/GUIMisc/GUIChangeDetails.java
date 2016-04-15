@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
+import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
@@ -101,7 +102,7 @@ public class GUIChangeDetails extends JPanel
 				loggedIn.setFirstName(fieldFirstName.getText());
 				loggedIn.setMiddleName(fieldMiddleName.getText());
 				loggedIn.setLastName(fieldLastName.getText());
-				UserProfileDatabase.updateUserDatabaseFile();
+				DatabaseIO.serializeEverything();
 				// TODO: show confirmation notification
 			}
 		});
@@ -185,7 +186,7 @@ public class GUIChangeDetails extends JPanel
 						originalPass.setText("");
 						newPass.setText("");
 						confPass.setText("");
-						UserProfileDatabase.updateUserDatabaseFile();
+						DatabaseIO.serializeEverything();
 					}
 				}
 			}

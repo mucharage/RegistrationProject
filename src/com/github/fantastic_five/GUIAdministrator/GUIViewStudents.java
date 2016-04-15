@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.swing.JButton;
@@ -23,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIViewStudents extends JPanel
@@ -84,7 +83,7 @@ public class GUIViewStudents extends JPanel
 	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		ArrayList<UserProfile> studentUsers = (ArrayList<UserProfile>) UserProfileDatabase.users.clone();
+		Set<UserProfile> studentUsers = StudentRegistrationMain.profiles.copyUserProfiles();
 		studentUsers.removeIf(new Predicate<UserProfile>()
 		{
 			@Override

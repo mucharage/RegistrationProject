@@ -148,7 +148,7 @@ public class MiscUtils
 
 						// Creates a temporary userprofile
 						UserProfile u = new UserProfile(userID, password, permLevel, firstName, middleName, lastName);
-						UserProfileDatabase.addUser(u);
+						StudentRegistrationMain.profiles.addUser(u);
 					}
 				}
 				userIn.close();
