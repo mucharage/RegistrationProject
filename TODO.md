@@ -10,7 +10,7 @@
 
 - [ ] Make sure UserProfileDatabase / CourseManager + Connectors can handle TA being teacher AND student
 
-- [ ] Needs to display notifications if searched result is not avilable. 
+- [ ] Needs to display notifications if searched result is not available. 
 
 **Administration:**
 
@@ -22,9 +22,9 @@
 
 - [ ] Implement student payment checkmark properly
 
-- [ ] Catch Time Exception for Create Class
+- [x] Catch Time Exception for Create Class
 
-- [ ] Ensure password length is > 0 when making new accounts
+- [x] Ensure password length is > 0 when making new accounts
 
 **Teacher:**
 
