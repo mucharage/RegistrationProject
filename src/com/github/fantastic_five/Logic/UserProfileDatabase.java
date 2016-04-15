@@ -60,7 +60,7 @@ public class UserProfileDatabase implements Serializable
 	 * Returns the UserProfile object that matches with the userID
 	 * @param userID
 	 *            the userID to check for
-	 * @return the UserProfile object that matches with the userID
+	 * @return the UserProfile object that matches with the userID, or null if 
 	 */
 	public UserProfile getUserProfile(String userID)
 	{
@@ -75,29 +75,6 @@ public class UserProfileDatabase implements Serializable
 		}
 		
 		return rVal;
-	}
-
-	/**
-	 * 
-	 * @param userID
-	 *            the username to check for
-	 * @param password
-	 *            the password to test against
-	 * @return the UserProfile object that matches with the username & password
-	 */
-	@Deprecated
-	public UserProfile getUserProfile(String userID, char[] password)
-	{
-		for (UserProfile u : users)
-		{
-			if (u.getUserID().equalsIgnoreCase(userID))
-			{
-				String tempPass = new String(password);
-				if (u.passwordIs(tempPass))
-					return u;
-			}
-		}
-		return null;
 	}
 	
 	private static class UserProfileComparator implements Serializable, Comparator<UserProfile>
