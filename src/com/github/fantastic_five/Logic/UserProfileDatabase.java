@@ -16,6 +16,7 @@ import com.github.fantastic_five.GUITeacher.GUITeacher;
 
 public class UserProfileDatabase implements Serializable
 {
+	private static final long serialVersionUID = -8052666172712131697L;
 	// The entire user list
 	public static ArrayList<UserProfile> users = new ArrayList<UserProfile>();
 	private static PrintStream userOutput;

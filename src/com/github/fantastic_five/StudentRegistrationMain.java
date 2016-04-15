@@ -13,6 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.CourseManager;
+import com.github.fantastic_five.Logic.FinancialRecordsOffice;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
@@ -28,6 +29,10 @@ public class StudentRegistrationMain
 	public static Dimension mainWindowDimension = new Dimension(618, 458);
 	public static ArrayList<UserProfile> loggedIn = new ArrayList<UserProfile>();
 	public static CourseManager mainCourseManager = new CourseManager();
+	
+	//Temporary addition by Stephen, may need to be changed by someone who fully understands the GUI
+	public static UserProfileDatabase profiles = new UserProfileDatabase();
+	public static FinancialRecordsOffice financialRecords = new FinancialRecordsOffice();
 
 	public static void main(String[] args)
 	{
