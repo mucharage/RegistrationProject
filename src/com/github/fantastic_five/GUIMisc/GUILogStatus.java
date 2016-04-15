@@ -1,6 +1,7 @@
 package com.github.fantastic_five.GUIMisc;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 /**
  * @author Fantastic Five (Jose Stovall)
@@ -8,6 +9,9 @@ import java.awt.Frame;
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -71,13 +75,17 @@ public class GUILogStatus extends JPanel
 		JLabel currentLoggedInPrefix = new JLabel("Current Logged In User: ");
 		currentLoggedInPrefix.setBounds(10, 4, 120, 14);
 		add(currentLoggedInPrefix);
-
+		
 		UserProfile u = MiscUtils.getCurrentLoggedInUser();
 		JButton currentLoggedIn = new JButton(u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
+		currentLoggedIn.setToolTipText("Edit Account Information");
 		currentLoggedIn.setHorizontalAlignment(SwingConstants.LEFT);
 		currentLoggedIn.setContentAreaFilled(false);
 		currentLoggedIn.setBorderPainted(false);
 		currentLoggedIn.setForeground(Color.BLUE);
+		Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
+		fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		currentLoggedIn.setFont(new Font("Tahoma", Font.PLAIN, 11).deriveFont(fontAttributes));
 		currentLoggedIn.setBounds(114, 4, 413, 14);
 		currentLoggedIn.addActionListener(new ActionListener()
 		{
