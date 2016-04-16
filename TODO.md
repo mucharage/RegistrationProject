@@ -1,5 +1,11 @@
 #Tentative To-Do List:
 
+**To Most / All Code:**
+
+- [ ] Change tables to use TBA if teacher == null
+
+- [ ] Implement table text formatting for days 
+
 **Backbone:**
 
 - [x] Complete "big.dat" and remove other .dat implementation
