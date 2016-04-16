@@ -38,7 +38,8 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				createTeacherWindow();
+				if (!isTeacherWindowOpen())
+					createTeacherWindow();
 			}
 		});
 		add(btnTeacherView);
@@ -50,7 +51,8 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				createStudentWindow();
+				if (!isStudentWindowOpen())
+					createStudentWindow();
 			}
 		});
 		add(btnStudentView);
@@ -64,9 +66,31 @@ public class GUITeacherAssistant extends JPanel
 		add(lblAdministration);
 	}
 
+	/**
+	 * @return true if the Student Perspective window is open, false otherwise
+	 */
+	boolean isStudentWindowOpen()
+	{
+		Frame[] allFrames = Frame.getFrames();
+		for (Frame f : allFrames)
+			if (f instanceof JFrame)
+				if (f.getTitle() == "Student Perspective")
+					return true;
+
+		return false;
+	}
+
+	/**
+	 * @return true if the Teacher Perspective window is open, false otherwise
+	 */
 	boolean isTeacherWindowOpen()
 	{
 		Frame[] allFrames = Frame.getFrames();
+		for (Frame f : allFrames)
+			if (f instanceof JFrame)
+				if (f.getTitle() == "Teacher Perspective")
+					return true;
+
 		return false;
 	}
 
