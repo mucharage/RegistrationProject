@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,17 +19,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Document;
-import javax.swing.text.html.ParagraphView;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.MiscUtils;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIViewSchedule extends JPanel
 {
+	
 	
 	/**
 	 * This GUI that shall display student's individual schedule of courses that he/she has chosen
@@ -41,7 +40,7 @@ public class GUIViewSchedule extends JPanel
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 60, 587, 107);
+		scrollPane.setBounds(10, 109, 587, 106);
 		add(scrollPane);
 
 		/**
@@ -73,27 +72,24 @@ public class GUIViewSchedule extends JPanel
 		btnPrint.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
-			{
+			{				
+				MessageFormat header = new MessageFormat ("Schedule");				
+				
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
 				try
 				{
-					table.print();
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 				}
 				catch (PrinterException e1)
-				{
-					// TODO Auto-generated catch block
+				{					
 					e1.printStackTrace();
 				}
 				
 			}// end of actionPerformed
 		});// end of actionListener
 		add(btnPrint);
-
-		/**
-		 * adds a scrollPane
-		 */
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 178, 587, 197);
-		add(scrollPane_1);
 
 		/**
 		 * adds a login GUI
@@ -106,11 +102,13 @@ public class GUIViewSchedule extends JPanel
 		 * adds a JLabel named "View Schedule"
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Schedule");
+		lblCourseRemoval.setBounds(178, 54, 243, 23);
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(177, 30, 243, 23);
 		add(lblCourseRemoval);
+			
+		
 
 	}// end of GUIViewSchedule()
 }// end of JPanel extension of GUIViewSchedule

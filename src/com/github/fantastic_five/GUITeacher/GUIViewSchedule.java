@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIViewSchedule extends JPanel
@@ -61,6 +64,29 @@ public class GUIViewSchedule extends JPanel
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(469, 386, 128, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+		
+			public void actionPerformed(ActionEvent e)
+			{			
+				MessageFormat header = new MessageFormat ("Schedule");				
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{					
+					e1.printStackTrace();
+				}
+			}
+		});
+		add(btnPrint);
 
 		// Button & Logic for print button
 		JButton btnPrint = new JButton("Print");

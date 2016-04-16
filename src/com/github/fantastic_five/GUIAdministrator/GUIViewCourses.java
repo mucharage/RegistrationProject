@@ -78,7 +78,7 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(179, 21, 243, 23);
+		lblCourseRemoval.setBounds(180, 30, 243, 23);
 		add(lblCourseRemoval);
 		
 		JButton btnPrint = new JButton("Print");
