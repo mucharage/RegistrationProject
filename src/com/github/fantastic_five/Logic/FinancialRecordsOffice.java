@@ -65,9 +65,9 @@ public class FinancialRecordsOffice implements Serializable
 	 */
 	public boolean userHasCharges(String userID)
 	{
-		UserProfile dummy = dummyUser(userID);
-		if(userPaymentInfo.containsKey(dummy))
+		if(hasUser(userID))
 		{
+			UserProfile dummy = dummyUser(userID);
 			return userPaymentInfo.get(dummy);
 		}
 		else
@@ -76,8 +76,27 @@ public class FinancialRecordsOffice implements Serializable
 		}
 	}
 	
-	public boolean charge;
-	
+	/**
+	 * Changes the boolean associated with a specified user
+	 * @param userID
+	 * @param newStatus The new value representing whether or not the specified UserProfile has unpaid charges
+	 * @return true iff the value was successfully changed
+	 */
+	public boolean changeUsersPaymentStatus(String userID, boolean newStatus)
+	{
+		boolean rVal = false;
+		
+		if(hasUser(userID))
+		{
+			rVal = true;
+			UserProfile dummy = dummyUser(userID);
+			userPaymentInfo.replace(dummy, newStatus);
+			DatabaseIO.serializeEverything();
+		}
+		
+		return rVal;
+	}
+
 	private UserProfile dummyUser(String userID)
 	{
 		return new UserProfile(userID, null, 0, null, null, null);
