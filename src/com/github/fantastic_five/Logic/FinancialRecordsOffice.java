@@ -96,7 +96,7 @@ public class FinancialRecordsOffice implements Serializable
 		
 		return rVal;
 	}
-	
+
 	private UserProfile dummyUser(String userID)
 	{
 		return new UserProfile(userID, null, 0, null, null, null);
