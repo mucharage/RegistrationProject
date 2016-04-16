@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -232,7 +232,7 @@ public class GUIAddCourse extends JPanel
 		}
 
 		// Handles the days of the week
-		HashSet<Day> days = new HashSet<>();
+		TreeSet<Day> days = new TreeSet<>();
 		String[] dayParts = fieldDays.getText().split(" ");
 		for (String s : dayParts)
 		{
