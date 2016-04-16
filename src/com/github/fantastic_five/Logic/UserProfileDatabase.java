@@ -59,9 +59,8 @@ public class UserProfileDatabase implements Serializable
 	 */
 	public boolean hasUser(String userID)
 	{
-		UserProfile dummy = dummyUser(userID);
-		
-		return false;
+		UserProfile dummy = dummyUser(userID);	
+		return userProfiles.contains(dummy);
 	}
 
 		
