@@ -125,7 +125,7 @@ public class GUIAddCourse extends JPanel
 		add(lblCreateCourse);
 
 		// Example Labels
-		JLabel lblExampleDays = new JLabel("(ex. M T W TR F S SU)");
+		JLabel lblExampleDays = new JLabel("(ex. M T W R F S U)");
 		lblExampleDays.setForeground(Color.GRAY);
 		lblExampleDays.setHorizontalAlignment(SwingConstants.CENTER);
 		lblExampleDays.setBounds(467, 132, 107, 14);
