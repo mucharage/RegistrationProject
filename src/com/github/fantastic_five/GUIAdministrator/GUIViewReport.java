@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -18,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -84,6 +87,29 @@ public class GUIViewReport extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(191, 37, 243, 23);
 		add(lblAdministration);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(469, 386, 128, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+		
+			public void actionPerformed(ActionEvent e)
+			{			
+				MessageFormat header = new MessageFormat ("Master Student Report");				
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{					
+					e1.printStackTrace();
+				}
+			}
+		});
+		add(btnPrint);
 	}
 
 	Object[][] getTable()
