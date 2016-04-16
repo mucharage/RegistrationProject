@@ -29,7 +29,7 @@ public class CourseManager implements Serializable
 	public CourseManager()
 	{
 		courseOfferings = new TreeSet<>(new CourseComparator());
-		
+
 		network = new TreeSet<>();
 	}
 
@@ -53,14 +53,8 @@ public class CourseManager implements Serializable
 	 */
 	public boolean containsCourse(int crn)
 	{
-
-		boolean rVal;
-
-		Course testCourse = dummyCourse(crn);
-
-		rVal = courseOfferings.contains(testCourse);
-
-		return rVal;
+		Course dummy = dummyCourse(crn);
+		return courseOfferings.contains(dummy);
 	}
 
 	/**
@@ -89,8 +83,8 @@ public class CourseManager implements Serializable
 					return (connector.courseCRN == crn);
 				}
 			});
-			
-			serializeThis();
+
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
@@ -111,7 +105,7 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			courseOfferings.add(addition);
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
@@ -165,7 +159,7 @@ public class CourseManager implements Serializable
 				}
 			}
 		}
-		
+
 		return rVal;
 	}
 
@@ -195,7 +189,7 @@ public class CourseManager implements Serializable
 				}
 			}
 		}
-		
+
 		return rVal;
 	}
 
@@ -229,7 +223,7 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
-	/** 
+	/**
 	 * Returns a set of UserProfiles representing the people who are teaching the course with a specified CRN
 	 * 
 	 * @param courseCRN
@@ -287,7 +281,7 @@ public class CourseManager implements Serializable
 
 		return rVal;
 	}
-	
+
 	/**
 	 * Attempts to enroll a specified person in a course with a specified crn. Fails if the learner's permLevel is not STUDENT or TA, no courses with the CRN exist in the catalog, the person is already enrolled in the maximum number of classes allowed, or the desired course is full.
 	 * 
@@ -316,7 +310,7 @@ public class CourseManager implements Serializable
 					{
 						rVal = true;
 						network.add(connector);
-						serializeThis();
+						DatabaseIO.serializeEverything();
 					}
 				}
 			}
@@ -343,7 +337,7 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			network.remove(connector);
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
@@ -365,7 +359,7 @@ public class CourseManager implements Serializable
 		{
 			if (!containsCourse(courseCRN))
 			{
-				if(getInstructorWithCourse(courseCRN) == null)
+				if (getInstructorWithCourse(courseCRN) == null)
 				{
 					Connector connector = new Connector(COURSE_INSTRUCTOR_RELATIONSHIP, courseCRN, instructor);
 
@@ -373,7 +367,7 @@ public class CourseManager implements Serializable
 					{
 						rVal = true;
 						network.add(connector);
-						serializeThis();
+						DatabaseIO.serializeEverything();
 					}
 				}
 			}
@@ -399,7 +393,7 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			network.remove(connector);
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 		return rVal;
 	}
@@ -462,45 +456,45 @@ public class CourseManager implements Serializable
 
 		public boolean equals(Object o)
 		{
-			if(this == o)
+			if (this == o)
 				return true;
-			
+
 			boolean rVal = false;
-			
+
 			if (o instanceof Connector)
 			{
 				Connector other = (Connector) o;
 
 				rVal = (this.relationship == other.relationship);
-				if(rVal)
+				if (rVal)
 				{
 					rVal = (this.courseCRN == other.courseCRN);
-					if(rVal)
+					if (rVal)
 					{
-						rVal = (this.person.equals(other.person));	
+						rVal = (this.person.equals(other.person));
 					}
 				}
 			}
-			
+
 			return rVal;
 		}
 
 		@Override
 		public int compareTo(Connector other)
 		{
-			if(this.equals(other))
+			if (this.equals(other))
 				return 0;
-			
+
 			int rVal = Integer.compare(this.relationship, other.relationship);
-			if(rVal == 0)
+			if (rVal == 0)
 			{
 				rVal = Integer.compare(this.courseCRN, other.courseCRN);
-				if(rVal == 0)
+				if (rVal == 0)
 				{
 					rVal = this.person.getUserID().compareTo(other.person.getUserID());
 				}
 			}
-			
+
 			return rVal;
 		}
 	}
@@ -515,25 +509,4 @@ public class CourseManager implements Serializable
 		}
 
 	}
-
-	private void serializeThis()
-	{
-		try
-		{
-			FileOutputStream fileOut = new FileOutputStream("maincoursemanager.dat");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(this);
-			fileOut.close();
-			out.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 }
