@@ -30,10 +30,9 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIViewCourse extends JPanel
 {
-	// Private instance variables
-	private JTable table;
-
-	// This GUI shall display all the available courses that our University offers.
+	/**
+	 * This GUI shall display all the available courses that our University offers.
+	 */
 	public GUIViewCourse()
 	{
 		setBounds(0, 0, 618, 434);
