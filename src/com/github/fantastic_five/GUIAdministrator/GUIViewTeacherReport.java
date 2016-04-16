@@ -21,18 +21,15 @@ import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUIViewReport extends JPanel
+public class GUIViewTeacherReport extends JPanel
 {
 	JTable table;
-	int permLevel;
-	String[] headers = new String[] { "Last", "First", "UserID", "Paid", "CRNs" };
+	String[] headers = new String[] { "Last", "First", "UserID", "Available", "CRNs" };
 
 	// TODO: Add PRINT button
 
-	public GUIViewReport(int permLevel)
+	public GUIViewTeacherReport()
 	{
-		this.permLevel = permLevel;
-
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
@@ -53,8 +50,8 @@ public class GUIViewReport extends JPanel
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(75);
-		table.getColumnModel().getColumn(3).setPreferredWidth(20);
-		table.getColumnModel().getColumn(4).setPreferredWidth(290);
+		table.getColumnModel().getColumn(3).setPreferredWidth(60);
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);
 
 		scrollPane.setViewportView(table);
 
@@ -78,7 +75,7 @@ public class GUIViewReport extends JPanel
 		add(btnBack);
 
 		// Panel label, essentially
-		JLabel lblAdministration = new JLabel("View " + (permLevel == UserProfile.TEACHER ? "Teacher" : "Student") + " Report");
+		JLabel lblAdministration = new JLabel("View Teacher Report");
 		lblAdministration.setForeground(Color.GRAY);
 		lblAdministration.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
@@ -96,7 +93,7 @@ public class GUIViewReport extends JPanel
 			public boolean test(UserProfile t)
 			{
 				// Returns true (i.e. removes if:) permLevel DOESN'T match these criteria:
-				return (!(t.getPermLevel() == permLevel)) || t.getPermLevel() == UserProfile.TA;
+				return ((t.getPermLevel() != UserProfile.TEACHER && t.getPermLevel() != UserProfile.TA));
 			}
 		});
 
@@ -109,7 +106,7 @@ public class GUIViewReport extends JPanel
 			cells[row][0] = u.getLastName();
 			cells[row][1] = u.getFirstName();
 			cells[row][2] = u.getUserID();
-			cells[row][3] = getPaymentUnicode(StudentRegistrationMain.financialRecords.userHasCharges(u.getUserID()));
+			cells[row][3] = getAvailibilityUnicode(u);
 			cells[row][4] = getCRNS(u);
 
 			row++;
@@ -118,20 +115,19 @@ public class GUIViewReport extends JPanel
 		return cells;
 	}
 
-	String getPaymentUnicode(boolean hasDues)
+	String getAvailibilityUnicode(UserProfile u)
 	{
-		return hasDues ? "\u2713" : "\u2717";
+		int numCourses = 0;
+		if (u != null)
+			numCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(u).size();
+
+		return numCourses >= 5 ? "     \u2717" : "     \u2713";
 	}
 
 	String getCRNS(UserProfile profile)
 	{
 		String rVal = "";
-
-		Set<Course> courses;
-		if (profile.getPermLevel() == UserProfile.STUDENT)
-			courses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(profile);
-		else
-			courses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(profile);
+		Set<Course> courses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(profile);
 
 		for (Course c : courses)
 			rVal += c.getCRN() + ", ";

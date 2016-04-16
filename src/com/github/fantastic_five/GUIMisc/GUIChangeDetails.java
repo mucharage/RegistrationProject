@@ -19,7 +19,6 @@ import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIChangeDetails extends JPanel
@@ -183,11 +182,20 @@ public class GUIChangeDetails extends JPanel
 				{
 					if (MiscUtils.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
 					{
+						resetFieldColors();
 						originalPass.setText("");
 						newPass.setText("");
 						confPass.setText("");
 						DatabaseIO.serializeEverything();
 					}
+					else
+					{
+						displayError(originalPass);
+					}
+				}
+				else
+				{
+					displayError(newPass, confPass);
 				}
 			}
 		});
@@ -229,5 +237,27 @@ public class GUIChangeDetails extends JPanel
 			}
 		});
 		add(btnBack);
+	}
+	
+	/**
+	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
+	 * 
+	 * @param erroredFields
+	 *            The text field to set the background red of. Can be passed multiple fields to set red
+	 */
+	void displayError(JPasswordField... erroredFields)
+	{
+		resetFieldColors();
+		for (JPasswordField field : erroredFields)
+			field.setBackground(Color.RED);
+		revalidate();
+		repaint();
+	}
+	
+	void resetFieldColors()
+	{
+		confPass.setBackground(Color.WHITE);
+		newPass.setBackground(Color.WHITE);
+		originalPass.setBackground(Color.WHITE);
 	}
 }

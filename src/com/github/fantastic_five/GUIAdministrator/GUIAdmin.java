@@ -17,7 +17,6 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAdmin extends JPanel
@@ -63,30 +62,6 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnRemoveCourse);
 
-		// Button & Logic for Enrolled Student View
-		JButton btnViewEnrolledStudents = new JButton("View Enrolled Students");
-		btnViewEnrolledStudents.setBounds(48, 180, 154, 23);
-		btnViewEnrolledStudents.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
-			}
-		});
-		add(btnViewEnrolledStudents);
-
-		// Button & Logic for Teacher Staff View
-		JButton btnViewTeacher = new JButton("View Teacher Staff");
-		btnViewTeacher.setBounds(415, 180, 154, 23);
-		btnViewTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeachers());
-			}
-		});
-		add(btnViewTeacher);
-
 		// Button & Logic for Student Addition
 		JButton btnAddStudent = new JButton("Add Student");
 		btnAddStudent.setBounds(48, 214, 154, 23);
@@ -106,7 +81,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(UserProfile.STUDENT));
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudentReport());
 			}
 		});
 		add(btnViewStudents);
@@ -130,7 +105,7 @@ public class GUIAdmin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(UserProfile.TEACHER));
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeacherReport());
 			}
 		});
 		add(btnViewTeachers);
@@ -151,9 +126,6 @@ public class GUIAdmin extends JPanel
 
 	// TODO list below:
 	/**
-	 * - View Student Report
-	 * - View Teacher Report
-	 * - View Enrolled Students needs a way to see if they've paid
-	 * - View Enrolled Teachers - needs to find availability, and is the "Courses" heading req'd?
+	 * - View Student Report - View Teacher Report - View Enrolled Students needs a way to see if they've paid - View Enrolled Teachers - needs to find availability, and is the "Courses" heading req'd?
 	 */
 }

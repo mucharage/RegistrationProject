@@ -9,25 +9,32 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.CourseManager;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
 {
+	
 	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
@@ -67,7 +74,7 @@ public class GUIViewCourses extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
 			}
 		});
-		btnBack.setBounds(10, 386, 128, 23);
+		btnBack.setBounds(20, 386, 128, 23);
 		add(btnBack);
 
 		/**
@@ -86,6 +93,48 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(469, 386, 128, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+		
+			public void actionPerformed(ActionEvent e)
+			{			
+				MessageFormat header = new MessageFormat ("Master Course List");				
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{					
+					e1.printStackTrace();
+				}
+			}
+		});
+		add(btnPrint);
+		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+		{			
+			@Override
+			public void valueChanged(ListSelectionEvent e)
+			{
+						JFrame popup = new JFrame("Course Desctiption");	
+						popup.setBounds(200,200,307,107);
+						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						popup.setLocationRelativeTo(null);
+						popup.getContentPane().setLayout(null);
+						popup.setResizable(false);
+						popup.setVisible(true);
+						
+						JLabel desc = new JLabel("haha");
+						desc.setBounds(150, 150, 309, 106);
+						
+			}
+		});
 
 	}// end of GuiViewCourses()
 
