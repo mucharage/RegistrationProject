@@ -28,7 +28,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.setBounds(233, 180, 154, 23);
+		btnView.setBounds(335, 180, 154, 23);
 		btnView.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -40,7 +40,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for adding classes
 		JButton btnCreateCourseOffering = new JButton("Add Course");
-		btnCreateCourseOffering.setBounds(233, 214, 154, 23);
+		btnCreateCourseOffering.setBounds(335, 214, 154, 23);
 		btnCreateCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -52,7 +52,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for removing courses
 		JButton btnRemoveCourse = new JButton("Remove Course");
-		btnRemoveCourse.setBounds(233, 248, 154, 23);
+		btnRemoveCourse.setBounds(335, 248, 154, 23);
 		btnRemoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -63,20 +63,20 @@ public class GUIAdmin extends JPanel
 		add(btnRemoveCourse);
 
 		// Button & Logic for Student Addition
-		JButton btnAddStudent = new JButton("Add Student");
-		btnAddStudent.setBounds(48, 214, 154, 23);
+		JButton btnAddStudent = new JButton("Add User");
+		btnAddStudent.setBounds(150, 180, 154, 23);
 		btnAddStudent.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddStudent());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddUser());
 			}
 		});
 		add(btnAddStudent);
 
 		// Button & Logic for Student Report
 		JButton btnViewStudents = new JButton("View Student Report");
-		btnViewStudents.setBounds(48, 248, 154, 23);
+		btnViewStudents.setBounds(150, 214, 154, 23);
 		btnViewStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -86,21 +86,9 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnViewStudents);
 
-		// Button & Logic for Teacher Addition
-		JButton btnAddTeacher = new JButton("Add Teacher");
-		btnAddTeacher.setBounds(415, 214, 154, 23);
-		btnAddTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddTeacher());
-			}
-		});
-		add(btnAddTeacher);
-
 		// Button & Logic for Teacher Report
 		JButton btnViewTeachers = new JButton("View Teacher Report");
-		btnViewTeachers.setBounds(415, 248, 154, 23);
+		btnViewTeachers.setBounds(150, 248, 154, 23);
 		btnViewTeachers.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
