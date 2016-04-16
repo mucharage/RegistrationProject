@@ -117,7 +117,7 @@ public class GUIAddTeacher extends JPanel
 		labelIsTA.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelIsTA.setBounds(102, 296, 128, 14);
 		add(labelIsTA);
-		
+
 		checkBoxIsTA = new JCheckBox("");
 		checkBoxIsTA.setBounds(248, 290, 21, 23);
 		add(checkBoxIsTA);
@@ -127,7 +127,7 @@ public class GUIAddTeacher extends JPanel
 		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
 		confirmation.setBounds(252, 280, 217, 20);
 		add(confirmation);
-		
+
 		// Back Button
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
@@ -154,6 +154,9 @@ public class GUIAddTeacher extends JPanel
 				String pwd = passwordTextField.getText();
 				if (!StudentRegistrationMain.profiles.hasUser(userID) && areFieldsPopulated())
 				{
+					if (permLvl == UserProfile.TA)
+						StudentRegistrationMain.financialRecords.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					
 					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLvl, fName, mName, lName));
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
@@ -196,7 +199,7 @@ public class GUIAddTeacher extends JPanel
 			}
 		});
 	}
-	
+
 	/**
 	 * Checks to see that all the text fields have SOMETHING in them..
 	 * 
