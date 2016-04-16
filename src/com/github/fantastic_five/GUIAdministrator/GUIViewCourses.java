@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
@@ -125,11 +127,19 @@ public class GUIViewCourses extends JPanel
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
 			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(1) + ". " + teacher.getLastName();
-			cells[row][5] = c.getDays();
+			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 
 		return cells;
+	}
+	
+	String getFormattedDays(TreeSet<Day> days)
+	{
+		String rVal = "";
+		for(Day d : days)
+			rVal += d.getAbbreviation() + " ";
+		return rVal;
 	}
 }
