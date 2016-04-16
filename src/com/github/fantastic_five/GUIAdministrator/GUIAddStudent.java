@@ -140,6 +140,7 @@ public class GUIAddStudent extends JPanel
 				if (!StudentRegistrationMain.profiles.hasUser(userID) && areFieldsPopulated())
 				{
 					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					StudentRegistrationMain.financialRecords.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
 					confirmation.setForeground(Color.GREEN);
@@ -149,7 +150,7 @@ public class GUIAddStudent extends JPanel
 				{
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
 					confirmation.setForeground(Color.RED);
-					confirmation.setText("User ID already exists");
+					confirmation.setText("User ID conflict");
 				}
 				revalidate();
 				repaint();
