@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,8 +22,6 @@ import javax.swing.SwingConstants;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
-import javax.swing.JCheckBox;
 
 @SuppressWarnings("serial")
 public class GUIAddTeacher extends JPanel
@@ -153,9 +152,9 @@ public class GUIAddTeacher extends JPanel
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				if (!UserProfileDatabase.doesUserIDExist(userID) && areFieldsPopulated())
+				if (!StudentRegistrationMain.profiles.hasUser(userID) && areFieldsPopulated())
 				{
-					UserProfileDatabase.addUser(new UserProfile(userID, pwd, permLvl, fName, mName, lName));
+					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLvl, fName, mName, lName));
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
 					confirmation.setForeground(Color.GREEN);

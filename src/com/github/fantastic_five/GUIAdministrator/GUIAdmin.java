@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAdmin extends JPanel
@@ -98,25 +99,14 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnAddStudent);
 
-		// Button & Logic for Student Removal
-		JButton btnRemoveStudent = new JButton("Remove Student");
-		btnRemoveStudent.setBounds(48, 248, 154, 23);
-		btnRemoveStudent.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveStudent());
-			}
-		});
-		add(btnRemoveStudent);
-
 		// Button & Logic for Student Report
 		JButton btnViewStudents = new JButton("View Student Report");
-		btnViewStudents.setBounds(138, 282, 154, 23);
+		btnViewStudents.setBounds(48, 248, 154, 23);
 		btnViewStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(UserProfile.STUDENT));
 			}
 		});
 		add(btnViewStudents);
@@ -133,25 +123,14 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnAddTeacher);
 
-		// Button & Logic for Teacher Removal
-		JButton btnRemoveTeacher = new JButton("Remove Teacher");
-		btnRemoveTeacher.setBounds(415, 248, 154, 23);
-		btnRemoveTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveTeacher());
-			}
-		});
-		add(btnRemoveTeacher);
-
 		// Button & Logic for Teacher Report
 		JButton btnViewTeachers = new JButton("View Teacher Report");
-		btnViewTeachers.setBounds(323, 282, 154, 23);
+		btnViewTeachers.setBounds(415, 248, 154, 23);
 		btnViewTeachers.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewReport(UserProfile.TEACHER));
 			}
 		});
 		add(btnViewTeachers);

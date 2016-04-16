@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
@@ -69,6 +71,29 @@ public class GUIAddRemoveCourse extends JPanel
 		searchField.setBounds(88, 82, 206, 20);
 		add(searchField);
 		searchField.setColumns(10);
+		searchField.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				{
+					btnSearch.doClick();
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				/** Do Nothing */
+			}
+		});
 
 		/**
 		 * Creates an another ScrollPane
@@ -101,6 +126,7 @@ public class GUIAddRemoveCourse extends JPanel
 				txtpnAreYouSure.setBounds(86, 11, 127, 20);
 				popup.getContentPane().add(txtpnAreYouSure);
 
+				// Logic for Yes button on popup
 				JButton btnYes = new JButton("Yes");
 				btnYes.setBounds(10, 49, 100, 23);
 				btnYes.addActionListener(new ActionListener()
@@ -108,10 +134,12 @@ public class GUIAddRemoveCourse extends JPanel
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
+						// Gets the selected row
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
+							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+
 							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 							{
 								@Override
@@ -258,7 +286,6 @@ public class GUIAddRemoveCourse extends JPanel
 			{
 				int rowSel = searchTable.getSelectedRow();
 
-				// TODO: also add check for "is user taking CRN already"
 				if (rowSel > -1)
 				{
 					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
@@ -273,9 +300,6 @@ public class GUIAddRemoveCourse extends JPanel
 					addedScrollPane.setViewportView(addedTable);
 					revalidate();
 					repaint();
-					// TODO: table model for "Added" should actually be searching through all the student's enrolled classes.
-					// TODO: changed addedTable to have an Object[][] looping through the student's classes
-					// TODO: this area should simply remove the student from the class and redraw the table
 				}
 			}// end of the actionPerformed
 		});// end of the addActionListener
@@ -313,7 +337,8 @@ public class GUIAddRemoveCourse extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			if (teacher != null)
+				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
@@ -330,7 +355,6 @@ public class GUIAddRemoveCourse extends JPanel
 		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
 		courseOfferings.removeIf(new Predicate<Course>()
 		{
-
 			@Override
 			public boolean test(Course toTest)
 			{

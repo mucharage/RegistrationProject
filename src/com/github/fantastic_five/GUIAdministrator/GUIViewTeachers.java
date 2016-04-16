@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.swing.JButton;
@@ -84,7 +85,7 @@ public class GUIViewTeachers extends JPanel
 	public Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
-		ArrayList<UserProfile> teacherUsers = (ArrayList<UserProfile>) UserProfileDatabase.users.clone();
+		Set<UserProfile> teacherUsers = StudentRegistrationMain.profiles.copyUserProfiles();
 		teacherUsers.removeIf(new Predicate<UserProfile>()
 		{
 			@Override

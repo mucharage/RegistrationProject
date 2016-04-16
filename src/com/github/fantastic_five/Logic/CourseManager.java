@@ -1,11 +1,9 @@
 package com.github.fantastic_five.Logic;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -18,7 +16,7 @@ public class CourseManager implements Serializable
 	private static final long serialVersionUID = 217804861480820004L;
 
 	private TreeSet<Course> courseOfferings;
-	private Set<Connector> network;
+	private TreeSet<Connector> network;
 
 	private static final int COURSE_INSTRUCTOR_RELATIONSHIP = Connector.COURSE_INSTRUCTOR_RELATIONSHIP;
 	private static final int COURSE_LEARNER_RELATIONSHIP = Connector.COURSE_LEARNER_RELATIONSHIP;
@@ -32,7 +30,7 @@ public class CourseManager implements Serializable
 	{
 		courseOfferings = new TreeSet<>(new CourseComparator());
 		
-		network = new HashSet<>();
+		network = new TreeSet<>();
 	}
 
 	/**
@@ -445,11 +443,8 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
-	public static class Connector implements Serializable
+	public static class Connector implements Serializable, Comparable<Connector>
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -1125763548284346166L;
 		public final int relationship;
 		public final int courseCRN;
@@ -467,19 +462,45 @@ public class CourseManager implements Serializable
 
 		public boolean equals(Object o)
 		{
-			boolean rVal;
+			if(this == o)
+				return true;
+			
+			boolean rVal = false;
+			
 			if (o instanceof Connector)
 			{
 				Connector other = (Connector) o;
 
 				rVal = (this.relationship == other.relationship);
-				rVal = (this.courseCRN == other.courseCRN) && rVal;
-				rVal = (this.person.equals(other.person)) && rVal;
+				if(rVal)
+				{
+					rVal = (this.courseCRN == other.courseCRN);
+					if(rVal)
+					{
+						rVal = (this.person.equals(other.person));	
+					}
+				}
 			}
-			else
+			
+			return rVal;
+		}
+
+		@Override
+		public int compareTo(Connector other)
+		{
+			if(this.equals(other))
+				return 0;
+			
+			int rVal = Integer.compare(this.relationship, other.relationship);
+			if(rVal == 0)
 			{
-				rVal = false;
+				rVal = Integer.compare(this.courseCRN, other.courseCRN);
+				if(rVal == 0)
+				{
+					rVal = this.person.getUserID().compareTo(other.person.getUserID());
+				}
 			}
+			
 			return rVal;
 		}
 	}
@@ -495,7 +516,6 @@ public class CourseManager implements Serializable
 
 	}
 
-	
 	private void serializeThis()
 	{
 		try
