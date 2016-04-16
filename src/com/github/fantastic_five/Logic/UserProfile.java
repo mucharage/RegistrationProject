@@ -37,8 +37,7 @@ public class UserProfile implements Serializable
 
 	public boolean equals(UserProfile other)
 	{
-		boolean rVal = this.userID.equals(other.userID);
-		return rVal;
+		return this.userID.equals(other.userID);
 	}
 
 	/**
