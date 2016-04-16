@@ -87,18 +87,7 @@ public class GUIViewSchedule extends JPanel
 			}
 		});
 		add(btnPrint);
-
-		// Button & Logic for print button
-		JButton btnPrint = new JButton("Print");
-		btnPrint.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				createPrintWindow();
-			}// end of actionPerformed
-		});// end of actionListener
-		btnPrint.setBounds(498, 386, 99, 23);
-		add(btnPrint);
+		
 		
 	 	// Adds a scrollPane
 		JScrollPane scrollPane_1 = new JScrollPane();

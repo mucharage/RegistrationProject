@@ -53,7 +53,7 @@ public class GUIAddRemoveCourse extends JPanel
 	private JButton btnSearch;
 	private JLabel lblCrn;
 	private JTable searchTable;
-	private JTable addedTable;
+	private static JTable addedTable;
 
 	private int CRNToSearch;
 	ArrayList<Course> courseSearchResult;
@@ -140,7 +140,7 @@ public class GUIAddRemoveCourse extends JPanel
 						{
 							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
@@ -215,7 +215,7 @@ public class GUIAddRemoveCourse extends JPanel
 		 * Creates a Table which shall display result of the course that user has searched for
 		 */
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 
 		{
 			@Override
@@ -337,7 +337,7 @@ public class GUIAddRemoveCourse extends JPanel
 
 	}// end of GUIAddorRemoveCourse()
 
-	private Object[][] getClassTable()
+	public static Object[][] getClassTable()
 	{
 		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(MiscUtils.getCurrentLoggedInUser());
 		Object[][] cells = new Object[enrolledCourses.size()][7];
