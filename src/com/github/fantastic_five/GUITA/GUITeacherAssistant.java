@@ -2,6 +2,7 @@ package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,6 +62,12 @@ public class GUITeacherAssistant extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(191, 97, 243, 23);
 		add(lblAdministration);
+	}
+
+	boolean isTeacherWindowOpen()
+	{
+		Frame[] allFrames = Frame.getFrames();
+		return false;
 	}
 
 	public void createStudentWindow()

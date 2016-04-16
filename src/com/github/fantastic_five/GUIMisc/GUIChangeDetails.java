@@ -2,12 +2,14 @@ package com.github.fantastic_five.GUIMisc;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -232,8 +234,30 @@ public class GUIChangeDetails extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.loggedIn.remove(0);
-				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+				// Checks to see TA status
+				if (StudentRegistrationMain.loggedIn.size() > 0 && StudentRegistrationMain.loggedIn.get(0).getPermLevel() == UserProfile.TA)
+				{
+					// Gets all activev windows
+					Frame frames[] = Frame.getFrames();
+
+					// Closes all windows that aren't the main window
+					for (Frame f : frames)
+						if (f instanceof JFrame && !(f == StudentRegistrationMain.mainWindow))
+							f.dispose();
+
+					// Resets the main window
+					StudentRegistrationMain.loggedIn.remove(0);
+					StudentRegistrationMain.mainWindow.getContentPane().removeAll();
+					StudentRegistrationMain.mainWindow.getContentPane().add(new GUILogin());
+					StudentRegistrationMain.mainWindow.pack();
+
+				}
+				// Isn't a TA:
+				else
+				{
+					StudentRegistrationMain.loggedIn.remove(0);
+					StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+				}
 			}
 		});
 		add(btnBack);
