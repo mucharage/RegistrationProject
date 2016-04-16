@@ -1,5 +1,6 @@
 package com.github.fantastic_five.Logic;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import com.github.fantastic_five.StudentRegistrationMain;
 
 public class DatabaseIO
 {
-	public static String fileLocation = "big.dat";
+	public static String fileLocation = getCoursesFileName();
 	
 	public static void serializeEverything()
 	{		
@@ -70,5 +71,26 @@ public class DatabaseIO
 			this.profiles = profiles;
 			this.financialRecords = financialRecords;
 		}
+	}
+	
+	/**
+	 * @return A String with the proper location of the .dat file
+	 */
+	private static String getCoursesFileName()
+	{
+		// Gets the OS name
+		String OS = System.getProperty("os.name").toLowerCase();
+
+		// Puts the file in %appdata% if Windows
+		if (OS.indexOf("win") >= 0)
+			return System.getenv("APPDATA") + File.separator + "big.dat";
+		// Puts the file in Application Support if OSX
+		else if (OS.indexOf("mac") >= 0)
+			return System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator + "Student Registration" + File.separator + "big.dat";
+		// Puts the file in Temp if Linux
+		else if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0)
+			return "/tmp/big.dat";
+		else
+			return "big.dat";
 	}
 }
