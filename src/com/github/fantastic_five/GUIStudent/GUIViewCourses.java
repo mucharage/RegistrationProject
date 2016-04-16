@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
@@ -86,6 +88,35 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
+		
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(508, 386, 89, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{				
+				
+				StringBuilder builder = new StringBuilder();
+				builder.append("Name: ");
+				builder.append(MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName());
+				builder.append(System.getProperty("line.separator"));
+				builder.append("User ID: "  + MiscUtils.getCurrentLoggedInUser().getUserID());
+				
+				//headerText.getFont().deriveFont(Font.PLAIN, 14.0f);
+				MessageFormat header1 = new MessageFormat(builder.toString());	
+			//	MessageFormat header2 = new MessageFormat(headerText2);
+				
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header1, null);
+				}
+				catch (PrinterException e1)
+				{					
+					e1.printStackTrace();
+				}
+			}
+		});
+		add(btnPrint);
 
 	}// end of GuiViewCourses()
 

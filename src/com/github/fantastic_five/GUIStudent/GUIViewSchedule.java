@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,13 +18,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
+import javax.swing.text.html.ParagraphView;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
 public class GUIViewSchedule extends JPanel
 {
+	
 	/**
 	 * This GUI that shall display student's individual schedule of courses that he/she has chosen
 	 */
@@ -68,6 +74,16 @@ public class GUIViewSchedule extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				try
+				{
+					table.print();
+				}
+				catch (PrinterException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}// end of actionPerformed
 		});// end of actionListener
 		add(btnPrint);
