@@ -125,7 +125,7 @@ public class GUIAddRemoveClass extends JPanel
 						{
 							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
@@ -190,7 +190,7 @@ public class GUIAddRemoveClass extends JPanel
 
 	    // adds a table to display searched classes
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -200,38 +200,52 @@ public class GUIAddRemoveClass extends JPanel
 		});
 		searchScrollPane.setViewportView(searchTable);
 
+		// Button & Logic for Search
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(300, 82, 128, 23);
+		btnSearch.setBounds(306, 81, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
+
 			public void actionPerformed(ActionEvent e)
 			{
 				try
 				{
 					int CRN = Integer.parseInt(searchField.getText());
-					searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						@Override
-						public boolean isCellEditable(int row, int column)
+						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 						{
-							return false;
-						}
-					});
-					searchScrollPane.setViewportView(searchTable);
-					revalidate();
-					repaint();
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						searchScrollPane.setViewportView(searchTable);
+						revalidate();
+						repaint();
+					}
+					else
+					{
+						JLabel errorMessage = new JLabel();
+						errorMessage.setForeground(Color.RED);
+						errorMessage.setText("CRN Not Found");
+						errorMessage.setBounds(88, 102, 206, 20);
+						revalidate();
+						repaint();
+						add(errorMessage);
+					}
 				}
 				catch (NumberFormatException exception)
 				{
 					JLabel notNumbers = new JLabel();
 					notNumbers.setForeground(Color.RED);
-					notNumbers.setText("CRN Must be Numbers Only");
-					notNumbers.setBounds(88, 102, 206, 20);
+					notNumbers.setText("Invalid CRN");
+					notNumbers.setBounds(90, 102, 206, 20);
 					revalidate();
 					repaint();
 					add(notNumbers);
-					//TODO: Notification for incorrect CRN
 				}
 			}
 		});
@@ -239,7 +253,7 @@ public class GUIAddRemoveClass extends JPanel
 
 		// adds another table that displays courses the user has added
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
 		addedScrollPane.setViewportView(addedTable);
 		
 		// Button & Logic for Add courses
@@ -254,7 +268,7 @@ public class GUIAddRemoveClass extends JPanel
 				if (rowSel > -1)
 				{
 					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 					{
 						@Override
 						public boolean isCellEditable(int row, int column)
@@ -282,38 +296,9 @@ public class GUIAddRemoveClass extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(177, 30, 243, 23);
 		add(lblCourseRemoval);
-		
-		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(304, 81, 89, 23);
-		btnSearch.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				AbstractButton textField = null;
-				CRNToSearch = Integer.parseInt(textField.getText());
-				courseSearchResult = new ArrayList<Course>();
-				for (Course c : StudentRegistrationMain.mainCourseManager.copyCourseOfferings())
-					if (c.getCRN() == CRNToSearch)
-						courseSearchResult.add(c);
-				searchTable.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, { null, null, null, null, null, null, null } }, new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
-				{
-					@Override
-					public boolean isCellEditable(int row, int column)
-					{
-						return false;
-					}
-				});
-				JScrollPane scrollPane_1 = null;
-				scrollPane_1.setViewportView(searchTable);
-				revalidate();
-				repaint();
-			}
-		});
-		add(btnSearch);
 	}
 	
-	private Object[][] getClassTable()
+	public static Object[][] getClassTable()
 	{
 		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(MiscUtils.getCurrentLoggedInUser());
 		Object[][] cells = new Object[enrolledCourses.size()][7];
@@ -363,8 +348,7 @@ public class GUIAddRemoveClass extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			if (teacher != null)
-				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = c.getDays();
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
