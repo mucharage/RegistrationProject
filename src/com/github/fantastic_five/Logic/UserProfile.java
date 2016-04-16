@@ -156,10 +156,4 @@ public class UserProfile implements Serializable
 		}
 		return success;
 	}
-
-	@Override
-	public String toString()
-	{
-		return this.userID + "_" + this.password + "_" + this.permLevel + "_" + this.firstName + "_" + this.middleName + "_" + this.lastName;
-	}
 }

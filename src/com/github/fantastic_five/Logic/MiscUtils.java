@@ -1,14 +1,7 @@
 package com.github.fantastic_five.Logic;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.TreeSet;
 
 import com.github.fantastic_five.StudentRegistrationMain;
@@ -58,6 +51,4 @@ public class MiscUtils
 	{
 		return StudentRegistrationMain.loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
 	}
-
-
 }

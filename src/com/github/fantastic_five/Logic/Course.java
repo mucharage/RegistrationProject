@@ -451,10 +451,4 @@ public class Course implements Serializable
 			return rVal;
 		}
 	}
-
-	@Override
-	public String toString()
-	{
-		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
-	}
 }
