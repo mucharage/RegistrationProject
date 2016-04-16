@@ -76,7 +76,7 @@ public class FinancialRecordsOffice implements Serializable
 		}
 	}
 	
-	public boolean charge
+	public boolean charge;
 	
 	private UserProfile dummyUser(String userID)
 	{
