@@ -30,6 +30,7 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
 {
+	
 	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
@@ -69,7 +70,7 @@ public class GUIViewCourses extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
 			}
 		});
-		btnBack.setBounds(10, 386, 128, 23);
+		btnBack.setBounds(20, 386, 128, 23);
 		add(btnBack);
 
 		/**
@@ -90,25 +91,19 @@ public class GUIViewCourses extends JPanel
 		add(lblCourseRemoval);
 		
 		JButton btnPrint = new JButton("Print");
-		btnPrint.setBounds(508, 386, 89, 23);
+		btnPrint.setBounds(469, 386, 128, 23);
 		btnPrint.addActionListener(new ActionListener()
 		{
+		
 			public void actionPerformed(ActionEvent e)
-			{				
-				
-				StringBuilder builder = new StringBuilder();
-				builder.append("Name: ");
-				builder.append(MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName());
-				builder.append(System.getProperty("line.separator"));
-				builder.append("User ID: "  + MiscUtils.getCurrentLoggedInUser().getUserID());
-				
-				//headerText.getFont().deriveFont(Font.PLAIN, 14.0f);
-				MessageFormat header1 = new MessageFormat(builder.toString());	
-			//	MessageFormat header2 = new MessageFormat(headerText2);
-				
+			{			
+				MessageFormat header = new MessageFormat ("Master Course List");				
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
 				try
 				{
-					table.print(JTable.PrintMode.FIT_WIDTH, header1, null);
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 				}
 				catch (PrinterException e1)
 				{					
