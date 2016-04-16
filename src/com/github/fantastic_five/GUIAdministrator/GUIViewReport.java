@@ -25,7 +25,7 @@ public class GUIViewReport extends JPanel
 {
 	JTable table;
 	int permLevel;
-	String[] headers = new String[] { "Last", "First", "UserID", "CRNs" };
+	String[] headers = new String[] { "Last", "First", "UserID", "Paid", "CRNs" };
 
 	// TODO: Add PRINT button
 
@@ -53,7 +53,8 @@ public class GUIViewReport extends JPanel
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(75);
-		table.getColumnModel().getColumn(3).setPreferredWidth(310);
+		table.getColumnModel().getColumn(3).setPreferredWidth(20);
+		table.getColumnModel().getColumn(4).setPreferredWidth(290);
 
 		scrollPane.setViewportView(table);
 
@@ -108,12 +109,18 @@ public class GUIViewReport extends JPanel
 			cells[row][0] = u.getLastName();
 			cells[row][1] = u.getFirstName();
 			cells[row][2] = u.getUserID();
-			cells[row][3] = getCRNS(u);
+			cells[row][3] = getPaymentUnicode(StudentRegistrationMain.financialRecords.userHasCharges(u.getUserID()));
+			cells[row][4] = getCRNS(u);
 
 			row++;
 		}
 
 		return cells;
+	}
+
+	String getPaymentUnicode(boolean hasDues)
+	{
+		return hasDues ? "\u2713" : "\u2717";
 	}
 
 	String getCRNS(UserProfile profile)

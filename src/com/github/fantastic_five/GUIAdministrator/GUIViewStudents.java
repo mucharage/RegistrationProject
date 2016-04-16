@@ -40,7 +40,7 @@ public class GUIViewStudents extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Middle", "User ID", "Paid" })
+		table.setModel(new DefaultTableModel(getTable(), new String[] { "Last", "First", "Middle", "User ID" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -92,7 +92,7 @@ public class GUIViewStudents extends JPanel
 				return !(t.getPermLevel() == UserProfile.STUDENT);
 			}
 		});
-		Object[][] cells = new Object[studentUsers.size()][7];
+		Object[][] cells = new Object[studentUsers.size()][4];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
@@ -102,8 +102,6 @@ public class GUIViewStudents extends JPanel
 			cells[row][1] = u.getFirstName();
 			cells[row][2] = u.getMiddleName();
 			cells[row][3] = u.getUserID();
-			// TODO: needs a way to actually check pay status
-			cells[row][4] = "\u2713";
 	
 			row++;
 		}

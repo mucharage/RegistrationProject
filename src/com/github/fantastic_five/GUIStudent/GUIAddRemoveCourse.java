@@ -238,17 +238,30 @@ public class GUIAddRemoveCourse extends JPanel
 				try
 				{
 					int CRN = Integer.parseInt(searchField.getText());
-					searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						@Override
-						public boolean isCellEditable(int row, int column)
+						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 						{
-							return false;
-						}
-					});
-					searchScrollPane.setViewportView(searchTable);
-					revalidate();
-					repaint();
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						searchScrollPane.setViewportView(searchTable);
+						revalidate();
+						repaint();
+					}
+					else
+					{
+						JLabel errorMessage = new JLabel();
+						errorMessage.setForeground(Color.RED);
+						errorMessage.setText("CRN Not Found");
+						errorMessage.setBounds(88, 102, 206, 20);
+						revalidate();
+						repaint();
+						add(errorMessage);
+					}
 				}
 				catch (NumberFormatException exception)
 				{
@@ -374,8 +387,7 @@ public class GUIAddRemoveCourse extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			if (teacher != null)
-				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = MiscUtils.getDaysFormatted(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
