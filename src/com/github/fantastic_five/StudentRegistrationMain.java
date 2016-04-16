@@ -13,6 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.CourseManager;
+import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.FinancialRecordsOffice;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -53,8 +54,7 @@ public class StudentRegistrationMain
 				// Sets the icon ;D
 				mainWindow.setIconImage(Toolkit.getDefaultToolkit().createImage(ClassLoader.getSystemResource("com/github/fantastic_five/Resources/Icon.png")));
 				
-				MiscUtils.loadCoursesFromFile();
-				MiscUtils.loadUsersFromFile();
+				DatabaseIO.deserializeEverything();
 				initAdminUser();
 				createMainWindow();
 				replaceMainWindowContents(new GUILogin());
