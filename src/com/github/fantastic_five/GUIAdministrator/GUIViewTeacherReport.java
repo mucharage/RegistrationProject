@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -18,13 +20,14 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewTeacherReport extends JPanel
 {
 	JTable table;
-	String[] headers = new String[] { "Last", "First", "UserID", "Available", "CRNs" };
+	String[] headers = new String[] { "Last", "First", "UserID", "Available", "TA", "CRNs" };
 
 	// TODO: Add PRINT button
 
@@ -51,7 +54,8 @@ public class GUIViewTeacherReport extends JPanel
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(75);
 		table.getColumnModel().getColumn(3).setPreferredWidth(60);
-		table.getColumnModel().getColumn(4).setPreferredWidth(250);
+		table.getColumnModel().getColumn(4).setPreferredWidth(25);
+		table.getColumnModel().getColumn(5).setPreferredWidth(225);
 
 		scrollPane.setViewportView(table);
 
@@ -73,6 +77,30 @@ public class GUIViewTeacherReport extends JPanel
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
+
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(498, 386, 99, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				MessageFormat header = new MessageFormat("Master Teacher Report");
+
+				String name = MiscUtils.getCurrentLoggedInUser().getFirstName() + " " + MiscUtils.getCurrentLoggedInUser().getLastName();
+				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();
+				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		add(btnPrint);
 
 		// Panel label, essentially
 		JLabel lblAdministration = new JLabel("View Teacher Report");
@@ -107,7 +135,8 @@ public class GUIViewTeacherReport extends JPanel
 			cells[row][1] = u.getFirstName();
 			cells[row][2] = u.getUserID();
 			cells[row][3] = getAvailibilityUnicode(u);
-			cells[row][4] = getCRNS(u);
+			cells[row][4] = u.getPermLevel() == UserProfile.TA ? "\u2713" : "\u2717";
+			cells[row][5] = getCRNS(u);
 
 			row++;
 		}
@@ -121,7 +150,7 @@ public class GUIViewTeacherReport extends JPanel
 		if (u != null)
 			numCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(u).size();
 
-		return numCourses >= 5 ? "     \u2717" : "     \u2713";
+		return numCourses >= 5 ? "\u2717" : "\u2713";
 	}
 
 	String getCRNS(UserProfile profile)
