@@ -13,25 +13,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
@@ -41,27 +35,26 @@ import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUIAddRemoveCourse extends JPanel
+public class GUIAddDropCourse extends JPanel
 {
 	/**
 	 * Private instant variables
 	 */
 	private JTextField searchField;
 	private JButton btnAdd;
-	private JButton btnRemove;
+	private JButton btnDrop;
 	private JButton btnBack;
 	private JButton btnSearch;
 	private JLabel lblCrn;
 	private JTable searchTable;
 	private static JTable addedTable;
 
-	private int CRNToSearch;
 	ArrayList<Course> courseSearchResult;
 
 	/**
-	 * This GUI class displays the panel for adding and removing courses. Here student can search course by CRN that he/she want to add or remove, and would allow them to do so.
+	 * This GUI class displays the panel for adding and removing courses. Here student can search course by CRN that he/she want to add or Drop, and would allow them to do so.
 	 */
-	public GUIAddRemoveCourse()
+	public GUIAddDropCourse()
 	{
 
 		setBounds(0, 0, 618, 434);
@@ -106,9 +99,9 @@ public class GUIAddRemoveCourse extends JPanel
 		 * Button & Logic for Remove for the list below
 		 */
 
-		btnRemove = new JButton("Remove");
-		btnRemove.setBounds(180, 345, 254, 23);
-		btnRemove.addActionListener(new ActionListener()
+		btnDrop = new JButton("Drop");
+		btnDrop.setBounds(180, 345, 254, 23);
+		btnDrop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -170,7 +163,7 @@ public class GUIAddRemoveCourse extends JPanel
 				popup.getContentPane().add(btnNo);
 			}// end of the actionPerformed
 		});// end of the actionPerformed
-		add(btnRemove);
+		add(btnDrop);
 
 		/**
 		 * adds a back button.
@@ -287,6 +280,20 @@ public class GUIAddRemoveCourse extends JPanel
 		addedTable = new JTable();
 		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
 		addedScrollPane.setViewportView(addedTable);
+		
+		/**
+		 * Makes Table-Cell Non-editable
+		 */
+		DefaultTableModel tableModel = new DefaultTableModel() {
+
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+
+		addedTable.setModel(tableModel);
 
 		/**
 		 * Button & Logic for Add Courses to list below.

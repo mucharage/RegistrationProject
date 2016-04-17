@@ -7,6 +7,7 @@ package com.github.fantastic_five.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -32,6 +33,7 @@ import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import javax.swing.JScrollBar;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -108,6 +110,8 @@ public class GUIViewCourses extends JPanel
 			}
 		});
 		add(btnPrint);
+		
+		
 
 	/**
 	 * Displays Course Description by  double Clicking selected Course 
@@ -126,15 +130,19 @@ public class GUIViewCourses extends JPanel
 					popup.setLocationRelativeTo(null);
 					popup.setResizable(false);
 					popup.setVisible(true);
-
+					
+					JScrollPane scrollPane = new JScrollPane();	
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);
+																		
 					JTextArea desc = new JTextArea();
 					desc.setText(selectedCourse.getDescription());
 					desc.setWrapStyleWord(true);
 					desc.setLineWrap(true);
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
-					
-					popup.add(desc);		
+					desc.setBounds(10, 11, 421, 96);						
+					desc.setEditable(false);
+					scrollPane.setViewportView(desc);
 					
 				}//end of if statement
 			}//end of mouseClicked

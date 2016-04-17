@@ -54,7 +54,7 @@ public class GUIStudent extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveCourse());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddDropCourse());
 			}
 		});
 		btnAddremoveCourse.setBounds(178, 220, 243, 23);
