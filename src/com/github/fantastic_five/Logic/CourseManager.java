@@ -357,7 +357,7 @@ public class CourseManager implements Serializable
 		boolean rVal = false;
 		if ((instructor.getPermLevel() >= UserProfile.TA) && (instructor.getPermLevel() <= UserProfile.ADMIN))
 		{
-			if (!containsCourse(courseCRN))
+			if (containsCourse(courseCRN))
 			{
 				if (getInstructorWithCourse(courseCRN) == null)
 				{

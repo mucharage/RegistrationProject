@@ -123,4 +123,12 @@ public class StudentRegistrationMain
 			}
 		}
 	}
+	
+	/**
+	 * @return a UserProfile object of who is currently logged in, null if no user is logged in (shouldn't be, but just in case)
+	 */
+	public static UserProfile getCurrentLoggedInUser()
+	{
+		return loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
+	}
 }
