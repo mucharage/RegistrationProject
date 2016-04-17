@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,9 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -72,24 +72,24 @@ public class GUIViewCourses extends JPanel
 		});
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-		
+
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setBounds(469, 386, 128, 23);
 		btnPrint.addActionListener(new ActionListener()
 		{
-		
+
 			public void actionPerformed(ActionEvent e)
-			{			
-				MessageFormat header = new MessageFormat ("Master Course List");				
-				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
-				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
-				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
+			{
+				MessageFormat header = new MessageFormat("Master Course List");
+				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName() + " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
+				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();
+				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
 				try
 				{
 					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
 				}
 				catch (PrinterException e1)
-				{					
+				{
 					e1.printStackTrace();
 				}
 			}
@@ -108,42 +108,42 @@ public class GUIViewCourses extends JPanel
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCourseRemoval.setBounds(179, 21, 243, 23);
 		add(lblCourseRemoval);
-		
-		/**
-		 * Displays Course Description by  double Clicking selected Course 
-		 */
-			table.addMouseListener(new MouseAdapter()
-			{
-				public void mouseClicked(MouseEvent e)
-				{
-					if (e.getClickCount() == 2)
-					{
-						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
-						popup.setBounds(200, 200, 447, 147);
-						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						popup.setLocationRelativeTo(null);
-						popup.setResizable(false);
-						popup.setVisible(true);
-						
-						JScrollPane scrollPane = new JScrollPane();	
-						scrollPane.setBounds(10, 11, 421, 96);
-						popup.getContentPane().add(scrollPane);
-									
-											
-						JTextArea desc = new JTextArea();
-						desc.setText(selectedCourse.getDescription());
-						desc.setWrapStyleWord(true);
-						desc.setLineWrap(true);
-						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-						desc.setBounds(10, 11, 421, 96);						
-						desc.setEditable(false);
-						scrollPane.setViewportView(desc);
-						
-					}//end of if statement
-				}//end of mouseClicked
-			});//end of addMouseLisener
+		/**
+		 * Displays Course Description by double Clicking selected Course
+		 */
+		table.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2)
+				{
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
+					popup.setBounds(200, 200, 447, 147);
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(null);
+					popup.setResizable(false);
+					popup.setVisible(true);
+					popup.setAlwaysOnTop(true);
+
+					JScrollPane scrollPane = new JScrollPane();
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);
+
+					JTextArea desc = new JTextArea();
+					desc.setText(selectedCourse.getDescription());
+					desc.setWrapStyleWord(true);
+					desc.setLineWrap(true);
+					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+					desc.setBounds(10, 11, 421, 96);
+					desc.setEditable(false);
+					scrollPane.setViewportView(desc);
+
+				} // end of if statement
+			}// end of mouseClicked
+		});// end of addMouseLisener
 
 	}// end of GuiViewCourses()
 
@@ -174,11 +174,11 @@ public class GUIViewCourses extends JPanel
 
 		return cells;
 	}
-	
+
 	String getFormattedDays(TreeSet<Day> days)
 	{
 		String rVal = "";
-		for(Day d : days)
+		for (Day d : days)
 			rVal += d.getAbbreviation() + " ";
 		return rVal;
 	}

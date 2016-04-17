@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +30,6 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -94,8 +94,8 @@ public class GUIViewCourses extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{			
 				MessageFormat header = new MessageFormat ("Master Course List");				
-				String name = MiscUtils.getCurrentLoggedInUser().getFirstName()+ " " + MiscUtils.getCurrentLoggedInUser().getLastName();
-				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();	
+				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName()+ " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
+				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();	
 				MessageFormat footer = new MessageFormat("Name: "  + name + "                                                                User ID: " + userID);						
 				try
 				{
@@ -120,12 +120,13 @@ public class GUIViewCourses extends JPanel
 					{
 						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
+						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						popup.setLocationRelativeTo(null);
 						popup.setResizable(false);
 						popup.setVisible(true);
+						popup.setAlwaysOnTop(true);
 						
 						JScrollPane scrollPane = new JScrollPane();	
 						scrollPane.setBounds(10, 11, 421, 96);

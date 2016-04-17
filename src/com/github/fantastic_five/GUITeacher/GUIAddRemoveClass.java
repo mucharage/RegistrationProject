@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +30,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -44,7 +44,7 @@ public class GUIAddRemoveClass extends JPanel
 	private JLabel lblCrn;
 	private JTable searchTable;
 	private JTable addedTable;
-	
+
 	private int CRNToSearch;
 	ArrayList<Course> courseSearchResult;
 
@@ -83,12 +83,12 @@ public class GUIAddRemoveClass extends JPanel
 				/** Do Nothing */
 			}
 		});
-		
+
 		// Creates another scroll pane
 		JScrollPane addedScrollPane = new JScrollPane();
 		addedScrollPane.setBounds(41, 227, 540, 107);
 		add(addedScrollPane);
-		
+
 		// Button & Logic for Remove Courses
 		btnRemove = new JButton("Remove");
 		btnRemove.setBounds(180, 345, 254, 23);
@@ -96,13 +96,15 @@ public class GUIAddRemoveClass extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				JFrame popup = new JFrame("Confirmation");
+				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
 				popup.setBounds(100, 100, 307, 107);
 				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				popup.setLocationRelativeTo(null);
 				popup.getContentPane().setLayout(null);
 				popup.setResizable(false);
 				popup.setVisible(true);
+				popup.setAlwaysOnTop(true);
+
 				JLabel txtpnAreYouSure = new JLabel();
 				txtpnAreYouSure.setText("Are you sure?");
 				txtpnAreYouSure.setForeground(Color.RED);
@@ -122,7 +124,7 @@ public class GUIAddRemoveClass extends JPanel
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 
 							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 							{
@@ -187,7 +189,7 @@ public class GUIAddRemoveClass extends JPanel
 		searchScrollPane.setBounds(41, 132, 539, 50);
 		add(searchScrollPane);
 
-	    // adds a table to display searched classes
+		// adds a table to display searched classes
 		searchTable = new JTable();
 		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 		{
@@ -254,7 +256,7 @@ public class GUIAddRemoveClass extends JPanel
 		addedTable = new JTable();
 		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
 		addedScrollPane.setViewportView(addedTable);
-		
+
 		// Button & Logic for Add courses
 		btnAdd = new JButton("Add");
 		btnAdd.setBounds(180, 183, 254, 23);
@@ -266,7 +268,7 @@ public class GUIAddRemoveClass extends JPanel
 
 				if (rowSel > -1)
 				{
-					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 					{
 						@Override
@@ -296,10 +298,10 @@ public class GUIAddRemoveClass extends JPanel
 		lblCourseRemoval.setBounds(177, 30, 243, 23);
 		add(lblCourseRemoval);
 	}
-	
+
 	public static Object[][] getClassTable()
 	{
-		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(MiscUtils.getCurrentLoggedInUser());
+		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
 		Object[][] cells = new Object[enrolledCourses.size()][7];
 		int row = 0;
 		for (Course c : enrolledCourses)

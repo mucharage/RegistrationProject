@@ -1,4 +1,4 @@
-	package com.github.fantastic_five;
+package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,7 +15,6 @@ import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.CourseManager;
 import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.FinancialRecordsOffice;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
@@ -25,13 +24,13 @@ import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 public class StudentRegistrationMain
 {
-	// Kept public for a reason - may be needed by other classes
+	// Kept public & static for a reason - may be needed by other classes for reference, arbitrarily
 	public static JFrame mainWindow = new JFrame("FF Student Registration");
-	public static Dimension mainWindowDimension = new Dimension(618, 458);
+	// A "Cache" of who is logged in. Only ever holds one UserProfile, but an ArrayList ensures it's a "safe copy"
 	public static ArrayList<UserProfile> loggedIn = new ArrayList<UserProfile>();
+
+	// Main variables which store all Courses, all UserProfiles, and all Financial Records
 	public static CourseManager mainCourseManager = new CourseManager();
-	
-	//Temporary addition by Stephen, may need to be changed by someone who fully understands the GUI
 	public static UserProfileDatabase profiles = new UserProfileDatabase();
 	public static FinancialRecordsOffice financialRecords = new FinancialRecordsOffice();
 
@@ -51,9 +50,10 @@ public class StudentRegistrationMain
 			@Override
 			public void run()
 			{
-				// Sets the icon ;D
+				// Sets our icon in use
 				mainWindow.setIconImage(Toolkit.getDefaultToolkit().createImage(ClassLoader.getSystemResource("com/github/fantastic_five/Resources/Icon.png")));
-				
+
+				// Uses serialization to load in our variables from secondary storage
 				DatabaseIO.deserializeEverything();
 				initAdminUser();
 				createMainWindow();
@@ -70,7 +70,7 @@ public class StudentRegistrationMain
 	{
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		mainWindow.setPreferredSize(mainWindowDimension);
+		mainWindow.setPreferredSize(new Dimension(618, 458));
 		mainWindow.setResizable(false);
 
 		mainWindow.pack();
@@ -79,7 +79,7 @@ public class StudentRegistrationMain
 	}
 
 	/**
-	 * Creates a default administrator user if one doesn't exist
+	 * Generates a default Adminstrator account that will ALWAYS be available.
 	 */
 	private static void initAdminUser()
 	{
@@ -122,5 +122,13 @@ public class StudentRegistrationMain
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @return a UserProfile object of who is currently logged in, null if no user is logged in (shouldn't be, but just in case)
+	 */
+	public static UserProfile getCurrentLoggedInUser()
+	{
+		return loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
 	}
 }

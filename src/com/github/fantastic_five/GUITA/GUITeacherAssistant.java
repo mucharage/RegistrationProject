@@ -1,6 +1,7 @@
 package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Point;
@@ -104,7 +105,7 @@ public class GUITeacherAssistant extends JPanel
 
 		// Basic pop-up window initialization
 		studentView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		studentView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
+		studentView.setPreferredSize(new Dimension(618, 458));
 		studentView.setResizable(false);
 		studentView.pack();
 		studentView.setVisible(true);
@@ -123,7 +124,7 @@ public class GUITeacherAssistant extends JPanel
 
 		// Basic pop-up window initialization
 		teacherView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		teacherView.setPreferredSize(StudentRegistrationMain.mainWindowDimension);
+		teacherView.setPreferredSize(new Dimension(618, 458));
 		teacherView.setResizable(false);
 		teacherView.pack();
 		teacherView.setVisible(true);
