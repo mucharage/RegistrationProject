@@ -23,16 +23,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.Course.Day;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -124,34 +122,42 @@ public class GUIViewCourses extends JPanel
 		 * Displays Course Description by  double Clicking selected Course 
 		 */
 		
-		table.addMouseListener(new MouseAdapter()
-		{
-			public void mouseClicked(MouseEvent e)
+		/**
+		 * Displays Course Description by  double Clicking selected Course 
+		 */
+			table.addMouseListener(new MouseAdapter()
 			{
-				if (e.getClickCount() == 2)
+				public void mouseClicked(MouseEvent e)
 				{
-					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+					if (e.getClickCount() == 2)
+					{
+						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-					JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
-					popup.setBounds(200, 200, 447, 147);
-					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setLocationRelativeTo(null);
-					popup.setResizable(false);
-					popup.setVisible(true);
-
-					JTextArea desc = new JTextArea();
-					desc.setText(selectedCourse.getDescription());
-					desc.setWrapStyleWord(true);
-					desc.setLineWrap(true);
-					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
-					
-					popup.add(desc);		
-					
-				}//end of if statement
-			}//end of mouseClicked
-		});//end of addMouseLisener
-
+						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
+						popup.setBounds(200, 200, 447, 147);
+						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						popup.setLocationRelativeTo(null);
+						popup.setResizable(false);
+						popup.setVisible(true);
+						
+						JScrollPane scrollPane = new JScrollPane();	
+						scrollPane.setBounds(10, 11, 421, 96);
+						popup.getContentPane().add(scrollPane);
+									
+											
+						JTextArea desc = new JTextArea();
+						desc.setText(selectedCourse.getDescription());
+						desc.setWrapStyleWord(true);
+						desc.setLineWrap(true);
+						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+						desc.setBounds(10, 11, 421, 96);						
+						desc.setEditable(false);
+						scrollPane.setViewportView(desc);
+						
+					}//end of if statement
+				}//end of mouseClicked
+			});//end of addMouseLisener
+		
 	}// end of GuiViewCourses()
 
 	/**

@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,7 +51,7 @@ public class GUIViewSchedule extends JPanel
 		 * adds a table which would displays list of courses that user have ch osen
 		 */
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddRemoveCourse.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		addedTable.setModel(new DefaultTableModel(GUIAddDropCourse.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -142,19 +141,24 @@ public class GUIViewSchedule extends JPanel
 						popup.setLocationRelativeTo(null);
 						popup.setResizable(false);
 						popup.setVisible(true);
-
+						
+						JScrollPane scrollPane = new JScrollPane();	
+						scrollPane.setBounds(10, 11, 421, 96);
+						popup.getContentPane().add(scrollPane);
+									
+											
 						JTextArea desc = new JTextArea();
 						desc.setText(selectedCourse.getDescription());
 						desc.setWrapStyleWord(true);
 						desc.setLineWrap(true);
 						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-						desc.setBounds(10, 11, 421, 96);
-						
-						popup.getContentPane().add(desc);		
+						desc.setBounds(10, 11, 421, 96);						
+						desc.setEditable(false);
+						scrollPane.setViewportView(desc);
 						
 					}//end of if statement
 				}//end of mouseClicked
 			});//end of addMouseLisener
-
+		
 	}// end of GUIViewSchedule()
 }// end of JPanel extension of GUIViewSchedule

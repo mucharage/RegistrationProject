@@ -23,15 +23,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
@@ -108,6 +105,8 @@ public class GUIViewCourses extends JPanel
 			}
 		});
 		add(btnPrint);
+		
+		
 
 	/**
 	 * Displays Course Description by  double Clicking selected Course 
@@ -126,15 +125,19 @@ public class GUIViewCourses extends JPanel
 					popup.setLocationRelativeTo(null);
 					popup.setResizable(false);
 					popup.setVisible(true);
-
+					
+					JScrollPane scrollPane = new JScrollPane();	
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);
+																		
 					JTextArea desc = new JTextArea();
 					desc.setText(selectedCourse.getDescription());
 					desc.setWrapStyleWord(true);
 					desc.setLineWrap(true);
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
-					
-					popup.add(desc);		
+					desc.setBounds(10, 11, 421, 96);						
+					desc.setEditable(false);
+					scrollPane.setViewportView(desc);
 					
 				}//end of if statement
 			}//end of mouseClicked

@@ -28,7 +28,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.setBounds(335, 180, 154, 23);
+		btnView.setBounds(335, 248, 154, 23);
 		btnView.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -40,7 +40,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for adding classes
 		JButton btnCreateCourseOffering = new JButton("Add Course");
-		btnCreateCourseOffering.setBounds(335, 214, 154, 23);
+		btnCreateCourseOffering.setBounds(335, 180, 154, 23);
 		btnCreateCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -52,7 +52,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for removing courses
 		JButton btnRemoveCourse = new JButton("Remove Course");
-		btnRemoveCourse.setBounds(335, 248, 154, 23);
+		btnRemoveCourse.setBounds(335, 214, 154, 23);
 		btnRemoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -108,7 +108,7 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setForeground(Color.GRAY);
 		lblAdministration.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAdministration.setBounds(191, 97, 243, 23);
+		lblAdministration.setBounds(0, 83, 618, 23);
 		add(lblAdministration);
 	}
 
