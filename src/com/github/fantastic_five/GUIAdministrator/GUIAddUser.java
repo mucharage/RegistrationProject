@@ -48,11 +48,11 @@ public class GUIAddUser extends JPanel
 		add(loginPanel);
 
 		// Panel Label
-		JLabel lblCreateStudent = new JLabel("Add Account");
+		JLabel lblCreateStudent = new JLabel("Add User");
 		lblCreateStudent.setForeground(Color.GRAY);
 		lblCreateStudent.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCreateStudent.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateStudent.setBounds(183, 44, 243, 21);
+		lblCreateStudent.setBounds(0, 56, 618, 21);
 		add(lblCreateStudent);
 
 		// First Name
