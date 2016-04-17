@@ -1,3 +1,4 @@
+	
 package com.github.fantastic_five.Logic;
 
 import java.io.Serializable;

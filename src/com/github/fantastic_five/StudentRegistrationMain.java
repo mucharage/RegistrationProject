@@ -1,4 +1,4 @@
-package com.github.fantastic_five;
+	package com.github.fantastic_five;
 
 import java.awt.Component;
 import java.awt.Dimension;

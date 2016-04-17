@@ -7,7 +7,6 @@ package com.github.fantastic_five.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,16 +23,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
-import javax.swing.JScrollBar;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel

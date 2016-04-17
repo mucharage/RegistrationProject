@@ -7,7 +7,6 @@ package com.github.fantastic_five.GUITeacher;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -27,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import com.github.fantastic_five.GUITeacher.GUIAddRemoveClass;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
 

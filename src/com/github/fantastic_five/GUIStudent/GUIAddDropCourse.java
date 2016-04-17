@@ -52,7 +52,9 @@ public class GUIAddDropCourse extends JPanel
 	ArrayList<Course> courseSearchResult;
 
 	/**
-	 * This GUI class displays the panel for adding and removing courses. Here student can search course by CRN that he/she want to add or Drop, and would allow them to do so.
+	 * This GUI class displays the panel for adding and removing courses.
+	 *  Here student can search course by CRN that he/she want to add or Drop, 
+	 *  and would allow them to do so.
 	 */
 	public GUIAddDropCourse()
 	{
@@ -72,21 +74,22 @@ public class GUIAddDropCourse extends JPanel
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnSearch.doClick();
-				}
-			}
+				}//end of if
+			}//end of keyTyped
 
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
 				/** Do Nothing */
-			}
+			}//end of keyPressed
 
 			@Override
-			public void keyReleased(KeyEvent e)
+			public void keyReleased(KeyEvent arg0)
 			{
 				/** Do Nothing */
-			}
-		});
+				
+			}//end of keyReleased
+		});//end of addKeyListener
 
 		/**
 		 * Creates an another ScrollPane
@@ -119,7 +122,9 @@ public class GUIAddDropCourse extends JPanel
 				txtpnAreYouSure.setBounds(86, 11, 127, 20);
 				popup.getContentPane().add(txtpnAreYouSure);
 
-				// Logic for Yes button on popup
+				/**
+				 *  Logic for Yes button inside Confirmation Pop-up
+				 */
 				JButton btnYes = new JButton("Yes");
 				btnYes.setBounds(10, 49, 100, 23);
 				btnYes.addActionListener(new ActionListener()
@@ -132,23 +137,29 @@ public class GUIAddDropCourse extends JPanel
 						if (rowSel > -1)
 						{
 							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-
+							/**
+							 * Makes Table-Cell Non-editable
+							 */							
 							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
 								{
 									return false;
-								}
-							});
+								}//end of isCellEdittable
+							});//end of setModel
 							addedScrollPane.setViewportView(addedTable);
 							revalidate();
 							repaint();
-						}
+						}//end of if
 						popup.dispose();
-					}
-				});
+					}//end of actionPerformed
+				});//end of addActionListener
 				popup.getContentPane().add(btnYes);
+				
+				/*
+				 * Logic for No Button inside Confirmation Pop-up
+				 */
 
 				JButton btnNo = new JButton("No");
 				btnNo.addActionListener(new ActionListener()
@@ -157,8 +168,8 @@ public class GUIAddDropCourse extends JPanel
 					public void actionPerformed(ActionEvent e)
 					{
 						popup.dispose();
-					}
-				});
+					}//end of actionPerformed
+				});//end of addActionListener
 				btnNo.setBounds(191, 49, 100, 23);
 				popup.getContentPane().add(btnNo);
 			}// end of the actionPerformed
@@ -166,7 +177,7 @@ public class GUIAddDropCourse extends JPanel
 		add(btnDrop);
 
 		/**
-		 * adds a back button.
+		 * adds a back button with logic behind it.
 		 */
 		btnBack = new JButton("Back");
 		btnBack.setBounds(41, 389, 128, 23);
@@ -215,9 +226,12 @@ public class GUIAddDropCourse extends JPanel
 			public boolean isCellEditable(int row, int column)
 			{
 				return false;
-			}
-		});
+			}//end of isCellEditable
+		});//end of setModel
 
+		/*
+		 * Added a Button named "Search" would search for the entered CRN from the Course data. 
+		 */
 		searchScrollPane.setViewportView(searchTable);
 
 		btnSearch = new JButton("Search");
@@ -239,12 +253,12 @@ public class GUIAddDropCourse extends JPanel
 							public boolean isCellEditable(int row, int column)
 							{
 								return false;
-							}
-						});
+							}//end of isCellEditable
+						});//end of setModel
 						searchScrollPane.setViewportView(searchTable);
 						revalidate();
 						repaint();
-					}
+					}//end of if 
 					else
 					{
 						JLabel errorMessage = new JLabel();
@@ -254,8 +268,8 @@ public class GUIAddDropCourse extends JPanel
 						revalidate();
 						repaint();
 						add(errorMessage);
-					}
-				}
+					}//end of else
+				}//end of try
 				catch (NumberFormatException exception)
 				{
 					JLabel notNumbers = new JLabel();
@@ -268,9 +282,9 @@ public class GUIAddDropCourse extends JPanel
 					// searchField.setText("CRN Must be Numbers Only");
 
 					// TODO: Also needs to notify if searched CRN is wrong!!
-				}
-			}
-		});
+				}//end of catch
+			}//end of acitonPerformed
+		});//end of addActionListener
 
 		add(btnSearch);
 
@@ -284,14 +298,15 @@ public class GUIAddDropCourse extends JPanel
 		/**
 		 * Makes Table-Cell Non-editable
 		 */
-		DefaultTableModel tableModel = new DefaultTableModel() {
-
+		DefaultTableModel tableModel = new DefaultTableModel()
+		{
 		    @Override
-		    public boolean isCellEditable(int row, int column) {
+		    public boolean isCellEditable(int row, int column)
+		    {
 		       //all cells false
 		       return false;
-		    }
-		};
+		    }//end of isCellEditable
+		};//end of tableModel
 
 		addedTable.setModel(tableModel);
 
@@ -309,18 +324,21 @@ public class GUIAddDropCourse extends JPanel
 				if (rowSel > -1)
 				{
 					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+					/**
+					 * Makes Table-Cell Non-editable
+					 */
 					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
 					{
 						@Override
 						public boolean isCellEditable(int row, int column)
 						{
 							return false;
-						}
-					});
+						}//end of isCellEditable
+					});//end setModel
 					addedScrollPane.setViewportView(addedTable);
 					revalidate();
 					repaint();
-				}
+				}//end of if
 			}// end of the actionPerformed
 		});// end of the addActionListener
 		add(btnAdd);
@@ -343,6 +361,11 @@ public class GUIAddDropCourse extends JPanel
 		add(lblCourseRemoval);
 
 	}// end of GUIAddorRemoveCourse()
+	
+	/**
+	 * 
+	 * @return fills or removes information from the table when user adds or drops course. 
+	 */
 
 	public static Object[][] getClassTable()
 	{
@@ -362,9 +385,10 @@ public class GUIAddDropCourse extends JPanel
 			cells[row][5] = c.getDays();
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
-		}
+		}//end of for loop
 		return cells;
-	}
+	}//end of public static. 
+	
 
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
@@ -379,8 +403,8 @@ public class GUIAddDropCourse extends JPanel
 			public boolean test(Course toTest)
 			{
 				return toTest.getCRN() != CRN;
-			}
-		});
+			}//end of test
+		});//end of removeIf
 		int numCourses = courseOfferings.size();
 		Object[][] cells = new Object[numCourses][7];
 
@@ -398,9 +422,7 @@ public class GUIAddDropCourse extends JPanel
 			cells[row][5] = c.getDays();
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
-		}
-
+		}//end of for loop
 		return cells;
-
-	}
+	}//end of getSearchResultTable
 }// end of JPanel extension of GUIAddorRemoveCourse()
