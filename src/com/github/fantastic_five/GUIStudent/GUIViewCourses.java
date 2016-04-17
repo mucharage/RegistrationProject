@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -133,12 +134,13 @@ public class GUIViewCourses extends JPanel
 					{
 						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
+						JDialog popup = new JDialog(new JFrame(), selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						popup.setLocationRelativeTo(null);
 						popup.setResizable(false);
 						popup.setVisible(true);
+						popup.setAlwaysOnTop(true);
 						
 						JScrollPane scrollPane = new JScrollPane();	
 						scrollPane.setBounds(10, 11, 421, 96);
