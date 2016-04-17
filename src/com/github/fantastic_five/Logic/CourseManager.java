@@ -54,7 +54,7 @@ public class CourseManager implements Serializable
 	public boolean containsCourse(int crn)
 	{
 		Course dummy = dummyCourse(crn);
-		return courseOfferings.floor(dummy).equals(dummy);
+		return courseOfferings.contains(dummy);
 	}
 
 	/**
