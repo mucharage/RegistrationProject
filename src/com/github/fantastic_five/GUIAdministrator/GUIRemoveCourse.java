@@ -2,12 +2,13 @@ package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
- * A JFrame containing the field necessary to remove a course offering from the University
+ * A JPanel containing the field necessary to remove a course offering from the University
  */
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -90,30 +92,40 @@ public class GUIRemoveCourse extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				// Creates a pop-up window
-				JFrame popup = new JFrame("Confirmation");
+				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
 				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				popup.setPreferredSize(new Dimension(347, 123));
 				popup.setResizable(false);
+				popup.setAlwaysOnTop(true);
 
 				JPanel GUI = new JPanel();
 				GUI.setLayout(null);
 
 				// Confirmation label
-				Course searchedCourse = StudentRegistrationMain.mainCourseManager.getCourse(Integer.parseInt(fieldCRN.getText()));
-				JLabel confrm0 = new JLabel("Are you sure you want to remove ");				
-				confrm0.setForeground(Color.RED);
-				confrm0.setFont(new Font("Tahoma", Font.BOLD, 16));
-				confrm0.setBounds(7, 11,322, 22);
-				confrm0.setHorizontalAlignment(JLabel.CENTER);
-				GUI.add(confrm0);
-				
-				JLabel confrm1 = new JLabel(searchedCourse.getTitle()+ "?");
-				confrm1.setForeground(Color.RED);
-				confrm1.setFont(new Font("Tahoma", Font.BOLD, 16));
-				confrm1.setBounds(7, 11,322, 70);
-				confrm1.setHorizontalAlignment(JLabel.CENTER);
-				GUI.add(confrm1);
-				
+				Course searchedCourse = null;
+				try
+				{
+					searchedCourse = StudentRegistrationMain.mainCourseManager.getCourse(Integer.parseInt(fieldCRN.getText()));
+					fieldCRN.setBackground(Color.WHITE);
+				}
+				catch (NumberFormatException exception)
+				{
+					fieldCRN.setBackground(Color.RED);
+				}
+				if (searchedCourse != null)
+				{
+					JTextArea confirmation = new JTextArea();
+					confirmation.setText("Are you sure you want to remove " + "\n" + searchedCourse.getTitle() + "?");
+					confirmation.setForeground(Color.RED);
+					confirmation.setFont(new Font("Tahoma", Font.BOLD, 16));
+					confirmation.setBounds(7, 11, 322, 44);
+					confirmation.setLineWrap(true);
+					confirmation.setEditable(false);
+					confirmation.setAlignmentX(CENTER_ALIGNMENT);
+					confirmation.setBackground(popup.getBackground());
+					GUI.add(confirmation);
+				}
+
 				// No button should remove the CRN from the list
 				JButton btnNo = new JButton("No");
 				btnNo.addActionListener(new ActionListener()
@@ -181,45 +193,42 @@ public class GUIRemoveCourse extends JPanel
 		lblAllClasses.setForeground(Color.GRAY);
 		lblAllClasses.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblAllClasses);
-		
+
 		/**
-		 * Displays Course Description by  double Clicking selected Course 
+		 * Displays Course Description by double Clicking selected Course
 		 */
-			table.addMouseListener(new MouseAdapter()
+		table.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
 			{
-				public void mouseClicked(MouseEvent e)
+				if (e.getClickCount() == 2)
 				{
-					if (e.getClickCount() == 2)
-					{
-						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
-						popup.setBounds(200, 200, 447, 147);
-						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						popup.setLocationRelativeTo(null);
-						popup.setResizable(false);
-						popup.setVisible(true);
-						
-						JScrollPane scrollPane = new JScrollPane();	
-						scrollPane.setBounds(10, 11, 421, 96);
-						popup.getContentPane().add(scrollPane);
-									
-											
-						JTextArea desc = new JTextArea();
-						desc.setText(selectedCourse.getDescription());
-						desc.setWrapStyleWord(true);
-						desc.setLineWrap(true);
-						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-						desc.setBounds(10, 11, 421, 96);						
-						desc.setEditable(false);
-						scrollPane.setViewportView(desc);
-						
-					}//end of if statement
-				}//end of mouseClicked
-			});//end of addMouseLisener
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
+					popup.setBounds(200, 200, 447, 147);
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(null);
+					popup.setResizable(false);
+					popup.setVisible(true);
 
+					JScrollPane scrollPane = new JScrollPane();
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);
+
+					JTextArea desc = new JTextArea();
+					desc.setText(selectedCourse.getDescription());
+					desc.setWrapStyleWord(true);
+					desc.setLineWrap(true);
+					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+					desc.setBounds(10, 11, 421, 96);
+					desc.setEditable(false);
+					scrollPane.setViewportView(desc);
+
+				}
+			}
+		});
 	}
-
 
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
@@ -248,11 +257,11 @@ public class GUIRemoveCourse extends JPanel
 
 		return cells;
 	}
-	
+
 	String getFormattedDays(TreeSet<Day> days)
 	{
 		String rVal = "";
-		for(Day d : days)
+		for (Day d : days)
 			rVal += d.getAbbreviation() + " ";
 		return rVal;
 	}

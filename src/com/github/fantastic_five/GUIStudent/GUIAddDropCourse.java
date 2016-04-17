@@ -19,6 +19,7 @@ import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -108,13 +109,14 @@ public class GUIAddDropCourse extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				JFrame popup = new JFrame("Confirmation");
+				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
 				popup.setBounds(100, 100, 307, 107);
 				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				popup.setLocationRelativeTo(null);
 				popup.getContentPane().setLayout(null);
 				popup.setResizable(false);
 				popup.setVisible(true);
+				popup.setAlwaysOnTop(true);
 				JLabel txtpnAreYouSure = new JLabel();
 				txtpnAreYouSure.setText("Are you sure?");
 				txtpnAreYouSure.setForeground(Color.RED);

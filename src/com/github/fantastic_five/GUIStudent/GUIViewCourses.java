@@ -134,7 +134,7 @@ public class GUIViewCourses extends JPanel
 					{
 						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
-						JDialog popup = new JDialog(new JFrame(), selectedCourse.getTitle() + " - Description");
+						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						popup.setLocationRelativeTo(null);
