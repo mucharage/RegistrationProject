@@ -247,7 +247,7 @@ public class GUIAddDropCourse extends JPanel
 					int CRN = Integer.parseInt(searchField.getText());
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 						{
 							@Override
 							public boolean isCellEditable(int row, int column)
@@ -292,7 +292,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
 		addedScrollPane.setViewportView(addedTable);
 		
 		/**
@@ -327,7 +327,7 @@ public class GUIAddDropCourse extends JPanel
 					/**
 					 * Makes Table-Cell Non-editable
 					 */
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" })
+					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
 					{
 						@Override
 						public boolean isCellEditable(int row, int column)
