@@ -29,8 +29,6 @@ public class GUIViewTeacherReport extends JPanel
 	JTable table;
 	String[] headers = new String[] { "Last", "First", "UserID", "Available", "TA", "CRNs" };
 
-	// TODO: Add PRINT button
-
 	public GUIViewTeacherReport()
 	{
 		setBounds(0, 0, 618, 434);
