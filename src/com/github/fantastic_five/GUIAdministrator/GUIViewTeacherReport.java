@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -84,8 +83,8 @@ public class GUIViewTeacherReport extends JPanel
 			{
 				MessageFormat header = new MessageFormat("Master Teacher Report");
 
-				String name = MiscUtils.getCurrentLoggedInUser().getFirstName() + " " + MiscUtils.getCurrentLoggedInUser().getLastName();
-				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();
+				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName() + " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
+				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();
 				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
 				try
 				{

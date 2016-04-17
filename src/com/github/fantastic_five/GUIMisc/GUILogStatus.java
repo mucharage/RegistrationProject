@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -76,7 +75,7 @@ public class GUILogStatus extends JPanel
 		currentLoggedInPrefix.setBounds(10, 4, 120, 14);
 		add(currentLoggedInPrefix);
 		
-		UserProfile u = MiscUtils.getCurrentLoggedInUser();
+		UserProfile u = StudentRegistrationMain.getCurrentLoggedInUser();
 		JButton currentLoggedIn = new JButton(u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
 		currentLoggedIn.setToolTipText("Edit Account Information");
 		currentLoggedIn.setHorizontalAlignment(SwingConstants.LEFT);
