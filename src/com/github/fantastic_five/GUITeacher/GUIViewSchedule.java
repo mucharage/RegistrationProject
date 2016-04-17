@@ -28,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
 
 @SuppressWarnings("serial")
 public class GUIViewSchedule extends JPanel
@@ -70,8 +69,8 @@ public class GUIViewSchedule extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				MessageFormat header = new MessageFormat("Schedule");
-				String name = MiscUtils.getCurrentLoggedInUser().getFirstName() + " " + MiscUtils.getCurrentLoggedInUser().getLastName();
-				String userID = MiscUtils.getCurrentLoggedInUser().getUserID();
+				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName() + " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
+				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();
 				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
 				try
 				{

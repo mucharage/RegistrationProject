@@ -32,7 +32,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -138,7 +137,7 @@ public class GUIAddDropCourse extends JPanel
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 							/**
 							 * Makes Table-Cell Non-editable
 							 */							
@@ -325,7 +324,7 @@ public class GUIAddDropCourse extends JPanel
 
 				if (rowSel > -1)
 				{
-					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(MiscUtils.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 					/**
 					 * Makes Table-Cell Non-editable
 					 */
@@ -371,7 +370,7 @@ public class GUIAddDropCourse extends JPanel
 
 	public static Object[][] getClassTable()
 	{
-		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(MiscUtils.getCurrentLoggedInUser());
+		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser());
 		Object[][] cells = new Object[enrolledCourses.size()][7];
 		int row = 0;
 		for (Course c : enrolledCourses)

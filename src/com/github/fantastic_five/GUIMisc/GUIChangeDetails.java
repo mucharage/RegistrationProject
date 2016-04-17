@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.DatabaseIO;
-import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
@@ -62,7 +61,7 @@ public class GUIChangeDetails extends JPanel
 		fieldFirstName = new JTextField();
 		fieldFirstName.setColumns(10);
 		fieldFirstName.setBounds(240, 98, 217, 20);
-		fieldFirstName.setText(MiscUtils.getCurrentLoggedInUser().getFirstName());
+		fieldFirstName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getFirstName());
 		add(fieldFirstName);
 
 		// Middle Name
@@ -75,7 +74,7 @@ public class GUIChangeDetails extends JPanel
 		fieldMiddleName = new JTextField();
 		fieldMiddleName.setColumns(10);
 		fieldMiddleName.setBounds(240, 129, 217, 20);
-		fieldMiddleName.setText(MiscUtils.getCurrentLoggedInUser().getMiddleName());
+		fieldMiddleName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getMiddleName());
 		add(fieldMiddleName);
 
 		// Last NAme
@@ -88,7 +87,7 @@ public class GUIChangeDetails extends JPanel
 		fieldLastName = new JTextField();
 		fieldLastName.setColumns(10);
 		fieldLastName.setBounds(240, 160, 217, 20);
-		fieldLastName.setText(MiscUtils.getCurrentLoggedInUser().getLastName());
+		fieldLastName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getLastName());
 		add(fieldLastName);
 
 		// Update Button
@@ -99,7 +98,7 @@ public class GUIChangeDetails extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile loggedIn = MiscUtils.getCurrentLoggedInUser();
+				UserProfile loggedIn = StudentRegistrationMain.getCurrentLoggedInUser();
 				loggedIn.setFirstName(fieldFirstName.getText());
 				loggedIn.setMiddleName(fieldMiddleName.getText());
 				loggedIn.setLastName(fieldLastName.getText());
@@ -182,7 +181,7 @@ public class GUIChangeDetails extends JPanel
 				// Confirms that at least ONE of the new passwords is filled and the other one has to match IT, so only check once
 				if (newPassString.length() > 0 && newPassString.equals(newPassStringConf))
 				{
-					if (MiscUtils.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
+					if (StudentRegistrationMain.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
 					{
 						resetFieldColors();
 						originalPass.setText("");
