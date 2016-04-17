@@ -2,7 +2,7 @@ package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
- * A JFrame containing the main actions an Administrator can take
+ * A JPanel containing the main actions an Administrator can take
  */
 
 import java.awt.Color;

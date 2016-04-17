@@ -15,6 +15,7 @@ import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -135,12 +136,13 @@ public class GUIViewSchedule extends JPanel
 					{
 						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) addedTable.getModel().getValueAt(addedTable.getSelectedRow(), 0));
 
-						JFrame popup = new JFrame(selectedCourse.getTitle() + " - Description");
+						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						popup.setLocationRelativeTo(null);
 						popup.setResizable(false);
 						popup.setVisible(true);
+						popup.setAlwaysOnTop(true);
 						
 						JScrollPane scrollPane = new JScrollPane();	
 						scrollPane.setBounds(10, 11, 421, 96);
