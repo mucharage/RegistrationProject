@@ -26,14 +26,15 @@ import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.Course.Day;
 
 @SuppressWarnings("serial")
-public class GUIViewCourse extends JPanel
+public class GUIViewCourses extends JPanel
 {
 	/**
 	 * This GUI shall display all the available courses that our University offers.
 	 */
-	public GUIViewCourse()
+	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
@@ -125,12 +126,20 @@ public class GUIViewCourse extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			if (teacher != null)
-				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
-			cells[row][5] = c.getDays();
+			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(1) + ". " + teacher.getLastName();
+			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
+
 		return cells;
+	}
+	
+	String getFormattedDays(TreeSet<Day> days)
+	{
+		String rVal = "";
+		for(Day d : days)
+			rVal += d.getAbbreviation() + " ";
+		return rVal;
 	}
 }
