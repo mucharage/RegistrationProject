@@ -9,25 +9,27 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.CourseManager;
+import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.MiscUtils;
 import com.github.fantastic_five.Logic.UserProfile;
 
@@ -74,7 +76,7 @@ public class GUIViewCourses extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
 			}
 		});
-		btnBack.setBounds(20, 386, 128, 23);
+		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
 		/**
@@ -117,25 +119,47 @@ public class GUIViewCourses extends JPanel
 		});
 		add(btnPrint);
 		
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-		{			
-			@Override
-			public void valueChanged(ListSelectionEvent e)
+		/**
+		 * Displays Course Description by  double Clicking selected Course 
+		 */
+		
+		/**
+		 * Displays Course Description by  double Clicking selected Course 
+		 */
+			table.addMouseListener(new MouseAdapter()
 			{
-						JFrame popup = new JFrame("Course Desctiption");	
-						popup.setBounds(200,200,307,107);
+				public void mouseClicked(MouseEvent e)
+				{
+					if (e.getClickCount() == 2)
+					{
+						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+
+						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
+						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						popup.setLocationRelativeTo(null);
-						popup.getContentPane().setLayout(null);
 						popup.setResizable(false);
 						popup.setVisible(true);
+						popup.setAlwaysOnTop(true);
 						
-						JLabel desc = new JLabel("haha");
-						desc.setBounds(150, 150, 309, 106);
+						JScrollPane scrollPane = new JScrollPane();	
+						scrollPane.setBounds(10, 11, 421, 96);
+						popup.getContentPane().add(scrollPane);
+									
+											
+						JTextArea desc = new JTextArea();
+						desc.setText(selectedCourse.getDescription());
+						desc.setWrapStyleWord(true);
+						desc.setLineWrap(true);
+						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+						desc.setBounds(10, 11, 421, 96);						
+						desc.setEditable(false);
+						scrollPane.setViewportView(desc);
 						
-			}
-		});
-
+					}//end of if statement
+				}//end of mouseClicked
+			});//end of addMouseLisener
+		
 	}// end of GuiViewCourses()
 
 	/**
@@ -157,12 +181,20 @@ public class GUIViewCourses extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			if (teacher != null)
-				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
-			cells[row][5] = c.getDays();
+			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(1) + ". " + teacher.getLastName();
+			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
+
 		return cells;
+	}
+	
+	String getFormattedDays(TreeSet<Day> days)
+	{
+		String rVal = "";
+		for(Day d : days)
+			rVal += d.getAbbreviation() + " ";
+		return rVal;
 	}
 }

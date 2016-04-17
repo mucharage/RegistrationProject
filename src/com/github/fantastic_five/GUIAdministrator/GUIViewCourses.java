@@ -9,16 +9,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -105,8 +109,45 @@ public class GUIViewCourses extends JPanel
 			}
 		});
 		add(btnPrint);
-	}
+		
+		/**
+		 * Displays Course Description by  double Clicking selected Course 
+		 */
+			table.addMouseListener(new MouseAdapter()
+			{
+				public void mouseClicked(MouseEvent e)
+				{
+					if (e.getClickCount() == 2)
+					{
+						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
 
+						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
+						popup.setBounds(200, 200, 447, 147);
+						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						popup.setLocationRelativeTo(null);
+						popup.setResizable(false);
+						popup.setVisible(true);
+						popup.setAlwaysOnTop(true);
+						
+						JScrollPane scrollPane = new JScrollPane();	
+						scrollPane.setBounds(10, 11, 421, 96);
+						popup.getContentPane().add(scrollPane);
+									
+											
+						JTextArea desc = new JTextArea();
+						desc.setText(selectedCourse.getDescription());
+						desc.setWrapStyleWord(true);
+						desc.setLineWrap(true);
+						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+						desc.setBounds(10, 11, 421, 96);						
+						desc.setEditable(false);
+						scrollPane.setViewportView(desc);
+						
+					}//end of if statement
+				}//end of mouseClicked
+			});//end of addMouseLisener
+		}// end of GuiViewCourses()
+	
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
 	 */

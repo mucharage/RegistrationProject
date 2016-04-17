@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -75,7 +76,7 @@ public class GUILogin extends JPanel
 
 		// lblUsername is a new JLabel object
 		// lblUsername will show up as "Username:"
-		JLabel lblUsername = new JLabel("Username:");
+		JLabel lblUsername = new JLabel("User ID:");
 		// Set the dimensions of the label
 		lblUsername.setBounds(210, 165, 300, 20);
 		// Add label to panel
@@ -108,15 +109,16 @@ public class GUILogin extends JPanel
 			{
 				{
 					// Initialize frame as a new JFrame
-					JFrame frame = new JFrame("Password Recovery");
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Password Recovery");
 					// Set the dimensions of the frame
-					frame.setBounds(100, 100, 303, 141);
+					popup.setBounds(100, 100, 303, 141);
 					// When the frame is closed, it simply goes away
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					frame.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-					frame.getContentPane().setLayout(null);
-					frame.setResizable(false);
-					frame.setVisible(true);
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					popup.getContentPane().setLayout(null);
+					popup.setResizable(false);
+					popup.setVisible(true);
+					popup.setAlwaysOnTop(true);
 
 					// Create a text area to go inside the frame
 					JTextArea txtpnPleaseContactThe = new JTextArea();
@@ -131,14 +133,14 @@ public class GUILogin extends JPanel
 					// Set the dimensions of the frame
 					txtpnPleaseContactThe.setBounds(57, 11, 178, 80);
 					// add the text area to the pane and frame
-					frame.getContentPane().add(txtpnPleaseContactThe);
+					popup.getContentPane().add(txtpnPleaseContactThe);
 					JButton btnNo = new JButton("No");
 					btnNo.addActionListener(new ActionListener()
 					{
 						@Override
 						public void actionPerformed(ActionEvent e)
 						{
-							frame.dispose();
+							popup.dispose();
 						}
 					});
 					btnNo.addKeyListener(new KeyAdapter()
@@ -148,7 +150,7 @@ public class GUILogin extends JPanel
 							if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
 							{
 								System.out.println("escaped ?");
-								frame.dispose();
+								popup.dispose();
 							}
 							else
 							{
@@ -156,7 +158,7 @@ public class GUILogin extends JPanel
 							}
 						}
 					});
-					frame.getContentPane().add(btnNo);
+					popup.getContentPane().add(btnNo);
 				}
 			}
 		});

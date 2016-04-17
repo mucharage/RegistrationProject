@@ -2,7 +2,7 @@ package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
- * A JPanel which adds new teacher UserProfiles to the UserProfileDatabase
+ * A JPanel which adds new student UserProfiles to the UserProfileDatabase
  */
 
 import java.awt.Color;
@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -24,16 +24,20 @@ import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUIAddTeacher extends JPanel
+public class GUIAddUser extends JPanel
 {
 	private JTextField firstnameTextField;
 	private JTextField middlenameTextField;
 	private JTextField lastnameTextField;
 	private JTextField userIDTextField;
 	private JTextField passwordTextField;
-	private JCheckBox checkBoxIsTA;
+	private JLabel confirmation;
+	private final String STUDENT = "Student";
+	private final String TEACHER = "Teacher";
+	private final String TA = "TA";
+	private final String ADMIN = "Administrator";
 
-	public GUIAddTeacher()
+	public GUIAddUser()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
@@ -44,12 +48,12 @@ public class GUIAddTeacher extends JPanel
 		add(loginPanel);
 
 		// Panel Label
-		JLabel lblCreateTeacher = new JLabel("Add Teacher Account");
-		lblCreateTeacher.setForeground(Color.GRAY);
-		lblCreateTeacher.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblCreateTeacher.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateTeacher.setBounds(183, 44, 243, 21);
-		add(lblCreateTeacher);
+		JLabel lblCreateStudent = new JLabel("Add User");
+		lblCreateStudent.setForeground(Color.GRAY);
+		lblCreateStudent.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblCreateStudent.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCreateStudent.setBounds(0, 56, 618, 21);
+		add(lblCreateStudent);
 
 		// First Name
 		JLabel lblFirstName = new JLabel("First Name:");
@@ -111,24 +115,12 @@ public class GUIAddTeacher extends JPanel
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
 
-		// Is TA checkbox
-		JLabel labelIsTA = new JLabel("Is Teacher TA?:");
-		labelIsTA.setHorizontalAlignment(SwingConstants.LEFT);
-		labelIsTA.setFont(new Font("Tahoma", Font.BOLD, 12));
-		labelIsTA.setBounds(102, 296, 128, 14);
-		add(labelIsTA);
-
-		checkBoxIsTA = new JCheckBox("");
-		checkBoxIsTA.setBounds(248, 290, 21, 23);
-		add(checkBoxIsTA);
-
 		// Confirmation thingy
-		JLabel confirmation = new JLabel("");
+		confirmation = new JLabel("");
 		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
-		confirmation.setBounds(252, 280, 217, 20);
+		confirmation.setBounds(252, 354, 217, 20);
 		add(confirmation);
 
-		// Back Button
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
 		btnBack.addActionListener(new ActionListener()
@@ -140,40 +132,56 @@ public class GUIAddTeacher extends JPanel
 		});
 		add(btnBack);
 
+		JComboBox<String> permDropdown = new JComboBox<String>();
+		permDropdown.addItem(this.STUDENT);
+		permDropdown.addItem(this.TEACHER);
+		permDropdown.addItem(this.TA);
+		permDropdown.addItem(this.ADMIN);
+		permDropdown.setEditable(false);
+		permDropdown.setBounds(252, 290, 217, 20);
+		add(permDropdown);
+
 		JButton btnCreate = new JButton("Create");
-		btnCreate.setBounds(252, 330, 217, 23);
+		btnCreate.setBounds(252, 322, 217, 23);
 		btnCreate.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				int permLvl = checkBoxIsTA.isSelected() ? UserProfile.TA : UserProfile.TEACHER;
 				String fName = firstnameTextField.getText();
 				String mName = middlenameTextField.getText();
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				if (!StudentRegistrationMain.profiles.hasUser(userID) && areFieldsPopulated())
+				if (checkFields())
 				{
-					if (permLvl == UserProfile.TA)
+					int permLevel = getPermFromString((String) permDropdown.getSelectedItem());
+					// Shouldn't ever be "GUEST", but let's be safe
+					if (permLevel == UserProfile.GUEST)
+					{
+						permDropdown.setForeground(Color.RED);
+						return;
+					}
+
+					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLevel, fName, mName, lName));
+					if (permLevel == UserProfile.STUDENT || permLevel == UserProfile.TA)
 						StudentRegistrationMain.financialRecords.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
-					
-					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLvl, fName, mName, lName));
+
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
 					confirmation.setForeground(Color.GREEN);
-					clearFields();
-				}
-				else
-				{
-					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
-					confirmation.setForeground(Color.RED);
-					confirmation.setText("User ID already exists");
+					resetFields();
 				}
 				revalidate();
 				repaint();
 			}
 		});
 		add(btnCreate);
+
+		JLabel lblRole = new JLabel("Role:");
+		lblRole.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRole.setBounds(102, 293, 128, 14);
+		add(lblRole);
 
 		passwordTextField.addKeyListener(new KeyListener()
 		{
@@ -200,26 +208,103 @@ public class GUIAddTeacher extends JPanel
 		});
 	}
 
+	public int getPermFromString(String s)
+	{
+		switch (s)
+		{
+		case STUDENT:
+			return UserProfile.STUDENT;
+		case TEACHER:
+			return UserProfile.TEACHER;
+		case TA:
+			return UserProfile.TA;
+		case ADMIN:
+			return UserProfile.ADMIN;
+		default:
+			return UserProfile.GUEST;
+		}
+	}
+
 	/**
 	 * Checks to see that all the text fields have SOMETHING in them..
 	 * 
-	 * @return True if all fields are populated, false otherwise
+	 * @return True if all fields are populated and valid, false otherwise
 	 */
-	boolean areFieldsPopulated()
+	boolean checkFields()
 	{
-		return firstnameTextField.getText().length() > 0 && middlenameTextField.getText().length() > 0 && lastnameTextField.getText().length() > 0 && userIDTextField.getText().length() > 0 && passwordTextField.getText().length() > 0;
+		if (firstnameTextField.getText().length() <= 0)
+		{
+			displayError(firstnameTextField);
+			return false;
+		}
+		if (middlenameTextField.getText().length() <= 0)
+		{
+			displayError(middlenameTextField);
+			return false;
+		}
+		if (lastnameTextField.getText().length() <= 0)
+		{
+			displayError(lastnameTextField);
+			return false;
+		}
+		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
+		{
+			displayError(userIDTextField);
+			if (StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
+			{
+				confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
+				confirmation.setForeground(Color.RED);
+				confirmation.setText("User ID conflict");
+				revalidate();
+				repaint();
+			}
+			return false;
+		}
+		if (passwordTextField.getText().length() <= 0)
+		{
+			displayError(passwordTextField);
+			return false;
+		}
+		resetFieldColors();
+		return true;
+	}
+
+	/**
+	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
+	 * 
+	 * @param erroredFields
+	 *            The text field to set the background red of. Can be passed multiple fields to set red
+	 */
+	void displayError(JTextField... erroredFields)
+	{
+		resetFieldColors();
+		for (JTextField field : erroredFields)
+			field.setBackground(Color.RED);
+		revalidate();
+		repaint();
 	}
 
 	/**
 	 * Clears all of the text fields in the window
 	 */
-	void clearFields()
+	void resetFields()
 	{
 		firstnameTextField.setText("");
 		middlenameTextField.setText("");
 		lastnameTextField.setText("");
 		userIDTextField.setText("");
 		passwordTextField.setText("");
-		checkBoxIsTA.setSelected(false);
+	}
+
+	/**
+	 * sets all field colors to white - separate because sometimes I need their colors reset but not their text
+	 */
+	void resetFieldColors()
+	{
+		firstnameTextField.setBackground(Color.WHITE);
+		middlenameTextField.setBackground(Color.WHITE);
+		lastnameTextField.setBackground(Color.WHITE);
+		userIDTextField.setBackground(Color.WHITE);
+		passwordTextField.setBackground(Color.WHITE);
 	}
 }

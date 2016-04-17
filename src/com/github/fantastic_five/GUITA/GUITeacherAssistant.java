@@ -2,6 +2,7 @@ package com.github.fantastic_five.GUITA;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +38,8 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				createTeacherWindow();
+				if (!isTeacherWindowOpen())
+					createTeacherWindow();
 			}
 		});
 		add(btnTeacherView);
@@ -49,7 +51,8 @@ public class GUITeacherAssistant extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				createStudentWindow();
+				if (!isStudentWindowOpen())
+					createStudentWindow();
 			}
 		});
 		add(btnStudentView);
@@ -61,6 +64,34 @@ public class GUITeacherAssistant extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(191, 97, 243, 23);
 		add(lblAdministration);
+	}
+
+	/**
+	 * @return true if the Student Perspective window is open, false otherwise
+	 */
+	boolean isStudentWindowOpen()
+	{
+		Frame[] allFrames = Frame.getFrames();
+		for (Frame f : allFrames)
+			if (f instanceof JFrame)
+				if (f.getTitle() == "Student Perspective")
+					return true;
+
+		return false;
+	}
+
+	/**
+	 * @return true if the Teacher Perspective window is open, false otherwise
+	 */
+	boolean isTeacherWindowOpen()
+	{
+		Frame[] allFrames = Frame.getFrames();
+		for (Frame f : allFrames)
+			if (f instanceof JFrame)
+				if (f.getTitle() == "Teacher Perspective")
+					return true;
+
+		return false;
 	}
 
 	public void createStudentWindow()
