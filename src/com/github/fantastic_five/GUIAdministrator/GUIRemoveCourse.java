@@ -91,16 +91,6 @@ public class GUIRemoveCourse extends JPanel
 			// Makes a pop-up dialog window
 			public void actionPerformed(ActionEvent e)
 			{
-				// Creates a pop-up window
-				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
-				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				popup.setPreferredSize(new Dimension(347, 123));
-				popup.setResizable(false);
-				popup.setAlwaysOnTop(true);
-
-				JPanel GUI = new JPanel();
-				GUI.setLayout(null);
-
 				// Confirmation label
 				Course searchedCourse = null;
 				try
@@ -112,8 +102,21 @@ public class GUIRemoveCourse extends JPanel
 				{
 					fieldCRN.setBackground(Color.RED);
 				}
-				if (searchedCourse != null)
+
+				if (fieldCRN.getText().length() > 0 && searchedCourse != null)
 				{
+					// Resets the background text appropriately
+					fieldCRN.setBackground(Color.WHITE);
+					// Creates a pop-up window
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setPreferredSize(new Dimension(347, 123));
+					popup.setResizable(false);
+					popup.setAlwaysOnTop(true);
+
+					JPanel GUI = new JPanel();
+					GUI.setLayout(null);
+
 					JTextArea confirmation = new JTextArea();
 					confirmation.setText("Are you sure you want to remove " + "\n" + searchedCourse.getTitle() + "?");
 					confirmation.setForeground(Color.RED);
@@ -124,52 +127,54 @@ public class GUIRemoveCourse extends JPanel
 					confirmation.setAlignmentX(CENTER_ALIGNMENT);
 					confirmation.setBackground(popup.getBackground());
 					GUI.add(confirmation);
-				}
 
-				// No button should remove the CRN from the list
-				JButton btnNo = new JButton("No");
-				btnNo.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
+					// No button should remove the CRN from the list
+					JButton btnNo = new JButton("No");
+					btnNo.addActionListener(new ActionListener()
 					{
-						popup.dispose();
-					}
-				});
-				btnNo.setBounds(232, 60, 100, 23);
-				GUI.add(btnNo);
-
-				// Yes button closes the window
-				JButton btnYes = new JButton("Yes");
-				btnYes.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						// Removes the class
-						StudentRegistrationMain.mainCourseManager.removeCourse(Integer.parseInt(fieldCRN.getText()));
-						// Refreshes the table
-						table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+						public void actionPerformed(ActionEvent e)
 						{
-							@Override
-							public boolean isCellEditable(int row, int column)
-							{
-								return false;
-							}
-						});
-						scrollPane.setViewportView(table);
-						revalidate();
-						repaint();
-						// Removes the popup
-						popup.dispose();
-					}
-				});
-				btnYes.setBounds(10, 60, 100, 23);
-				GUI.add(btnYes);
+							popup.dispose();
+						}
+					});
+					btnNo.setBounds(232, 60, 100, 23);
+					GUI.add(btnNo);
 
-				// Finalizes the popup window
-				popup.getContentPane().add(GUI);
-				popup.pack();
-				popup.setVisible(true);
-				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					// Yes button closes the window
+					JButton btnYes = new JButton("Yes");
+					btnYes.addActionListener(new ActionListener()
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							// Removes the class
+							StudentRegistrationMain.mainCourseManager.removeCourse(Integer.parseInt(fieldCRN.getText()));
+							// Refreshes the table
+							table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
+							{
+								@Override
+								public boolean isCellEditable(int row, int column)
+								{
+									return false;
+								}
+							});
+							scrollPane.setViewportView(table);
+							revalidate();
+							repaint();
+							// Removes the popup
+							popup.dispose();
+						}
+					});
+					btnYes.setBounds(10, 60, 100, 23);
+					GUI.add(btnYes);
+
+					// Finalizes the popup window
+					popup.getContentPane().add(GUI);
+					popup.pack();
+					popup.setVisible(true);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+				}
+				else
+					fieldCRN.setBackground(Color.RED);
 			}
 		});
 		btnRemoveCourseOffering.setBounds(479, 67, 107, 23);

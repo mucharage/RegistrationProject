@@ -1,4 +1,4 @@
-	package com.github.fantastic_five.Logic;
+package com.github.fantastic_five.Logic;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,7 +54,7 @@ public class CourseManager implements Serializable
 	public boolean containsCourse(int crn)
 	{
 		Course dummy = dummyCourse(crn);
-		return courseOfferings.floor(dummy).equals(dummy);
+		return courseOfferings.contains(dummy);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CourseManager implements Serializable
 		Course testKey = dummyCourse(crn);
 		Course possibleRVal = courseOfferings.floor(testKey);
 
-		if (possibleRVal.equals(testKey))
+		if (possibleRVal != null && possibleRVal.equals(testKey))
 		{
 			rVal = possibleRVal;
 		}

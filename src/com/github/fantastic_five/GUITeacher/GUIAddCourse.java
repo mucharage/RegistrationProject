@@ -1,3 +1,6 @@
+/**
+ * Just a test class to help with the creation of other classes with similar functions, serves no purpose to the final product
+ * /
 package com.github.fantastic_five.GUITeacher;
 
 /**
