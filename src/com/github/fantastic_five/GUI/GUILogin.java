@@ -174,30 +174,23 @@ public class GUILogin extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile user = StudentRegistrationMain.profiles.getUserProfile(usernameField.getText());
-
-				if (user != null)
+				if (usernameField.getText().length() > 0)
 				{
-					if (user.passwordIs(new String(passwordField.getPassword())))
+					UserProfile user = StudentRegistrationMain.profiles.getUserProfile(usernameField.getText());
+
+					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
 						StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else
-					{
-						passwordField.setText("");
-						JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
-						lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
-						lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
-						lblInvalidPassword.setForeground(new Color(255, 51, 0));
-						lblInvalidPassword.setBounds(164, 300, 280, 25);
-						add(lblInvalidPassword);
-						revalidate();
-						repaint();
-					}
+						createError();
 				}
+				else
+					createError();
 			}
 		});
+
 		// Add button to panel
 		add(btnLogin);
 
@@ -265,6 +258,22 @@ public class GUILogin extends JPanel
 		});
 		// Add button to panel
 		add(btnGuest);
+	}
+
+	/**
+	 * Creates error text
+	 */
+	public void createError()
+	{
+		passwordField.setText("");
+		JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
+		lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInvalidPassword.setForeground(new Color(255, 51, 0));
+		lblInvalidPassword.setBounds(164, 300, 280, 25);
+		add(lblInvalidPassword);
+		revalidate();
+		repaint();
 	}
 
 	/**
