@@ -2,11 +2,13 @@
 
 **To Most / All Code:**
 
-- [ ] Change tables to use TBA if teacher == null
+- [x] Change tables to use TBA if teacher == null
 
-- [ ] Implement table text formatting for days 
+- [x] Implement table text formatting for days 
 
 **Backbone:**
+
+- [ ] Ensure that addLearnerToCourse() is working properly via GUITeacher
 
 - [x] Complete "big.dat" and remove other .dat implementation
 
@@ -22,7 +24,7 @@
 
 - [x] Finish "View Teacher Report"
 
-- [ ] Implement teacher availibity checkmark properly
+- [x] Implement teacher availibity checkmark properly
 
 - [x] Implement student payment checkmark properly
 
