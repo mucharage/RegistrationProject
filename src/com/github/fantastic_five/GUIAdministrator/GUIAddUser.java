@@ -34,7 +34,7 @@ public class GUIAddUser extends JPanel
 	private JLabel confirmation;
 	private final String STUDENT = "Student";
 	private final String TEACHER = "Teacher";
-	private final String TA = "TA";
+	private final String TA = "Teacher's Assistant";
 	private final String ADMIN = "Administrator";
 
 	public GUIAddUser()
