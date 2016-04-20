@@ -266,7 +266,7 @@ public class GUIAddCourse extends JPanel
 	{
 		resetFieldColors();
 		for (JTextField field : erroredFields)
-			field.setBackground(Color.RED);
+			field.setBorder(BorderFactory.createLineBorder(Color.RED));
 		confirmation.setText("\u2717");
 		confirmation.setForeground(Color.RED);
 		revalidate();
@@ -289,11 +289,11 @@ public class GUIAddCourse extends JPanel
 	 */
 	void resetFieldColors()
 	{
-		fieldCourseName.setBackground(Color.WHITE);
-		fieldDays.setBackground(Color.WHITE);
-		fieldTimeStart.setBackground(Color.WHITE);
-		fieldCapacity.setBackground(Color.WHITE);
-		fieldTimeEnd.setBackground(Color.WHITE);
+		fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
 
 	/**

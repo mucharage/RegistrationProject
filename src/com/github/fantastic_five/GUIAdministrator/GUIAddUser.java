@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -279,7 +280,7 @@ public class GUIAddUser extends JPanel
 	{
 		resetFieldColors();
 		for (JTextField field : erroredFields)
-			field.setBackground(Color.RED);
+			field.setBorder(BorderFactory.createLineBorder(Color.RED));;
 		revalidate();
 		repaint();
 	}
@@ -301,10 +302,10 @@ public class GUIAddUser extends JPanel
 	 */
 	void resetFieldColors()
 	{
-		firstnameTextField.setBackground(Color.WHITE);
-		middlenameTextField.setBackground(Color.WHITE);
-		lastnameTextField.setBackground(Color.WHITE);
-		userIDTextField.setBackground(Color.WHITE);
-		passwordTextField.setBackground(Color.WHITE);
+		firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
 }
