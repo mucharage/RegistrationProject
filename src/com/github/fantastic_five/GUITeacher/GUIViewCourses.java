@@ -60,6 +60,9 @@ public class GUIViewCourses extends JPanel
 		});
 		scrollPane.setViewportView(table);
 
+		// does the impossible and adds a rudimentary sorting mechanism to the table. you're welcome - stephen
+		table.setAutoCreateRowSorter(true);
+
 		// Button & Logic for View Schedule
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener()
