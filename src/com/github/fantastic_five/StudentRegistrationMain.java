@@ -28,6 +28,7 @@ public class StudentRegistrationMain
 	public static JFrame mainWindow = new JFrame("FF Student Registration");
 	// A "Cache" of who is logged in. Only ever holds one UserProfile, but an ArrayList ensures it's a "safe copy"
 	public static ArrayList<UserProfile> loggedIn = new ArrayList<UserProfile>();
+	static UserProfile guest = new UserProfile("guest", "", UserProfile.GUEST, "Guest", "", "");
 
 	// Main variables which store all Courses, all UserProfiles, and all Financial Records
 	public static CourseManager mainCourseManager = new CourseManager();
@@ -52,6 +53,7 @@ public class StudentRegistrationMain
 			{
 				// Sets our icon in use
 				mainWindow.setIconImage(Toolkit.getDefaultToolkit().createImage(ClassLoader.getSystemResource("com/github/fantastic_five/Resources/Icon.png")));
+				loggedIn.add(guest);
 
 				// Uses serialization to load in our variables from secondary storage
 				DatabaseIO.deserializeEverything();
@@ -123,12 +125,22 @@ public class StudentRegistrationMain
 			}
 		}
 	}
-	
+
 	/**
 	 * @return a UserProfile object of who is currently logged in, null if no user is logged in (shouldn't be, but just in case)
 	 */
 	public static UserProfile getCurrentLoggedInUser()
 	{
 		return loggedIn.size() > 0 ? StudentRegistrationMain.loggedIn.get(0) : null;
+	}
+
+	/**
+	 * Simple method to log out the current user and sets the user to the Guest account
+	 */
+	public static void logOut()
+	{
+		if (loggedIn.size() > 0)
+			loggedIn.remove(0);
+		loggedIn.add(guest);
 	}
 }
