@@ -26,7 +26,7 @@ public class UniversalBackButton extends JButton
 			public void actionPerformed(ActionEvent e)
 			{
 				UserProfile currentUser = StudentRegistrationMain.getCurrentLoggedInUser();
-				int currentPermLevel = currentUser == null ? 0 : currentUser.getPermLevel();
+				int currentPermLevel = currentUser.getPermLevel();
 				StudentRegistrationMain.replaceMainWindowContents(GUILogin.getGUIFromPerm(currentPermLevel));
 			}
 		});

@@ -10,6 +10,11 @@ import java.io.Serializable;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class DatabaseIO
 {
 	public static File fileLocation = new File(getCoursesFileName());

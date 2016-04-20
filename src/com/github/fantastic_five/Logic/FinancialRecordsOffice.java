@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.TreeMap;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class FinancialRecordsOffice implements Serializable
 {
 	private static final long serialVersionUID = 2105416738235334366L;

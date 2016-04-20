@@ -12,6 +12,11 @@ import java.util.TreeSet;
 
 import com.github.fantastic_five.Logic.Course.Day;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class Course implements Serializable
 {
 	private static final long serialVersionUID = -1827693919442282177L;

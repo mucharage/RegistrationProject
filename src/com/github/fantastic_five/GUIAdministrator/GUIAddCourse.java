@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
@@ -142,14 +143,16 @@ public class GUIAddCourse extends JPanel
 		add(lblhrFormatEx2);
 
 		// Back button & implementation
-		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}
-		});
+//		JButton btnBack = new JButton("Back");
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+//			}
+//		});
+//		
+		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
