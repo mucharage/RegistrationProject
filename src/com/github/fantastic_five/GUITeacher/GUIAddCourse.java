@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
@@ -68,14 +69,16 @@ public class GUIAddCourse extends JPanel
 
 
 		// adds a back button
-		btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-			}
-		});
+//		btnBack = new JButton("Back");
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
+//			}
+//		});
+		JButton btnBack = new UniversalBackButton();
+		
 		btnBack.setBounds(41, 389, 128, 23);
 		add(btnBack);
 

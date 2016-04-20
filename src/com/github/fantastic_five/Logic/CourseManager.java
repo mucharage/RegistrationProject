@@ -11,6 +11,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class CourseManager implements Serializable
 {
 	private static final long serialVersionUID = 217804861480820004L;

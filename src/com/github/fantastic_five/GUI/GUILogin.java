@@ -83,7 +83,6 @@ public class GUILogin extends JPanel
 				lblInvalidPassword = new JLabel(" ");
 				revalidate();
 				repaint();
-
 			}
 		});
 		// Set the dimensions of the field
@@ -207,7 +206,12 @@ public class GUILogin extends JPanel
 
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
-						StudentRegistrationMain.loggedIn.add(user);
+						StudentRegistrationMain.logOut();
+						
+						//temporary bugfix
+						StudentRegistrationMain.loggedIn.set(0,user);
+						
+						//StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else
@@ -230,7 +234,7 @@ public class GUILogin extends JPanel
 
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				
+
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnLogin.doClick();
@@ -259,7 +263,7 @@ public class GUILogin extends JPanel
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
-				{					
+				{
 					btnLogin.doClick();
 				}
 			}
@@ -317,12 +321,12 @@ public class GUILogin extends JPanel
 	 *            the permission level of the user
 	 * @return the GUI that should be shown based on perm level
 	 */
-	JPanel getGUIFromPerm(int permLevel)
+	static JPanel getGUIFromPerm(int permLevel)
 	{
 		switch (permLevel)
 		{
 		case 0:
-			return new GUIViewCourses();
+			return new GUILogin();
 		case 1:
 			return new GUIStudent();
 		case 2:

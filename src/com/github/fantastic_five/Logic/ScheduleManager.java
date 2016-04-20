@@ -5,6 +5,11 @@ import java.util.Set;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class ScheduleManager
 {
 	
