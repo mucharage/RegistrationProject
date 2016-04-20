@@ -83,7 +83,6 @@ public class GUILogin extends JPanel
 				lblInvalidPassword = new JLabel(" ");
 				revalidate();
 				repaint();
-
 			}
 		});
 		// Set the dimensions of the field
@@ -207,6 +206,7 @@ public class GUILogin extends JPanel
 
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
+						StudentRegistrationMain.logOut();
 						StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
@@ -230,7 +230,7 @@ public class GUILogin extends JPanel
 
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				
+
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnLogin.doClick();
@@ -259,7 +259,7 @@ public class GUILogin extends JPanel
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
-				{					
+				{
 					btnLogin.doClick();
 				}
 			}

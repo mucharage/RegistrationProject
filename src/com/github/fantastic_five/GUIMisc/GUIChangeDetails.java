@@ -234,7 +234,7 @@ public class GUIChangeDetails extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				// Checks to see TA status
-				if (StudentRegistrationMain.loggedIn.size() > 0 && StudentRegistrationMain.loggedIn.get(0).getPermLevel() == UserProfile.TA)
+				if (StudentRegistrationMain.getCurrentLoggedInUser() != null && StudentRegistrationMain.getCurrentLoggedInUser().getPermLevel() == UserProfile.TA)
 				{
 					// Gets all activev windows
 					Frame frames[] = Frame.getFrames();
@@ -245,7 +245,7 @@ public class GUIChangeDetails extends JPanel
 							f.dispose();
 
 					// Resets the main window
-					StudentRegistrationMain.loggedIn.remove(0);
+					StudentRegistrationMain.logOut();
 					StudentRegistrationMain.mainWindow.getContentPane().removeAll();
 					StudentRegistrationMain.mainWindow.getContentPane().add(new GUILogin());
 					StudentRegistrationMain.mainWindow.pack();
@@ -254,14 +254,14 @@ public class GUIChangeDetails extends JPanel
 				// Isn't a TA:
 				else
 				{
-					StudentRegistrationMain.loggedIn.remove(0);
+					StudentRegistrationMain.logOut();
 					StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
 				}
 			}
 		});
 		add(btnBack);
 	}
-	
+
 	/**
 	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
 	 * 
@@ -276,7 +276,7 @@ public class GUIChangeDetails extends JPanel
 		revalidate();
 		repaint();
 	}
-	
+
 	void resetFieldColors()
 	{
 		confPass.setBackground(Color.WHITE);
