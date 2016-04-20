@@ -128,7 +128,7 @@ public class GUIAddCourse extends JPanel
 		JLabel lblExampleDays = new JLabel("(ex. M T W R F S U)");
 		lblExampleDays.setForeground(Color.GRAY);
 		lblExampleDays.setHorizontalAlignment(SwingConstants.CENTER);
-		lblExampleDays.setBounds(467, 132, 107, 14);
+		lblExampleDays.setBounds(467, 132, 95, 14);
 		add(lblExampleDays);
 
 		JLabel lblhrFormatEx = new JLabel("(24hr format, ex: 13:00)");
