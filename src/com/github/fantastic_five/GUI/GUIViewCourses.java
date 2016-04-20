@@ -68,14 +68,15 @@ public class GUIViewCourses extends JPanel
 		/**
 		 * Button & Logic for View Schedule
 		 */
-		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
-			}
-		});
+//		JButton btnBack = new JButton("Back");
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+//			}
+//		});
+		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 

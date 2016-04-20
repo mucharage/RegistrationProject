@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -159,16 +160,18 @@ public class GUIAddRemoveClass extends JPanel
 		add(btnRemove);
 
 		// adds a back button
-		btnBack = new JButton("Back");
+//		btnBack = new JButton("Back");
+		JButton btnBack = new UniversalBackButton();
+		
 		btnBack.setBounds(41, 389, 128, 23);
-		btnBack.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-			}
-		});
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			@Override
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
+//			}
+//		});
 		add(btnBack);
 
 		// adds a label named "Search By"

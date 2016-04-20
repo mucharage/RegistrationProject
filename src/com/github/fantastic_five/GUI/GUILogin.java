@@ -207,7 +207,11 @@ public class GUILogin extends JPanel
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
 						StudentRegistrationMain.logOut();
-						StudentRegistrationMain.loggedIn.add(user);
+						
+						//temporary bugfix
+						StudentRegistrationMain.loggedIn.set(0,user);
+						
+						//StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else
@@ -317,12 +321,12 @@ public class GUILogin extends JPanel
 	 *            the permission level of the user
 	 * @return the GUI that should be shown based on perm level
 	 */
-	JPanel getGUIFromPerm(int permLevel)
+	static JPanel getGUIFromPerm(int permLevel)
 	{
 		switch (permLevel)
 		{
 		case 0:
-			return new GUIViewCourses();
+			return new GUILogin();
 		case 1:
 			return new GUIStudent();
 		case 2:

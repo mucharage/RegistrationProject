@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -179,16 +180,17 @@ public class GUIAddDropCourse extends JPanel
 		/**
 		 * adds a back button with logic behind it.
 		 */
-		btnBack = new JButton("Back");
+//		btnBack = new JButton("Back");
+		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(41, 389, 128, 23);
-		btnBack.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-			}// end of mouseClicked
-		});// end of addMouseListener
+//		btnBack.addMouseListener(new MouseAdapter()
+//		{
+//			@Override
+//			public void mouseClicked(MouseEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
+//			}// end of mouseClicked
+//		});// end of addMouseListener
 		add(btnBack);
 
 		/**
