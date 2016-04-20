@@ -207,7 +207,11 @@ public class GUILogin extends JPanel
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
 						StudentRegistrationMain.logOut();
-						StudentRegistrationMain.loggedIn.add(user);
+						
+						//temporary bugfix
+						StudentRegistrationMain.loggedIn.set(0,user);
+						
+						//StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else

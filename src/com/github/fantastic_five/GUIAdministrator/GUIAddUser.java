@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
 
@@ -122,15 +123,16 @@ public class GUIAddUser extends JPanel
 		confirmation.setBounds(252, 354, 217, 20);
 		add(confirmation);
 
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new UniversalBackButton();
+//		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}
-		});
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+//			}
+//		});
 		add(btnBack);
 
 		JComboBox<String> permDropdown = new JComboBox<String>();

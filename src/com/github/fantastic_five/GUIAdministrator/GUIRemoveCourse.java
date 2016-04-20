@@ -30,6 +30,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
@@ -95,14 +96,16 @@ public class GUIRemoveCourse extends JPanel
 		fieldCRN.setColumns(10);
 
 		// Back Button and all of its actions
-		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}
-		});
+//		JButton btnBack = new JButton("Back");
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+//			}
+//		});
+		
+		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 389, 128, 23);
 		add(btnBack);
 
