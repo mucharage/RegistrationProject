@@ -18,6 +18,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -35,6 +36,8 @@ import com.github.fantastic_five.GUIStudent.GUIStudent;
 import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -42,6 +45,7 @@ public class GUILogin extends JPanel
 	// private instance variables
 	private JTextField usernameField;
 	private JPasswordField passwordField;
+	private JLabel lblInvalidPassword;
 
 	// Create the login screen panel.
 	public GUILogin()
@@ -51,6 +55,15 @@ public class GUILogin extends JPanel
 		// usernameField is a new JTextField object
 		// this is the box the user will type his/her name in
 		usernameField = new JTextField();
+		usernameField.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent arg0)
+			{
+				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			}
+		});
 		// Set the dimensions of the field
 		usernameField.setBounds(204, 182, 202, 20);
 		// Add field to panel
@@ -59,6 +72,20 @@ public class GUILogin extends JPanel
 		// passwordField is a new JTextField object
 		// this is the box the user will type his/her password in
 		passwordField = new JPasswordField();
+		passwordField.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				lblInvalidPassword.setForeground(Color.LIGHT_GRAY);
+				lblInvalidPassword = new JLabel(" ");
+				revalidate();
+				repaint();
+
+			}
+		});
 		// Set the dimensions of the field
 		passwordField.setBounds(204, 227, 202, 20);
 		// Add field to panel
@@ -200,6 +227,10 @@ public class GUILogin extends JPanel
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+
+				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnLogin.doClick();
@@ -225,8 +256,10 @@ public class GUILogin extends JPanel
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
-				{
+				{					
 					btnLogin.doClick();
 				}
 			}
@@ -263,10 +296,12 @@ public class GUILogin extends JPanel
 	/**
 	 * Creates error text
 	 */
-	public void createError()
+	void createError()
 	{
 		passwordField.setText("");
-		JLabel lblInvalidPassword = new JLabel("Invalid Username/Password combination");
+		lblInvalidPassword = new JLabel("Invalid Username/Password combination");
+		passwordField.setBorder(BorderFactory.createLineBorder(Color.RED));
+		usernameField.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblInvalidPassword.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		lblInvalidPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInvalidPassword.setForeground(new Color(255, 51, 0));
