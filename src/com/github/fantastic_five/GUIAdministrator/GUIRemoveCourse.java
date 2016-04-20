@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.TreeSet;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
@@ -32,6 +34,8 @@ import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
@@ -46,7 +50,7 @@ public class GUIRemoveCourse extends JPanel
 
 		// Table with auto-generated content!
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 95, 545, 283);
+		scrollPane.setBounds(10, 95, 598, 283);
 		add(scrollPane);
 
 		JTable table = new JTable();
@@ -63,12 +67,30 @@ public class GUIRemoveCourse extends JPanel
 		// Label for the CRN box
 		JLabel lblCrnToRemove = new JLabel("CRN:");
 		lblCrnToRemove.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCrnToRemove.setBounds(323, 70, 46, 14);
+		lblCrnToRemove.setBounds(340, 64, 46, 20);
 		add(lblCrnToRemove);
 
 		// The box where the CRN entered should be accessed
-		fieldCRN = new JTextField();
-		fieldCRN.setBounds(362, 68, 107, 20);
+		fieldCRN = new JTextField();		
+		fieldCRN.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			}
+		});
+		fieldCRN.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			}
+		});
+//		fieldCRN.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+//			}
+//		});
+		fieldCRN.setBounds(384, 64, 107, 20);
 		add(fieldCRN);
 		fieldCRN.setColumns(10);
 
@@ -81,7 +103,7 @@ public class GUIRemoveCourse extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
 			}
 		});
-		btnBack.setBounds(41, 389, 128, 23);
+		btnBack.setBounds(10, 389, 128, 23);
 		add(btnBack);
 
 		// Remove Course Button and all of its actions
@@ -100,7 +122,7 @@ public class GUIRemoveCourse extends JPanel
 				}
 				catch (NumberFormatException exception)
 				{
-					fieldCRN.setBackground(Color.RED);
+					fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				}
 
 				if (fieldCRN.getText().length() > 0 && searchedCourse != null)
@@ -110,7 +132,7 @@ public class GUIRemoveCourse extends JPanel
 					// Creates a pop-up window
 					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Confirmation");
 					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setPreferredSize(new Dimension(347, 123));
+					popup.setPreferredSize(new Dimension(300, 123));
 					popup.setResizable(false);
 					popup.setAlwaysOnTop(true);
 
@@ -118,7 +140,7 @@ public class GUIRemoveCourse extends JPanel
 					GUI.setLayout(null);
 
 					JTextArea confirmation = new JTextArea();
-					confirmation.setText("Are you sure you want to remove " + "\n" + searchedCourse.getTitle() + "?");
+					confirmation.setText("Are you sure you want to remove " + "\n" + "                   "  + searchedCourse.getTitle() + "?");
 					confirmation.setForeground(Color.RED);
 					confirmation.setFont(new Font("Tahoma", Font.BOLD, 16));
 					confirmation.setBounds(7, 11, 322, 44);
@@ -137,7 +159,7 @@ public class GUIRemoveCourse extends JPanel
 							popup.dispose();
 						}
 					});
-					btnNo.setBounds(232, 60, 100, 23);
+					btnNo.setBounds(185, 60, 100, 23);
 					GUI.add(btnNo);
 
 					// Yes button closes the window
@@ -174,10 +196,10 @@ public class GUIRemoveCourse extends JPanel
 					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 				}
 				else
-					fieldCRN.setBackground(Color.RED);
+					fieldCRN.setBorder(BorderFactory.createLineBorder(Color.RED));
 			}
 		});
-		btnRemoveCourseOffering.setBounds(479, 67, 107, 23);
+		btnRemoveCourseOffering.setBounds(501, 61, 107, 23);
 		add(btnRemoveCourseOffering);
 
 		// Adds the loginPanel to our panel
@@ -190,11 +212,11 @@ public class GUIRemoveCourse extends JPanel
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(188, 26, 243, 23);
+		lblCourseRemoval.setBounds(10, 26, 598, 23);
 		add(lblCourseRemoval);
 
 		JLabel lblAllClasses = new JLabel("All Courses:");
-		lblAllClasses.setBounds(41, 66, 116, 20);
+		lblAllClasses.setBounds(10, 68, 116, 20);
 		lblAllClasses.setForeground(Color.GRAY);
 		lblAllClasses.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblAllClasses);
