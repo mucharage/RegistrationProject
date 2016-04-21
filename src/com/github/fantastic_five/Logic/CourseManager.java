@@ -1,11 +1,9 @@
 package com.github.fantastic_five.Logic;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -13,13 +11,17 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class CourseManager implements Serializable
 {
 	private static final long serialVersionUID = 217804861480820004L;
 
 	private TreeSet<Course> courseOfferings;
-	private Set<Connector> network;
-	private PrintStream courseOutput;
+	private TreeSet<Connector> network;
 
 	private static final int COURSE_INSTRUCTOR_RELATIONSHIP = Connector.COURSE_INSTRUCTOR_RELATIONSHIP;
 	private static final int COURSE_LEARNER_RELATIONSHIP = Connector.COURSE_LEARNER_RELATIONSHIP;
@@ -33,7 +35,7 @@ public class CourseManager implements Serializable
 	{
 		courseOfferings = new TreeSet<>(new CourseComparator());
 
-		network = new HashSet<>();
+		network = new TreeSet<>();
 	}
 
 	/**
@@ -56,14 +58,8 @@ public class CourseManager implements Serializable
 	 */
 	public boolean containsCourse(int crn)
 	{
-
-		boolean rVal;
-
-		Course testCourse = dummyCourse(crn);
-
-		rVal = courseOfferings.contains(testCourse);
-
-		return rVal;
+		Course dummy = dummyCourse(crn);
+		return courseOfferings.contains(dummy);
 	}
 
 	/**
@@ -84,8 +80,7 @@ public class CourseManager implements Serializable
 			rVal = true;
 
 			courseOfferings.remove(dummy);
-			updateCourseListFile();
-			
+
 			network.removeIf(new Predicate<Connector>()
 			{
 				public boolean test(Connector connector)
@@ -93,8 +88,8 @@ public class CourseManager implements Serializable
 					return (connector.courseCRN == crn);
 				}
 			});
-			
-			serializeThis();
+
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
@@ -115,8 +110,7 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			courseOfferings.add(addition);
-			updateCourseListFile();
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
@@ -136,7 +130,7 @@ public class CourseManager implements Serializable
 		Course testKey = dummyCourse(crn);
 		Course possibleRVal = courseOfferings.floor(testKey);
 
-		if (possibleRVal.equals(testKey))
+		if (possibleRVal != null && possibleRVal.equals(testKey))
 		{
 			rVal = possibleRVal;
 		}
@@ -170,7 +164,7 @@ public class CourseManager implements Serializable
 				}
 			}
 		}
-		
+
 		return rVal;
 	}
 
@@ -200,7 +194,7 @@ public class CourseManager implements Serializable
 				}
 			}
 		}
-		
+
 		return rVal;
 	}
 
@@ -241,6 +235,7 @@ public class CourseManager implements Serializable
 	 *            The CRN of the course that is being looked at
 	 * @return A set of UserProfiles representing the people who are teaching the course with a specified CRN, or null iff (!this.containsCourse(courseCRN))
 	 */
+	@Deprecated
 	public Set<UserProfile> getInstructorsWithCourse(int courseCRN)
 	{
 		Set<UserProfile> rVal = null;
@@ -256,6 +251,34 @@ public class CourseManager implements Serializable
 					if (e.courseCRN == courseCRN)
 					{
 						rVal.add(e.person);
+					}
+				}
+			}
+		}
+
+		return rVal;
+	}
+
+	/**
+	 * Returns a set of UserProfiles representing the people who are teaching the course with a specified CRN
+	 * 
+	 * @param courseCRN
+	 *            The CRN of the course that is being looked at
+	 * @return A set of UserProfiles representing the people who are teaching the course with a specified CRN, or null iff (!this.containsCourse(courseCRN))
+	 */
+	public UserProfile getInstructorWithCourse(int courseCRN)
+	{
+		UserProfile rVal = null;
+
+		if (containsCourse(courseCRN))
+		{
+			for (Connector e : network)
+			{
+				if (e.relationship == COURSE_INSTRUCTOR_RELATIONSHIP)
+				{
+					if (e.courseCRN == courseCRN)
+					{
+						rVal = e.person;
 					}
 				}
 			}
@@ -292,7 +315,7 @@ public class CourseManager implements Serializable
 					{
 						rVal = true;
 						network.add(connector);
-						serializeThis();
+						DatabaseIO.serializeEverything();
 					}
 				}
 			}
@@ -319,14 +342,14 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			network.remove(connector);
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 
 		return rVal;
 	}
 
 	/**
-	 * Attempts to register a specified person to teach a course with a specified crn. Fails if the instructors's permLevel is not TA, TEACHER, or ADMIN, or no courses with the CRN exist in the catalog.
+	 * Attempts to register a specified person to teach a course with a specified crn. Fails if the instructors's permLevel is not TA, TEACHER, or ADMIN, no courses with the CRN exist in the catalog, or the course already has an instructor.
 	 * 
 	 * @param instructor
 	 *            The person who is being registered to teach
@@ -339,17 +362,19 @@ public class CourseManager implements Serializable
 		boolean rVal = false;
 		if ((instructor.getPermLevel() >= UserProfile.TA) && (instructor.getPermLevel() <= UserProfile.ADMIN))
 		{
-			if (!containsCourse(courseCRN))
+			if (containsCourse(courseCRN))
 			{
-				Connector connector = new Connector(COURSE_INSTRUCTOR_RELATIONSHIP, courseCRN, instructor);
-
-				if (!network.contains(connector) && !network.contains(new Connector(COURSE_LEARNER_RELATIONSHIP, courseCRN, instructor)))
+				if (getInstructorWithCourse(courseCRN) == null)
 				{
-					rVal = true;
-					network.add(connector);
-					serializeThis();
-				}
+					Connector connector = new Connector(COURSE_INSTRUCTOR_RELATIONSHIP, courseCRN, instructor);
 
+					if (!network.contains(connector) && !network.contains(new Connector(COURSE_LEARNER_RELATIONSHIP, courseCRN, instructor)))
+					{
+						rVal = true;
+						network.add(connector);
+						DatabaseIO.serializeEverything();
+					}
+				}
 			}
 		}
 		return rVal;
@@ -373,7 +398,7 @@ public class CourseManager implements Serializable
 		{
 			rVal = true;
 			network.remove(connector);
-			serializeThis();
+			DatabaseIO.serializeEverything();
 		}
 		return rVal;
 	}
@@ -389,7 +414,7 @@ public class CourseManager implements Serializable
 	 */
 	public int generateNewCRN(int min, int max)
 	{
-		if (max >= min)
+		if (max <= min)
 		{
 			throw new IllegalArgumentException("max must be greater than min");
 		}
@@ -417,11 +442,8 @@ public class CourseManager implements Serializable
 		return rVal;
 	}
 
-	private static class Connector implements Serializable
+	public static class Connector implements Serializable, Comparable<Connector>
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -1125763548284346166L;
 		public final int relationship;
 		public final int courseCRN;
@@ -439,24 +461,50 @@ public class CourseManager implements Serializable
 
 		public boolean equals(Object o)
 		{
-			boolean rVal;
+			if (this == o)
+				return true;
+
+			boolean rVal = false;
+
 			if (o instanceof Connector)
 			{
 				Connector other = (Connector) o;
 
 				rVal = (this.relationship == other.relationship);
-				rVal = (this.courseCRN == other.courseCRN) && rVal;
-				rVal = (this.person.equals(other.person)) && rVal;
+				if (rVal)
+				{
+					rVal = (this.courseCRN == other.courseCRN);
+					if (rVal)
+					{
+						rVal = (this.person.equals(other.person));
+					}
+				}
 			}
-			else
+
+			return rVal;
+		}
+
+		@Override
+		public int compareTo(Connector other)
+		{
+			if (this.equals(other))
+				return 0;
+
+			int rVal = Integer.compare(this.relationship, other.relationship);
+			if (rVal == 0)
 			{
-				rVal = false;
+				rVal = Integer.compare(this.courseCRN, other.courseCRN);
+				if (rVal == 0)
+				{
+					rVal = this.person.getUserID().compareTo(other.person.getUserID());
+				}
 			}
+
 			return rVal;
 		}
 	}
 
-	private static class CourseComparator implements Comparator<Course>, Serializable
+	public static class CourseComparator implements Comparator<Course>, Serializable
 	{
 		private static final long serialVersionUID = -3870133739880141697L;
 
@@ -466,41 +514,4 @@ public class CourseManager implements Serializable
 		}
 
 	}
-	
-	/**
-	 * Updates the course list file by resetting it and re-writing the contents
-	 */
-	private void updateCourseListFile()
-	{
-		try
-		{
-			courseOutput = new PrintStream(new File(MiscUtils.getCoursesFileName()));
-			for (Course c : courseOfferings)
-				courseOutput.println(c.toString());
-		}
-		catch (FileNotFoundException e)
-		{
-		}
-	}
-	
-	private void serializeThis()
-	{
-		try
-		{
-			FileOutputStream fileOut = new FileOutputStream("maincoursemanager.dat");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(this);
-			fileOut.close();
-			out.close();
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 }

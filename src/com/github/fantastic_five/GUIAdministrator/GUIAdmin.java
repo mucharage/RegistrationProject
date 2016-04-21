@@ -2,7 +2,7 @@ package com.github.fantastic_five.GUIAdministrator;
 
 /**
  * @author Fantastic Five (Jose Stovall)
- * A JFrame containing the main actions an Administrator can take
+ * A JPanel containing the main actions an Administrator can take
  */
 
 import java.awt.Color;
@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.GUIViewCourses;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 
 @SuppressWarnings("serial")
@@ -28,7 +29,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & Logic for View Courses
 		JButton btnView = new JButton("View Courses");
-		btnView.setBounds(233, 180, 154, 23);
+		btnView.setBounds(323, 248, 154, 23);
 		btnView.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -40,7 +41,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for adding classes
 		JButton btnCreateCourseOffering = new JButton("Add Course");
-		btnCreateCourseOffering.setBounds(233, 214, 154, 23);
+		btnCreateCourseOffering.setBounds(323, 180, 154, 23);
 		btnCreateCourseOffering.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -52,7 +53,7 @@ public class GUIAdmin extends JPanel
 
 		// Button & logic for removing courses
 		JButton btnRemoveCourse = new JButton("Remove Course");
-		btnRemoveCourse.setBounds(233, 248, 154, 23);
+		btnRemoveCourse.setBounds(323, 214, 154, 23);
 		btnRemoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -62,96 +63,38 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnRemoveCourse);
 
-		// Button & Logic for Enrolled Student View
-		JButton btnViewEnrolledStudents = new JButton("View Enrolled Students");
-		btnViewEnrolledStudents.setBounds(48, 180, 154, 23);
-		btnViewEnrolledStudents.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
-			}
-		});
-		add(btnViewEnrolledStudents);
-
-		// Button & Logic for Teacher Staff View
-		JButton btnViewTeacher = new JButton("View Teacher Staff");
-		btnViewTeacher.setBounds(415, 180, 154, 23);
-		btnViewTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeachers());
-			}
-		});
-		add(btnViewTeacher);
-
 		// Button & Logic for Student Addition
-		JButton btnAddStudent = new JButton("Add Student");
-		btnAddStudent.setBounds(48, 214, 154, 23);
+		JButton btnAddStudent = new JButton("Add User");
+		btnAddStudent.setBounds(138, 180, 154, 23);
 		btnAddStudent.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddStudent());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddUser());
 			}
 		});
 		add(btnAddStudent);
 
-		// Button & Logic for Student Removal
-		JButton btnRemoveStudent = new JButton("Remove Student");
-		btnRemoveStudent.setBounds(48, 248, 154, 23);
-		btnRemoveStudent.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveStudent());
-			}
-		});
-		add(btnRemoveStudent);
-
 		// Button & Logic for Student Report
 		JButton btnViewStudents = new JButton("View Student Report");
-		btnViewStudents.setBounds(138, 282, 154, 23);
+		btnViewStudents.setBounds(138, 214, 154, 23);
 		btnViewStudents.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudentReport());
 			}
 		});
 		add(btnViewStudents);
 
-		// Button & Logic for Teacher Addition
-		JButton btnAddTeacher = new JButton("Add Teacher");
-		btnAddTeacher.setBounds(415, 214, 154, 23);
-		btnAddTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddTeacher());
-			}
-		});
-		add(btnAddTeacher);
-
-		// Button & Logic for Teacher Removal
-		JButton btnRemoveTeacher = new JButton("Remove Teacher");
-		btnRemoveTeacher.setBounds(415, 248, 154, 23);
-		btnRemoveTeacher.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveTeacher());
-			}
-		});
-		add(btnRemoveTeacher);
-
 		// Button & Logic for Teacher Report
 		JButton btnViewTeachers = new JButton("View Teacher Report");
-		btnViewTeachers.setBounds(323, 282, 154, 23);
+		btnViewTeachers.setBounds(138, 248, 154, 23);
 		btnViewTeachers.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewTeacherReport());
 			}
 		});
 		add(btnViewTeachers);
@@ -166,15 +109,7 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setForeground(Color.GRAY);
 		lblAdministration.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAdministration.setBounds(191, 97, 243, 23);
+		lblAdministration.setBounds(0, 83, 618, 23);
 		add(lblAdministration);
 	}
-
-	// TODO list below:
-	/**
-	 * - View Student Report
-	 * - View Teacher Report
-	 * - View Enrolled Students needs a way to see if they've paid
-	 * - View Enrolled Teachers - needs to find availability, and is the "Courses" heading req'd?
-	 */
 }

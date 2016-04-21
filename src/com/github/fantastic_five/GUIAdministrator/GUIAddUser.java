@@ -12,27 +12,34 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
 @SuppressWarnings("serial")
-public class GUIAddStudent extends JPanel
+public class GUIAddUser extends JPanel
 {
 	private JTextField firstnameTextField;
 	private JTextField middlenameTextField;
 	private JTextField lastnameTextField;
 	private JTextField userIDTextField;
 	private JTextField passwordTextField;
+	private JLabel confirmation;
+	private final String STUDENT = "Student";
+	private final String TEACHER = "Teacher";
+	private final String TA = "Teacher's Assistant";
+	private final String ADMIN = "Administrator";
 
-	public GUIAddStudent()
+	public GUIAddUser()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
@@ -43,11 +50,11 @@ public class GUIAddStudent extends JPanel
 		add(loginPanel);
 
 		// Panel Label
-		JLabel lblCreateStudent = new JLabel("Add Student Account");
+		JLabel lblCreateStudent = new JLabel("Add User");
 		lblCreateStudent.setForeground(Color.GRAY);
 		lblCreateStudent.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCreateStudent.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateStudent.setBounds(183, 44, 243, 21);
+		lblCreateStudent.setBounds(0, 56, 618, 21);
 		add(lblCreateStudent);
 
 		// First Name
@@ -111,24 +118,34 @@ public class GUIAddStudent extends JPanel
 		add(passwordTextField);
 
 		// Confirmation thingy
-		JLabel confirmation = new JLabel("");
+		confirmation = new JLabel("");
 		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
-		confirmation.setBounds(252, 280, 217, 20);
+		confirmation.setBounds(252, 354, 217, 20);
 		add(confirmation);
 
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new UniversalBackButton();
+//		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
-		btnBack.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-			}
-		});
+//		btnBack.addActionListener(new ActionListener()
+//		{
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+//			}
+//		});
 		add(btnBack);
 
+		JComboBox<String> permDropdown = new JComboBox<String>();
+		permDropdown.addItem(this.STUDENT);
+		permDropdown.addItem(this.TEACHER);
+		permDropdown.addItem(this.TA);
+		permDropdown.addItem(this.ADMIN);
+		permDropdown.setEditable(false);
+		permDropdown.setBounds(252, 290, 217, 20);
+		add(permDropdown);
+
 		JButton btnCreate = new JButton("Create");
-		btnCreate.setBounds(252, 330, 217, 23);
+		btnCreate.setBounds(252, 322, 217, 23);
 		btnCreate.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -138,25 +155,36 @@ public class GUIAddStudent extends JPanel
 				String lName = lastnameTextField.getText();
 				String userID = userIDTextField.getText();
 				String pwd = passwordTextField.getText();
-				if (!UserProfileDatabase.doesUserIDExist(userID) && areFieldsPopulated())
+				if (checkFields())
 				{
-					UserProfileDatabase.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+					int permLevel = getPermFromString((String) permDropdown.getSelectedItem());
+					// Shouldn't ever be "GUEST", but let's be safe
+					if (permLevel == UserProfile.GUEST)
+					{
+						permDropdown.setForeground(Color.RED);
+						return;
+					}
+
+					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLevel, fName, mName, lName));
+					if (permLevel == UserProfile.STUDENT || permLevel == UserProfile.TA)
+						StudentRegistrationMain.financialRecords.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+
 					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 					confirmation.setText("\u2713");
 					confirmation.setForeground(Color.GREEN);
-					clearFields();
-				}
-				else
-				{
-					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
-					confirmation.setForeground(Color.RED);
-					confirmation.setText("User ID already exists");
+					resetFields();
 				}
 				revalidate();
 				repaint();
 			}
 		});
 		add(btnCreate);
+
+		JLabel lblRole = new JLabel("Role:");
+		lblRole.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRole.setBounds(102, 293, 128, 14);
+		add(lblRole);
 
 		passwordTextField.addKeyListener(new KeyListener()
 		{
@@ -182,26 +210,104 @@ public class GUIAddStudent extends JPanel
 			}
 		});
 	}
-	
+
+	public int getPermFromString(String s)
+	{
+		switch (s)
+		{
+		case STUDENT:
+			return UserProfile.STUDENT;
+		case TEACHER:
+			return UserProfile.TEACHER;
+		case TA:
+			return UserProfile.TA;
+		case ADMIN:
+			return UserProfile.ADMIN;
+		default:
+			return UserProfile.GUEST;
+		}
+	}
+
 	/**
 	 * Checks to see that all the text fields have SOMETHING in them..
 	 * 
-	 * @return True if all fields are populated, false otherwise
+	 * @return True if all fields are populated and valid, false otherwise
 	 */
-	boolean areFieldsPopulated()
+	boolean checkFields()
 	{
-		return firstnameTextField.getText().length() > 0 && middlenameTextField.getText().length() > 0 && lastnameTextField.getText().length() > 0 && userIDTextField.getText().length() > 0 && passwordTextField.getText().length() > 0;
+		if (firstnameTextField.getText().length() <= 0)
+		{
+			displayError(firstnameTextField);
+			return false;
+		}
+		if (middlenameTextField.getText().length() <= 0)
+		{
+			displayError(middlenameTextField);
+			return false;
+		}
+		if (lastnameTextField.getText().length() <= 0)
+		{
+			displayError(lastnameTextField);
+			return false;
+		}
+		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
+		{
+			displayError(userIDTextField);
+			if (StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
+			{
+				confirmation.setFont(new Font("Monospaced", Font.PLAIN, 12));
+				confirmation.setForeground(Color.RED);
+				confirmation.setText("User ID conflict");
+				revalidate();
+				repaint();
+			}
+			return false;
+		}
+		if (passwordTextField.getText().length() <= 0)
+		{
+			displayError(passwordTextField);
+			return false;
+		}
+		resetFieldColors();
+		return true;
+	}
+
+	/**
+	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
+	 * 
+	 * @param erroredFields
+	 *            The text field to set the background red of. Can be passed multiple fields to set red
+	 */
+	void displayError(JTextField... erroredFields)
+	{
+		resetFieldColors();
+		for (JTextField field : erroredFields)
+			field.setBorder(BorderFactory.createLineBorder(Color.RED));;
+		revalidate();
+		repaint();
 	}
 
 	/**
 	 * Clears all of the text fields in the window
 	 */
-	void clearFields()
+	void resetFields()
 	{
 		firstnameTextField.setText("");
 		middlenameTextField.setText("");
 		lastnameTextField.setText("");
 		userIDTextField.setText("");
 		passwordTextField.setText("");
+	}
+
+	/**
+	 * sets all field colors to white - separate because sometimes I need their colors reset but not their text
+	 */
+	void resetFieldColors()
+	{
+		firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
 }

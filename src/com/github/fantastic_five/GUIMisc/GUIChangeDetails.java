@@ -2,12 +2,14 @@ package com.github.fantastic_five.GUIMisc;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -16,10 +18,10 @@ import javax.swing.SwingConstants;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
-import com.github.fantastic_five.Logic.MiscUtils;
+import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.UserProfile;
-import com.github.fantastic_five.Logic.UserProfileDatabase;
 
+@SuppressWarnings("serial")
 public class GUIChangeDetails extends JPanel
 {
 	private JTextField fieldFirstName;
@@ -27,13 +29,28 @@ public class GUIChangeDetails extends JPanel
 	private JTextField fieldLastName;
 	private JPasswordField originalPass;
 	private JPasswordField newPass;
-	private JPasswordField newPassConfirmed;
 	private JPasswordField confPass;
+	private JLabel nameChangeConfirmation;
+	private JLabel passwordChangeConfirmation;
 
 	public GUIChangeDetails()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
+
+		// Confirmation label for Name Change
+		nameChangeConfirmation = new JLabel("");
+		nameChangeConfirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		nameChangeConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		nameChangeConfirmation.setBounds(377, 194, 56, 20);
+		add(nameChangeConfirmation);
+
+		// Confirmation label for Password Change
+		passwordChangeConfirmation = new JLabel("");
+		passwordChangeConfirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		passwordChangeConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordChangeConfirmation.setBounds(377, 366, 56, 20);
+		add(passwordChangeConfirmation);
 
 		// Panel Labels
 		JLabel lblChangeDetails = new JLabel("Change Account Details");
@@ -60,7 +77,7 @@ public class GUIChangeDetails extends JPanel
 		fieldFirstName = new JTextField();
 		fieldFirstName.setColumns(10);
 		fieldFirstName.setBounds(240, 98, 217, 20);
-		fieldFirstName.setText(MiscUtils.getCurrentLoggedInUser().getFirstName());
+		fieldFirstName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getFirstName());
 		add(fieldFirstName);
 
 		// Middle Name
@@ -73,7 +90,7 @@ public class GUIChangeDetails extends JPanel
 		fieldMiddleName = new JTextField();
 		fieldMiddleName.setColumns(10);
 		fieldMiddleName.setBounds(240, 129, 217, 20);
-		fieldMiddleName.setText(MiscUtils.getCurrentLoggedInUser().getMiddleName());
+		fieldMiddleName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getMiddleName());
 		add(fieldMiddleName);
 
 		// Last NAme
@@ -86,7 +103,7 @@ public class GUIChangeDetails extends JPanel
 		fieldLastName = new JTextField();
 		fieldLastName.setColumns(10);
 		fieldLastName.setBounds(240, 160, 217, 20);
-		fieldLastName.setText(MiscUtils.getCurrentLoggedInUser().getLastName());
+		fieldLastName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getLastName());
 		add(fieldLastName);
 
 		// Update Button
@@ -97,12 +114,19 @@ public class GUIChangeDetails extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				UserProfile loggedIn = MiscUtils.getCurrentLoggedInUser();
-				loggedIn.setFirstName(fieldFirstName.getText());
-				loggedIn.setMiddleName(fieldMiddleName.getText());
-				loggedIn.setLastName(fieldLastName.getText());
-				UserProfileDatabase.updateUserDatabaseFile();
-				// TODO: show confirmation notification
+				if (nameFieldsArePopulated())
+				{
+					UserProfile loggedIn = StudentRegistrationMain.getCurrentLoggedInUser();
+					loggedIn.setFirstName(fieldFirstName.getText());
+					loggedIn.setMiddleName(fieldMiddleName.getText());
+					loggedIn.setLastName(fieldLastName.getText());
+					DatabaseIO.serializeEverything();
+					displayNameChangeSuccess();
+				}
+				else
+				{
+					displayNameChangeError();
+				}
 			}
 		});
 		add(btnUpdate);
@@ -177,15 +201,26 @@ public class GUIChangeDetails extends JPanel
 			{
 				String newPassString = new String(newPass.getPassword());
 				String newPassStringConf = new String(confPass.getPassword());
-				if (newPassString.equals(newPassStringConf))
+				// Confirms that at least ONE of the new passwords is filled and the other one has to match IT, so only check once
+				if (newPassString.length() > 0 && newPassString.equals(newPassStringConf))
 				{
-					if (MiscUtils.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
+					if (StudentRegistrationMain.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
 					{
+						resetFieldColors();
 						originalPass.setText("");
 						newPass.setText("");
 						confPass.setText("");
-						UserProfileDatabase.updateUserDatabaseFile();
+						DatabaseIO.serializeEverything();
+						displayPasswordChangeSuccess();
 					}
+					else
+					{
+						displayPasswordError(originalPass);
+					}
+				}
+				else
+				{
+					displayPasswordError(newPass, confPass);
 				}
 			}
 		});
@@ -222,10 +257,101 @@ public class GUIChangeDetails extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.loggedIn.remove(0);
-				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+				// Checks to see TA status
+				if (StudentRegistrationMain.getCurrentLoggedInUser() != null && StudentRegistrationMain.getCurrentLoggedInUser().getPermLevel() == UserProfile.TA)
+				{
+					// Gets all activev windows
+					Frame frames[] = Frame.getFrames();
+
+					// Closes all windows that aren't the main window
+					for (Frame f : frames)
+						if (f instanceof JFrame && !(f == StudentRegistrationMain.mainWindow))
+							f.dispose();
+
+					// Resets the main window
+					StudentRegistrationMain.logOut();
+					StudentRegistrationMain.mainWindow.getContentPane().removeAll();
+					StudentRegistrationMain.mainWindow.getContentPane().add(new GUILogin());
+					StudentRegistrationMain.mainWindow.pack();
+
+				}
+				// Isn't a TA:
+				else
+				{
+					StudentRegistrationMain.logOut();
+					StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
+				}
 			}
 		});
 		add(btnBack);
+	}
+
+	/**
+	 * @return true if all the name fields are full (of something at least), false otherwise
+	 */
+	boolean nameFieldsArePopulated()
+	{
+		return (fieldFirstName.getText().length() > 0 && fieldMiddleName.getText().length() > 0 && fieldLastName.getText().length() > 0);
+	}
+
+	/**
+	 * Shows a green Check-mark to the user that the class was added okay
+	 */
+	void displayPasswordChangeSuccess()
+	{
+		resetFieldColors();
+		passwordChangeConfirmation.setText("\u2713");
+		passwordChangeConfirmation.setForeground(Color.GREEN);
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
+	 * 
+	 * @param erroredFields
+	 *            The text field to set the background red of. Can be passed multiple fields to set red
+	 */
+	void displayPasswordError(JPasswordField... erroredFields)
+	{
+		resetFieldColors();
+		for (JPasswordField field : erroredFields)
+			field.setBackground(Color.RED);
+		passwordChangeConfirmation.setText("\u2717");
+		passwordChangeConfirmation.setForeground(Color.RED);
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Shows a green Check-mark to the user that the class was added okay
+	 */
+	void displayNameChangeSuccess()
+	{
+		nameChangeConfirmation.setText("\u2713");
+		nameChangeConfirmation.setForeground(Color.GREEN);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * Shows a red X to the user that the class was added okay
+	 */
+	void displayNameChangeError()
+	{
+		nameChangeConfirmation.setText("\u2717");
+		nameChangeConfirmation.setForeground(Color.RED);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * Resets all field colors back to default color
+	 */
+	void resetFieldColors()
+	{
+		confPass.setBackground(Color.WHITE);
+		newPass.setBackground(Color.WHITE);
+		originalPass.setBackground(Color.WHITE);
 	}
 }

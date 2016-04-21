@@ -37,8 +37,7 @@ public class UserProfile implements Serializable
 
 	public boolean equals(UserProfile other)
 	{
-		boolean rVal = this.userID.equals(other.userID);
-		return rVal;
+		return this.userID.equals(other.userID);
 	}
 
 	/**
@@ -155,11 +154,5 @@ public class UserProfile implements Serializable
 			password = newPassword;
 		}
 		return success;
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.userID + "_" + this.password + "_" + this.permLevel + "_" + this.firstName + "_" + this.middleName + "_" + this.lastName;
 	}
 }

@@ -1,4 +1,4 @@
-package com.github.fantastic_five.Logic;
+	package com.github.fantastic_five.Logic;
 
 import java.io.Serializable;
 /**
@@ -6,8 +6,17 @@ import java.io.Serializable;
  * Group 5
  */
 import java.security.InvalidParameterException;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.TreeSet;
 
+import com.github.fantastic_five.Logic.Course.Day;
+
+/**
+ * 
+ * @author Fantastic Five (Stephen Clark)
+ *
+ */
 public class Course implements Serializable
 {
 	private static final long serialVersionUID = -1827693919442282177L;
@@ -16,14 +25,13 @@ public class Course implements Serializable
 	private int crn;
 	private int studentCap;
 	private int currentEnrolled;
-	private HashSet<Day> days;
+	private TreeSet<Day> days;
 	private Time startTime;
 	private Time endTime;
-	private UserProfile teacher;
 
 	public static final int TWENTYFOUR_HR_CLOCK = Time.TWENTYFOUR_HR_CLOCK;
 	public static final int TWELVE_HR_CLOCK = Time.TWELVE_HR_CLOCK;
-
+	
 	/**
 	 * Constructs a new course object
 	 * 
@@ -46,7 +54,7 @@ public class Course implements Serializable
 	 * @param endTimeMin
 	 *            A whole number less than 60, representing the minute of the hour at which the course ends
 	 */
-	public Course(String title, String description, int crn, int studentCap, HashSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
+	public Course(String title, String description, int crn, int studentCap, TreeSet<Day> days, int startTimeHr, int startTimeMin, int endTimeHr, int endTimeMin)
 	{
 		this.title = title;
 		this.description = description;
@@ -56,7 +64,6 @@ public class Course implements Serializable
 		this.days = days;
 		startTime = new Time(startTimeHr, startTimeMin);
 		endTime = new Time(endTimeHr, endTimeMin);
-		teacher = null;
 		checkTimes();
 	}
 
@@ -150,38 +157,31 @@ public class Course implements Serializable
 	}
 
 	/**
-	 * Sets the teacher for the class
-	 * 
-	 * @param user
-	 *            the person who is going to be the teacher
-	 */
-	public void setTeacher(UserProfile user)
-	{
-		this.teacher = user;
-	}
-
-	/**
-	 * Gets a formatted teacher name
-	 * 
-	 * @return a formatted teacher name
-	 */
-	public String getTeacherName()
-	{
-		if (this.teacher != null)
-			return (teacher.getFirstName() + " " + teacher.getLastName());
-		return "";
-	}
-
-	/**
 	 * Returns the meeting days for the course
 	 * 
 	 * @return The meeting days for the course
 	 */
-	public HashSet<Day> getDays()
+	public TreeSet<Day> getDays()
 	{
-		return days;
+		return (TreeSet)days.clone();
 	}
 
+	/**
+	 * @param daySet
+	 *            the HashSet of days that needs to be formatted
+	 * @return a formatted string with all the days in proper order
+	 */
+	public String getDaysFormatted()
+	{
+		String rVal = "";
+
+		// Makes the string
+		for (Day d : days)
+			rVal += d.getAbbreviation() + " ";
+
+		return rVal;
+	}
+	
 	/**
 	 * Returns a string representing the start time for the course, in either the 24 hour notation or the 12 hour notation
 	 * 
@@ -403,9 +403,9 @@ public class Course implements Serializable
 		}
 	}
 
-	public static enum Day
+	public static enum Day implements Serializable//, Comparable<Day>
 	{
-		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "TR", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "SU", 6);
+		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "R", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "U", 6);
 
 		private Day(String name, String abbreviation, int order)
 		{
@@ -475,11 +475,11 @@ public class Course implements Serializable
 
 			return rVal;
 		}
+	
+//		public int compareTo(Day other)
+//		{
+//			return Integer.compare(this.order, other.order);
+//		}
 	}
 
-	@Override
-	public String toString()
-	{
-		return this.title + "_" + this.description + "_" + this.crn + "_" + this.studentCap + "_" + this.days + "_" + this.startTime + "_" + this.endTime;
-	}
 }
