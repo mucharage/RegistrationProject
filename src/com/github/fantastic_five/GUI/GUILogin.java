@@ -303,6 +303,18 @@ public class GUILogin extends JPanel
 		});
 		// Add button to panel
 		add(btnGuest);
+		
+		JButton btnCreateApplication = new JButton("Apply for Registration");
+		btnCreateApplication.setBounds(204, 329, 202, 23);
+		btnCreateApplication.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUICreateApplication());
+			}
+		});
+		// Add button to panel
+		add(btnCreateApplication);
 	}
 
 	/**
