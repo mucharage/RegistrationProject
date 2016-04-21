@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -36,8 +38,6 @@ import com.github.fantastic_five.GUIStudent.GUIStudent;
 import com.github.fantastic_five.GUITA.GUITeacherAssistant;
 import com.github.fantastic_five.GUITeacher.GUITeacher;
 import com.github.fantastic_five.Logic.UserProfile;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUILogin extends JPanel
@@ -45,7 +45,7 @@ public class GUILogin extends JPanel
 	// private instance variables
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JLabel lblInvalidPassword;
+	private JLabel lblInvalidPassword = new JLabel();
 
 	// Create the login screen panel.
 	public GUILogin()
@@ -62,6 +62,9 @@ public class GUILogin extends JPanel
 			{
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				lblInvalidPassword.setText("");
+				revalidate();
+				repaint();
 			}
 		});
 		// Set the dimensions of the field
@@ -79,8 +82,7 @@ public class GUILogin extends JPanel
 			{
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				lblInvalidPassword.setForeground(Color.LIGHT_GRAY);
-				lblInvalidPassword = new JLabel(" ");
+				lblInvalidPassword.setText("");
 				revalidate();
 				repaint();
 			}
@@ -207,11 +209,11 @@ public class GUILogin extends JPanel
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
 						StudentRegistrationMain.logOut();
-						
-						//temporary bugfix
-						StudentRegistrationMain.loggedIn.set(0,user);
-						
-						//StudentRegistrationMain.loggedIn.add(user);
+
+						// temporary bugfix
+						StudentRegistrationMain.loggedIn.set(0, user);
+
+						// StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else
@@ -234,6 +236,9 @@ public class GUILogin extends JPanel
 
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				lblInvalidPassword.setText("");
+				revalidate();
+				repaint();
 
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
@@ -262,6 +267,9 @@ public class GUILogin extends JPanel
 			{
 				usernameField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				passwordField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				lblInvalidPassword.setText("");
+				revalidate();
+				repaint();
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnLogin.doClick();
