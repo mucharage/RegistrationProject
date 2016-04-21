@@ -143,15 +143,15 @@ public class GUIAddCourse extends JPanel
 		add(lblhrFormatEx2);
 
 		// Back button & implementation
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-//			}
-//		});
-//		
+		// JButton btnBack = new JButton("Back");
+		// btnBack.addActionListener(new ActionListener()
+		// {
+		// public void actionPerformed(ActionEvent e)
+		// {
+		// StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
+		// }
+		// });
+		//
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
@@ -186,20 +186,33 @@ public class GUIAddCourse extends JPanel
 	 */
 	void parseFields()
 	{
+		if (fieldCourseName.getText().length() == 0)
+		{
+			displayError(fieldCourseName);
+			return;
+		}
+
 		// Temporary Variables for creating the course object
 		String title = fieldCourseName.getText();
 		String description = fieldCourseDesc.getText();
 		int CRN = StudentRegistrationMain.mainCourseManager.generateNewCRN(1000, 9999);
-		int studentCap = -1;
-		try
+
+		// Handles the days of the week
+		TreeSet<Day> days = new TreeSet<>();
+		String[] dayParts = fieldDays.getText().split(" ");
+		for (String s : dayParts)
 		{
-			studentCap = Integer.parseInt(fieldCapacity.getText());
+			if (Day.getDayFromAbbreviation(s) != null)
+			{
+				days.add(Day.getDayFromAbbreviation(s));
+			}
+			else
+			{
+				displayError(this.fieldDays);
+				return;
+			}
 		}
-		catch (NumberFormatException numberException)
-		{
-			displayError(this.fieldCapacity);
-			return;
-		}
+
 		String[] startTimeParts = fieldTimeStart.getText().split(":");
 		String[] endTimeParts = fieldTimeEnd.getText().split(":");
 
@@ -234,20 +247,15 @@ public class GUIAddCourse extends JPanel
 			return;
 		}
 
-		// Handles the days of the week
-		TreeSet<Day> days = new TreeSet<>();
-		String[] dayParts = fieldDays.getText().split(" ");
-		for (String s : dayParts)
+		int studentCap = -1;
+		try
 		{
-			if (Day.getDayFromAbbreviation(s) != null)
-			{
-				days.add(Day.getDayFromAbbreviation(s));
-			}
-			else
-			{
-				displayError(this.fieldDays);
-				return;
-			}
+			studentCap = Integer.parseInt(fieldCapacity.getText());
+		}
+		catch (NumberFormatException numberException)
+		{
+			displayError(this.fieldCapacity);
+			return;
 		}
 
 		// Creates course and adds it to the course list
@@ -295,8 +303,8 @@ public class GUIAddCourse extends JPanel
 		fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
 
 	/**
