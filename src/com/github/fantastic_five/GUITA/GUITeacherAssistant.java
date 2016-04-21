@@ -21,9 +21,10 @@ public class GUITeacherAssistant extends JPanel
 		tabbedPane.addTab("Student", new GUIStudent());
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
 		
-		add(tabbedPane);
 		GUITeacher teacher = new GUITeacher();
 		tabbedPane.addTab("Teacher", teacher);
 		tabbedPane.setMnemonicAt(1, KeyEvent.VK_1);
+		
+		add(tabbedPane);
 	}
 }
