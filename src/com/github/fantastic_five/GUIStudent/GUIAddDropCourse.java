@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -63,7 +64,13 @@ public class GUIAddDropCourse extends JPanel
 		setLayout(null);
 
 		searchField = new JTextField();
-		searchField.setBounds(88, 82, 206, 20);
+		searchField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			}
+		});
+		searchField.setBounds(88, 82, 128, 20);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
@@ -71,6 +78,7 @@ public class GUIAddDropCourse extends JPanel
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnSearch.doClick();
@@ -103,7 +111,7 @@ public class GUIAddDropCourse extends JPanel
 		 */
 
 		btnDrop = new JButton("Drop");
-		btnDrop.setBounds(180, 345, 254, 23);
+		btnDrop.setBounds(226, 345, 128, 23);
 		btnDrop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -214,7 +222,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Adds a ScrollPane
 		 */
 		JScrollPane searchScrollPane = new JScrollPane();
-		searchScrollPane.setBounds(41, 132, 539, 50);
+		searchScrollPane.setBounds(41, 128, 540, 43);
 		add(searchScrollPane);
 
 		/**
@@ -236,7 +244,7 @@ public class GUIAddDropCourse extends JPanel
 		searchScrollPane.setViewportView(searchTable);
 
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(306, 81, 128, 23);
+		btnSearch.setBounds(226, 81, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
@@ -262,27 +270,16 @@ public class GUIAddDropCourse extends JPanel
 					} // end of if
 					else
 					{
-						JLabel errorMessage = new JLabel();
-						errorMessage.setForeground(Color.RED);
-						errorMessage.setText("CRN Not Found");
-						errorMessage.setBounds(88, 102, 206, 20);
+						searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 						revalidate();
-						repaint();
-						add(errorMessage);
+						repaint();						
 					} // end of else
 				} // end of try
 				catch (NumberFormatException exception)
 				{
-					JLabel notNumbers = new JLabel();
-					notNumbers.setForeground(Color.RED);
-					notNumbers.setText("Invalid CRN");
-					notNumbers.setBounds(90, 102, 206, 20);
+					searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 					revalidate();
-					repaint();
-					add(notNumbers);
-					// searchField.setText("CRN Must be Numbers Only");
-
-					// TODO: Also needs to notify if searched CRN is wrong!!
+					repaint();	
 				} // end of catch
 			}// end of acitonPerformed
 		});// end of addActionListener
@@ -307,7 +304,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Button & Logic for Add Courses to list below.
 		 */
 		btnAdd = new JButton("Add");
-		btnAdd.setBounds(180, 193, 254, 23);
+		btnAdd.setBounds(226, 182, 128, 23);
 		btnAdd.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -346,11 +343,11 @@ public class GUIAddDropCourse extends JPanel
 		/**
 		 * Adds a Label named, "Add or Remove Courses."
 		 */
-		JLabel lblCourseRemoval = new JLabel("Add or Remove Courses");
+		JLabel lblCourseRemoval = new JLabel("Add/Drop Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(177, 30, 243, 23);
+		lblCourseRemoval.setBounds(41, 30, 540, 23);
 		add(lblCourseRemoval);
 
 	}// end of GUIAddorRemoveCourse()

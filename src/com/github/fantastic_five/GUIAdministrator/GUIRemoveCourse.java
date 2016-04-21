@@ -143,7 +143,7 @@ public class GUIRemoveCourse extends JPanel
 					GUI.setLayout(null);
 
 					JTextArea confirmation = new JTextArea();
-					confirmation.setText("Are you sure you want to remove " + "\n" + "                   "  + searchedCourse.getTitle() + "?");
+					confirmation.setText("Are you sure you want to remove " + "\n" + "                     "  + searchedCourse.getTitle() + "?");
 					confirmation.setForeground(Color.RED);
 					confirmation.setFont(new Font("Tahoma", Font.BOLD, 16));
 					confirmation.setBounds(7, 11, 322, 44);
