@@ -29,6 +29,11 @@ public class PendingApplication implements Serializable
 		this.lastName = lastName;
 	}
 	
+	public boolean equals(PendingApplication other)
+	{
+		return (this == other) ? true : (this.userID.equals(other.userID));				
+	}
+	
 	/**
 	 * Returns the userID for this applicant
 	 * 
