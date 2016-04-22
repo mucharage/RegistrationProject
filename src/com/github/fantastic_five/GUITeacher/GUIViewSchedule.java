@@ -47,7 +47,7 @@ public class GUIViewSchedule extends JPanel
 
 		// Adds a table which will display list of courses that user have chose
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
+		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 		scrollPane.setViewportView(addedTable);
 
 		// Button & logic for back button
