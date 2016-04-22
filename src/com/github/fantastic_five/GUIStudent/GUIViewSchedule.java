@@ -52,7 +52,7 @@ public class GUIViewSchedule extends JPanel
 		 * adds a table which would displays list of courses that user have ch osen
 		 */
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddDropCourse.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		addedTable.setModel(new DefaultTableModel(GUIAddDropCourse.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -64,7 +64,7 @@ public class GUIViewSchedule extends JPanel
 		scrollPane.setViewportView(addedTable);
 
 		// addedTable = new JTable();
-		// addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher", "Room" }));
+		// addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher"}));
 		// scrollPane.setViewportView(addedTable);
 
 		/**
