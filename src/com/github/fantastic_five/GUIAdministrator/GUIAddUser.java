@@ -24,6 +24,8 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUIAddUser extends JPanel
@@ -65,6 +67,12 @@ public class GUIAddUser extends JPanel
 		add(lblFirstName);
 
 		firstnameTextField = new JTextField();
+		firstnameTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			
+			}
+		});
 		firstnameTextField.setBounds(252, 132, 217, 20);
 		add(firstnameTextField);
 		firstnameTextField.setColumns(10);
