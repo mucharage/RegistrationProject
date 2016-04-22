@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class UserProfile implements Serializable
 {
 	private static final long serialVersionUID = 543076885881532463L;
-	
+
 	public static final int GUEST = 0;
 	public static final int STUDENT = 1;
 	public static final int TA = 2;
@@ -38,6 +38,18 @@ public class UserProfile implements Serializable
 	public boolean equals(UserProfile other)
 	{
 		return this.userID.equals(other.userID);
+	}
+
+	/**
+	 * Changes the permission level of the user
+	 * 
+	 * @param newLevel
+	 *            the new level that you want to be applied to the user
+	 */
+	public void setPermLevel(int newLevel)
+	{
+		if (!(newLevel < GUEST || newLevel > ADMIN))
+			this.permLevel = newLevel;
 	}
 
 	/**
@@ -91,7 +103,6 @@ public class UserProfile implements Serializable
 		this.firstName = newName;
 	}
 
-
 	/**
 	 * Sets the users middle name
 	 * 
@@ -102,7 +113,6 @@ public class UserProfile implements Serializable
 	{
 		this.middleName = newName;
 	}
-
 
 	/**
 	 * Sets the users last name

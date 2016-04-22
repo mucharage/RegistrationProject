@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,9 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.KeyAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUIChangeDetails extends JPanel
@@ -42,14 +46,14 @@ public class GUIChangeDetails extends JPanel
 		nameChangeConfirmation = new JLabel("");
 		nameChangeConfirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 		nameChangeConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
-		nameChangeConfirmation.setBounds(377, 194, 56, 20);
+		nameChangeConfirmation.setBounds(353, 163, 56, 20);
 		add(nameChangeConfirmation);
 
 		// Confirmation label for Password Change
 		passwordChangeConfirmation = new JLabel("");
 		passwordChangeConfirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 		passwordChangeConfirmation.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordChangeConfirmation.setBounds(377, 366, 56, 20);
+		passwordChangeConfirmation.setBounds(353, 377, 56, 20);
 		add(passwordChangeConfirmation);
 
 		// Panel Labels
@@ -57,26 +61,44 @@ public class GUIChangeDetails extends JPanel
 		lblChangeDetails.setForeground(Color.GRAY);
 		lblChangeDetails.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblChangeDetails.setHorizontalAlignment(SwingConstants.CENTER);
-		lblChangeDetails.setBounds(177, 11, 243, 23);
+		lblChangeDetails.setBounds(10, 11, 598, 23);
 		add(lblChangeDetails);
 
 		JLabel lblResetPass = new JLabel("Reset Password");
 		lblResetPass.setForeground(Color.GRAY);
 		lblResetPass.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblResetPass.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResetPass.setBounds(177, 225, 243, 23);
+		lblResetPass.setBounds(10, 225, 598, 23);
 		add(lblResetPass);
 
 		// First Name
 		JLabel lblFirstName = new JLabel("First Name:");
 		lblFirstName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFirstName.setBounds(102, 100, 111, 14);
+		lblFirstName.setBounds(102, 69, 111, 14);
 		add(lblFirstName);
 
 		fieldFirstName = new JTextField();
+		fieldFirstName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldFirstName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
+			}
+		});
+		fieldFirstName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				fieldFirstName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
+			}
+		});
 		fieldFirstName.setColumns(10);
-		fieldFirstName.setBounds(240, 98, 217, 20);
+		fieldFirstName.setBounds(240, 67, 217, 20);
 		fieldFirstName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getFirstName());
 		add(fieldFirstName);
 
@@ -84,12 +106,30 @@ public class GUIChangeDetails extends JPanel
 		JLabel lblMiddleName = new JLabel("Middle Name:");
 		lblMiddleName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMiddleName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblMiddleName.setBounds(102, 131, 111, 14);
+		lblMiddleName.setBounds(102, 100, 111, 14);
 		add(lblMiddleName);
 
 		fieldMiddleName = new JTextField();
+		fieldMiddleName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldMiddleName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
+			}
+		});
+		fieldMiddleName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldMiddleName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
+			}
+		});
 		fieldMiddleName.setColumns(10);
-		fieldMiddleName.setBounds(240, 129, 217, 20);
+		fieldMiddleName.setBounds(240, 98, 217, 20);
 		fieldMiddleName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getMiddleName());
 		add(fieldMiddleName);
 
@@ -97,24 +137,33 @@ public class GUIChangeDetails extends JPanel
 		JLabel lblLastName = new JLabel("Last Name:");
 		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLastName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblLastName.setBounds(102, 162, 111, 14);
+		lblLastName.setBounds(102, 131, 111, 14);
 		add(lblLastName);
 
 		fieldLastName = new JTextField();
+		fieldLastName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldLastName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
+			}
+		});
 		fieldLastName.setColumns(10);
-		fieldLastName.setBounds(240, 160, 217, 20);
+		fieldLastName.setBounds(240, 129, 217, 20);
 		fieldLastName.setText(StudentRegistrationMain.getCurrentLoggedInUser().getLastName());
 		add(fieldLastName);
 
 		// Update Button
 		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(240, 192, 127, 23);
+		btnUpdate.setBounds(240, 160, 103, 23);
 		btnUpdate.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				if (nameFieldsArePopulated())
+				if (checkNameFields())
 				{
 					UserProfile loggedIn = StudentRegistrationMain.getCurrentLoggedInUser();
 					loggedIn.setFirstName(fieldFirstName.getText());
@@ -132,10 +181,14 @@ public class GUIChangeDetails extends JPanel
 		add(btnUpdate);
 
 		fieldLastName.addKeyListener(new KeyListener()
-		{
+		{			
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				fieldLastName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				nameChangeConfirmation.setText("");				
+				revalidate();
+				repaint();
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnUpdate.doClick();
@@ -175,6 +228,26 @@ public class GUIChangeDetails extends JPanel
 		add(lblNewPass);
 
 		newPass = new JPasswordField();
+		newPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordChangeConfirmation.setText("");				
+				revalidate();
+				repaint();	
+			}
+		});
+		newPass.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordChangeConfirmation.setText("");				
+				revalidate();
+				repaint();				
+			}
+		});
 		newPass.setColumns(10);
 		newPass.setBounds(240, 304, 217, 20);
 		add(newPass);
@@ -187,13 +260,23 @@ public class GUIChangeDetails extends JPanel
 		add(lblConf);
 
 		confPass = new JPasswordField();
+		confPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordChangeConfirmation.setText("");				
+				revalidate();
+				repaint();	
+			}
+		});
 		confPass.setColumns(10);
 		confPass.setBounds(240, 335, 217, 20);
 		add(confPass);
 
 		// Change password button
-		JButton btnPass = new JButton("Update Password");
-		btnPass.setBounds(240, 367, 127, 23);
+		JButton btnPass = new JButton("Update");
+		btnPass.setBounds(240, 374, 103, 23);
 		btnPass.addActionListener(new ActionListener()
 		{
 			@Override
@@ -231,6 +314,11 @@ public class GUIChangeDetails extends JPanel
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				passwordChangeConfirmation.setText("");				
+				revalidate();
+				repaint();	
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnPass.doClick();
@@ -260,7 +348,7 @@ public class GUIChangeDetails extends JPanel
 				// Checks to see TA status
 				if (StudentRegistrationMain.getCurrentLoggedInUser() != null && StudentRegistrationMain.getCurrentLoggedInUser().getPermLevel() == UserProfile.TA)
 				{
-					// Gets all activev windows
+					// Gets all active windows
 					Frame frames[] = Frame.getFrames();
 
 					// Closes all windows that aren't the main window
@@ -287,14 +375,6 @@ public class GUIChangeDetails extends JPanel
 	}
 
 	/**
-	 * @return true if all the name fields are full (of something at least), false otherwise
-	 */
-	boolean nameFieldsArePopulated()
-	{
-		return (fieldFirstName.getText().length() > 0 && fieldMiddleName.getText().length() > 0 && fieldLastName.getText().length() > 0);
-	}
-
-	/**
 	 * Shows a green Check-mark to the user that the class was added okay
 	 */
 	void displayPasswordChangeSuccess()
@@ -316,7 +396,7 @@ public class GUIChangeDetails extends JPanel
 	{
 		resetFieldColors();
 		for (JPasswordField field : erroredFields)
-			field.setBackground(Color.RED);
+			field.setBorder(BorderFactory.createLineBorder(Color.RED));
 		passwordChangeConfirmation.setText("\u2717");
 		passwordChangeConfirmation.setForeground(Color.RED);
 		revalidate();
@@ -333,12 +413,42 @@ public class GUIChangeDetails extends JPanel
 		revalidate();
 		repaint();
 	}
+	
+	/**
+	 * @return true if all the name fields are full (of something at least), false otherwise
+	 */
+	
+	boolean checkNameFields()
+	{
+		resetFieldColors();		
+		if (fieldFirstName.getText().length() == 0)
+		{
+			displayNameChangeError(fieldFirstName);
+			return false;
+		}
+		if (fieldMiddleName.getText().length() == 0)
+		{
+			displayNameChangeError(fieldMiddleName);
+			return false;
+		}
+		if (fieldLastName.getText().length() == 0)
+		{
+			displayNameChangeError(fieldLastName);
+			return false;
+		}		
+		return true;
+	}
 
 	/**
 	 * Shows a red X to the user that the class was added okay
 	 */
-	void displayNameChangeError()
+	void displayNameChangeError(JTextField... erroredFields)
 	{
+		resetFieldColors();
+		for (JTextField field : erroredFields)
+		{
+			field.setBorder(BorderFactory.createLineBorder(Color.RED));
+		}
 		nameChangeConfirmation.setText("\u2717");
 		nameChangeConfirmation.setForeground(Color.RED);
 		revalidate();
@@ -350,8 +460,8 @@ public class GUIChangeDetails extends JPanel
 	 */
 	void resetFieldColors()
 	{
-		confPass.setBackground(Color.WHITE);
-		newPass.setBackground(Color.WHITE);
-		originalPass.setBackground(Color.WHITE);
+		confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+		originalPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
 }

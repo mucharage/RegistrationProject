@@ -121,7 +121,7 @@ public class GUIViewSchedule extends JPanel
 		 * adds a JLabel named "View Schedule"
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Schedule");
-		lblCourseRemoval.setBounds(178, 54, 243, 23);
+		lblCourseRemoval.setBounds(10, 54, 587, 23);
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,7 +141,7 @@ public class GUIViewSchedule extends JPanel
 						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						popup.setLocationRelativeTo(null);
+						popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 						popup.setResizable(false);
 						popup.setVisible(true);
 						popup.setAlwaysOnTop(true);
