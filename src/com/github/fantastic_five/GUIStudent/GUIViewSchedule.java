@@ -141,7 +141,7 @@ public class GUIViewSchedule extends JPanel
 						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 						popup.setBounds(200, 200, 447, 147);
 						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						popup.setLocationRelativeTo(null);
+						popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 						popup.setResizable(false);
 						popup.setVisible(true);
 						popup.setAlwaysOnTop(true);

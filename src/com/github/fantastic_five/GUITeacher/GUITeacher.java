@@ -72,41 +72,16 @@ public class GUITeacher extends JPanel
 		btnViewSchedule.setBounds(178, 254, 243, 23);
 		add(btnViewSchedule);
 		
-		// Button & logic for Add Course & Remove Course buttons
-		JButton btnAddCourse = new JButton("Add Courses");
-		btnAddCourse.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddCourse());
-			}
-		});
-		btnAddCourse.setBounds(178, 284, 243, 23);
-		add(btnAddCourse);
-		
-		JButton btnRemoveCourse = new JButton("Remove Courses");
-		btnRemoveCourse.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIRemoveCourse());
-			}
-		});
-		btnRemoveCourse.setBounds(178, 314, 243, 23);
-		add(btnRemoveCourse);
-		
-		
 		// Button & logic for viewing students currently enrolled in classes you are teaching
 		JButton btnViewStudents = new JButton("View Students");
+		btnViewStudents.setBounds(178, 284, 243, 23);
 		btnViewStudents.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO: add setBounds & button; make GUIViewStudents class
-				//StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());;
+				//StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
 			}
 		});
 		

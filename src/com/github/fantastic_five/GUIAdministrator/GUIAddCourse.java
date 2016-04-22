@@ -24,6 +24,10 @@ import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class GUIAddCourse extends JPanel
@@ -50,6 +54,24 @@ public class GUIAddCourse extends JPanel
 		add(lblCourseName);
 
 		fieldCourseName = new JTextField();
+		fieldCourseName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldCourseName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldCourseName.setColumns(10);
 		fieldCourseName.setBounds(240, 98, 217, 20);
 		add(fieldCourseName);
@@ -62,6 +84,24 @@ public class GUIAddCourse extends JPanel
 		add(lblDaysOffered);
 
 		fieldDays = new JTextField();
+		fieldDays.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldDays.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldDays.setColumns(10);
 		fieldDays.setBounds(240, 129, 217, 20);
 		add(fieldDays);
@@ -74,6 +114,26 @@ public class GUIAddCourse extends JPanel
 		add(lblTimeStart);
 
 		fieldTimeStart = new JTextField();
+		fieldTimeStart.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldTimeStart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldTimeStart.setColumns(10);
 		fieldTimeStart.setBounds(240, 160, 217, 20);
 		add(fieldTimeStart);
@@ -86,6 +146,26 @@ public class GUIAddCourse extends JPanel
 		add(lblTimeEnd);
 
 		fieldTimeEnd = new JTextField();
+		fieldTimeEnd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));				
+				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldTimeEnd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));				
+				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldTimeEnd.setColumns(10);
 		fieldTimeEnd.setBounds(240, 191, 217, 20);
 		add(fieldTimeEnd);
@@ -98,6 +178,24 @@ public class GUIAddCourse extends JPanel
 		add(lblStudentCapacity);
 
 		fieldCapacity = new JTextField();
+		fieldCapacity.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldCapacity.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldCapacity.setColumns(10);
 		fieldCapacity.setBounds(240, 222, 217, 20);
 		add(fieldCapacity);
@@ -110,6 +208,24 @@ public class GUIAddCourse extends JPanel
 		add(lblCourseDesc);
 
 		fieldCourseDesc = new JTextArea();
+		fieldCourseDesc.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				fieldCourseDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		fieldCourseDesc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fieldCourseDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		fieldCourseDesc.setLineWrap(true);
 		fieldCourseDesc.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		fieldCourseDesc.setColumns(10);
