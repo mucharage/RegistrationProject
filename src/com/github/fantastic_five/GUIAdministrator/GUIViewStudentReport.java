@@ -46,7 +46,7 @@ public class GUIViewStudentReport extends JPanel
 		table.getColumnModel().getColumn(2).setPreferredWidth(75);
 		table.getColumnModel().getColumn(3).setPreferredWidth(30);
 		table.getColumnModel().getColumn(4).setPreferredWidth(280);
-
+		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
 		// Adds the login panel
