@@ -271,7 +271,8 @@ public class GUIAddDropClass extends JPanel
 					});
 					addedScrollPane.setViewportView(addedTable);
 					revalidate();
-					repaint();
+					repaint();					
+					
 				}
 			}
 		});

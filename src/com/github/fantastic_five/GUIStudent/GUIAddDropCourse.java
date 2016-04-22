@@ -34,19 +34,19 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAddDropCourse extends JPanel
 {
+	protected static final String ScheduleManager = null;
 	/**
 	 * Private instant variables
 	 */
 	private JTextField searchField;
 	private JButton btnAdd;
 	private JButton btnDrop;
-	private JButton btnBack;
 	private JButton btnSearch;
 	private JLabel lblCrn;
 	private JTable searchTable;
@@ -310,9 +310,14 @@ public class GUIAddDropCourse extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				int rowSel = searchTable.getSelectedRow();
-
+					
 				if (rowSel > -1)
 				{
+					
+				}
+				
+				else if (rowSel > -1)
+				{					
 					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 					/**
 					 * Makes Table-Cell Non-editable
