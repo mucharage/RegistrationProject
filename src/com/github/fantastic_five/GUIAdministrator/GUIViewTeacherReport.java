@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
@@ -26,8 +26,8 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIViewTeacherReport extends JPanel
 {
-	JTable table;
-	String[] headers = new String[] { "Last", "First", "UserID", "Available", "TA", "CRNs" };
+	private JTable table;
+	private String[] headers = new String[] { "Last", "First", "UserID", "Available", "TA", "CRNs" };
 
 	public GUIViewTeacherReport()
 	{
@@ -39,14 +39,7 @@ public class GUIViewTeacherReport extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), headers)
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		table.setModel(new UneditableTableModel(getTable(), headers));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -62,18 +55,6 @@ public class GUIViewTeacherReport extends JPanel
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// Back button
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-//			}
-//		});
-		
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
@@ -111,6 +92,9 @@ public class GUIViewTeacherReport extends JPanel
 		add(lblAdministration);
 	}
 
+	/**
+	 * @return a two-dimensional object array containing information about teachers
+	 */
 	Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
@@ -144,15 +128,25 @@ public class GUIViewTeacherReport extends JPanel
 		return cells;
 	}
 
-	String getAvailibilityUnicode(UserProfile u)
+	/**
+	 * @param profile
+	 *            the user profile to check for availability
+	 * @return a unicode String determined by the user's availability
+	 */
+	String getAvailibilityUnicode(UserProfile profile)
 	{
 		int numCourses = 0;
-		if (u != null)
-			numCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(u).size();
+		if (profile != null)
+			numCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(profile).size();
 
 		return numCourses >= 5 ? "\u2717" : "\u2713";
 	}
 
+	/**
+	 * @param profile
+	 *            the profile to populate the String for
+	 * @return a formatted string of all CRNs the teacher is enrolled in
+	 */
 	String getCRNS(UserProfile profile)
 	{
 		String rVal = "";

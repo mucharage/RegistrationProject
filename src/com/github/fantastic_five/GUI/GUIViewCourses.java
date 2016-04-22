@@ -24,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
@@ -53,14 +52,7 @@ public class GUIViewCourses extends JPanel
 		 * 
 		 */
 		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
 		scrollPane.setViewportView(table);
 		
 		//does the impossible and adds a rudimentary sorting mechanism to the table. you're welcome - stephen
@@ -69,14 +61,6 @@ public class GUIViewCourses extends JPanel
 		/**
 		 * Button & Logic for View Schedule
 		 */
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUILogin());
-//			}
-//		});
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
@@ -149,12 +133,11 @@ public class GUIViewCourses extends JPanel
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
 					desc.setBounds(10, 11, 421, 96);						
 					desc.setEditable(false);
-					scrollPane.setViewportView(desc);									
-					
-				}//end of if statement
-			}//end of mouseClicked
-		});//end of addMouseLisener
-	}// end of GuiViewCourses()
+					scrollPane.setViewportView(desc);										
+				}
+			}
+		});
+	}
 
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
@@ -183,14 +166,13 @@ public class GUIViewCourses extends JPanel
 
 		return cells;
 	}
-	
+
 	String getFormattedDays(TreeSet<Day> days)
 	{
 		String rVal = "";
-		for(Day d : days)
+		for (Day d : days)
 			rVal += d.getAbbreviation() + " ";
 		return rVal;
-		
-		
+
 	}
 }

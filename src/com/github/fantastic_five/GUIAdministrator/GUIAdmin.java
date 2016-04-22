@@ -98,7 +98,7 @@ public class GUIAdmin extends JPanel
 			}
 		});
 		add(btnViewTeachers);
-		
+
 		JButton btnViewPendingApplicants = new JButton("View Pending Applicants");
 		btnViewPendingApplicants.setBounds(138, 282, 154, 23);
 		btnViewPendingApplicants.addActionListener(new ActionListener()
@@ -109,7 +109,7 @@ public class GUIAdmin extends JPanel
 			}
 		});
 		add(btnViewPendingApplicants);
-		
+
 		JButton btnChangeUserPermissions = new JButton("Change User Permissions");
 		btnChangeUserPermissions.setBounds(323, 282, 154, 23);
 		btnChangeUserPermissions.addActionListener(new ActionListener()
@@ -133,7 +133,5 @@ public class GUIAdmin extends JPanel
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministration.setBounds(0, 83, 618, 23);
 		add(lblAdministration);
-		
-
 	}
 }
