@@ -99,5 +99,17 @@ public class GUITeacher extends JPanel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
+		
+		JButton btnViewStudent = new JButton("View Student");
+		btnViewStudent.setBounds(178, 288, 243, 23);
+		btnViewStudent.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
+			}
+		});
+		add(btnViewStudent);
 	}
 }
