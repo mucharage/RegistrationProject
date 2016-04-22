@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -111,8 +112,13 @@ public class GUIViewCourses extends JPanel
 		});
 		add(btnPrint);
 		
+		/**
+		 * adds a login GUI
+		 */
+		JPanel loginPanel = new GUILogStatus();
+		loginPanel.setBounds(0, 0, 618, 24);
+		add(loginPanel);
 		
-
 	/**
 	 * Displays Course Description by  double Clicking selected Course 
 	 */
@@ -127,7 +133,7 @@ public class GUIViewCourses extends JPanel
 					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 					popup.setBounds(200, 200, 447, 147);
 					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setLocationRelativeTo(null);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 					popup.setResizable(false);
 					popup.setVisible(true);
 					popup.setAlwaysOnTop(true);
@@ -143,7 +149,7 @@ public class GUIViewCourses extends JPanel
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
 					desc.setBounds(10, 11, 421, 96);						
 					desc.setEditable(false);
-					scrollPane.setViewportView(desc);
+					scrollPane.setViewportView(desc);									
 					
 				}//end of if statement
 			}//end of mouseClicked
@@ -184,5 +190,7 @@ public class GUIViewCourses extends JPanel
 		for(Day d : days)
 			rVal += d.getAbbreviation() + " ";
 		return rVal;
+		
+		
 	}
 }
