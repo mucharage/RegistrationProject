@@ -15,6 +15,7 @@ import com.github.fantastic_five.GUI.GUILogin;
 import com.github.fantastic_five.Logic.CourseManager;
 import com.github.fantastic_five.Logic.DatabaseIO;
 import com.github.fantastic_five.Logic.FinancialRecordsOffice;
+import com.github.fantastic_five.Logic.PendingApplicationDatabase;
 import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.UserProfileDatabase;
 
@@ -34,6 +35,7 @@ public class StudentRegistrationMain
 	public static CourseManager mainCourseManager = new CourseManager();
 	public static UserProfileDatabase profiles = new UserProfileDatabase();
 	public static FinancialRecordsOffice financialRecords = new FinancialRecordsOffice();
+	public static PendingApplicationDatabase pendingApplications = new PendingApplicationDatabase();
 
 	public static void main(String[] args)
 	{

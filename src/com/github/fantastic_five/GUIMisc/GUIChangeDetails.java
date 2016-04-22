@@ -79,20 +79,24 @@ public class GUIChangeDetails extends JPanel
 		add(lblFirstName);
 
 		fieldFirstName = new JTextField();
-		fieldFirstName.addMouseListener(new MouseAdapter() {
+		fieldFirstName.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldFirstName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldFirstName.addKeyListener(new KeyAdapter() {
+		fieldFirstName.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0)
+			{
 				fieldFirstName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 			}
@@ -110,20 +114,24 @@ public class GUIChangeDetails extends JPanel
 		add(lblMiddleName);
 
 		fieldMiddleName = new JTextField();
-		fieldMiddleName.addKeyListener(new KeyAdapter() {
+		fieldMiddleName.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldMiddleName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldMiddleName.addMouseListener(new MouseAdapter() {
+		fieldMiddleName.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldMiddleName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 			}
@@ -141,11 +149,13 @@ public class GUIChangeDetails extends JPanel
 		add(lblLastName);
 
 		fieldLastName = new JTextField();
-		fieldLastName.addMouseListener(new MouseAdapter() {
+		fieldLastName.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldLastName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 			}
@@ -181,12 +191,12 @@ public class GUIChangeDetails extends JPanel
 		add(btnUpdate);
 
 		fieldLastName.addKeyListener(new KeyListener()
-		{			
+		{
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
 				fieldLastName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				nameChangeConfirmation.setText("");				
+				nameChangeConfirmation.setText("");
 				revalidate();
 				repaint();
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
@@ -228,24 +238,28 @@ public class GUIChangeDetails extends JPanel
 		add(lblNewPass);
 
 		newPass = new JPasswordField();
-		newPass.addMouseListener(new MouseAdapter() {
+		newPass.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent arg0)
+			{
 				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				passwordChangeConfirmation.setText("");				
+				passwordChangeConfirmation.setText("");
 				revalidate();
-				repaint();	
+				repaint();
 			}
 		});
-		newPass.addKeyListener(new KeyAdapter() {
+		newPass.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0)
+			{
 				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				passwordChangeConfirmation.setText("");				
+				passwordChangeConfirmation.setText("");
 				revalidate();
-				repaint();				
+				repaint();
 			}
 		});
 		newPass.setColumns(10);
@@ -260,14 +274,16 @@ public class GUIChangeDetails extends JPanel
 		add(lblConf);
 
 		confPass = new JPasswordField();
-		confPass.addMouseListener(new MouseAdapter() {
+		confPass.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				passwordChangeConfirmation.setText("");				
+				passwordChangeConfirmation.setText("");
 				revalidate();
-				repaint();	
+				repaint();
 			}
 		});
 		confPass.setColumns(10);
@@ -284,10 +300,16 @@ public class GUIChangeDetails extends JPanel
 			{
 				String newPassString = new String(newPass.getPassword());
 				String newPassStringConf = new String(confPass.getPassword());
+				String originalPassword = new String(originalPass.getPassword());
+				if (originalPassword.length() == 0)
+				{
+					displayPasswordError(originalPass);
+					return;
+				}
 				// Confirms that at least ONE of the new passwords is filled and the other one has to match IT, so only check once
 				if (newPassString.length() > 0 && newPassString.equals(newPassStringConf))
 				{
-					if (StudentRegistrationMain.getCurrentLoggedInUser().setPassword(newPassString, new String(originalPass.getPassword())))
+					if (StudentRegistrationMain.getCurrentLoggedInUser().setPassword(newPassString, originalPassword))
 					{
 						resetFieldColors();
 						originalPass.setText("");
@@ -316,9 +338,9 @@ public class GUIChangeDetails extends JPanel
 			{
 				newPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confPass.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				passwordChangeConfirmation.setText("");				
+				passwordChangeConfirmation.setText("");
 				revalidate();
-				repaint();	
+				repaint();
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnPass.doClick();
@@ -385,7 +407,7 @@ public class GUIChangeDetails extends JPanel
 		revalidate();
 		repaint();
 	}
-	
+
 	/**
 	 * Sets the background of the passed text field to be red to alert the user, as well as a red text notifier
 	 * 
@@ -402,7 +424,7 @@ public class GUIChangeDetails extends JPanel
 		revalidate();
 		repaint();
 	}
-	
+
 	/**
 	 * Shows a green Check-mark to the user that the class was added okay
 	 */
@@ -413,14 +435,14 @@ public class GUIChangeDetails extends JPanel
 		revalidate();
 		repaint();
 	}
-	
+
 	/**
 	 * @return true if all the name fields are full (of something at least), false otherwise
 	 */
-	
+
 	boolean checkNameFields()
 	{
-		resetFieldColors();		
+		resetFieldColors();
 		if (fieldFirstName.getText().length() == 0)
 		{
 			displayNameChangeError(fieldFirstName);
@@ -435,7 +457,7 @@ public class GUIChangeDetails extends JPanel
 		{
 			displayNameChangeError(fieldLastName);
 			return false;
-		}		
+		}
 		return true;
 	}
 

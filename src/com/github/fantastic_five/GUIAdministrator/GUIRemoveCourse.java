@@ -53,6 +53,7 @@ public class GUIRemoveCourse extends JPanel
 
 		JTable table = new JTable();
 		table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
+		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
 		// Label for the CRN box
@@ -82,7 +83,6 @@ public class GUIRemoveCourse extends JPanel
 		fieldCRN.setBounds(384, 64, 107, 20);
 		add(fieldCRN);
 		fieldCRN.setColumns(10);
-
 
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 389, 128, 23);
@@ -230,7 +230,7 @@ public class GUIRemoveCourse extends JPanel
 	/**
 	 * @return a two-dimensional object array for the table with properly pre-filled info
 	 */
-	public Object[][] getCourseTable()
+	Object[][] getCourseTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
