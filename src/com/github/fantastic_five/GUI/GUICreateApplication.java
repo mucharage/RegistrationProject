@@ -27,6 +27,8 @@ import javax.swing.UIManager;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUICreateApplication extends JPanel
@@ -64,6 +66,24 @@ public class GUICreateApplication extends JPanel
 		add(lblFirstName);
 
 		firstnameTextField = new JTextField();
+		firstnameTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		firstnameTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		firstnameTextField.setBounds(252, 132, 217, 20);
 		add(firstnameTextField);
 		firstnameTextField.setColumns(10);
@@ -76,6 +96,24 @@ public class GUICreateApplication extends JPanel
 		add(lblMiddleName);
 
 		middlenameTextField = new JTextField();
+		middlenameTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		middlenameTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		middlenameTextField.setColumns(10);
 		middlenameTextField.setBounds(252, 164, 217, 20);
 		add(middlenameTextField);
@@ -88,8 +126,26 @@ public class GUICreateApplication extends JPanel
 		add(lblLastName);
 
 		lastnameTextField = new JTextField();
+		lastnameTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		lastnameTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		lastnameTextField.setColumns(10);
-		lastnameTextField.setBounds(252, 196, 217, 20);
+		lastnameTextField.setBounds(252, 195, 217, 20);
 		add(lastnameTextField);
 
 		// User ID
@@ -100,6 +156,24 @@ public class GUICreateApplication extends JPanel
 		add(lblUserID);
 
 		userIDTextField = new JTextField();
+		userIDTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
+		userIDTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		userIDTextField.setColumns(10);
 		userIDTextField.setBounds(252, 226, 217, 20);
 		add(userIDTextField);
@@ -112,6 +186,15 @@ public class GUICreateApplication extends JPanel
 		add(lblPassword);
 
 		passwordTextField = new JTextField();
+		passwordTextField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+			}
+		});
 		passwordTextField.setColumns(10);
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
@@ -195,6 +278,11 @@ public class GUICreateApplication extends JPanel
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				confirmation.setText("");
+				revalidate();
+				repaint();
+				
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnCreate.doClick();
