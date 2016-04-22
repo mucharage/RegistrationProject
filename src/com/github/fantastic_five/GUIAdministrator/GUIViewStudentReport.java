@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
@@ -26,8 +26,8 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIViewStudentReport extends JPanel
 {
-	JTable table;
-	String[] headers = new String[] { "Last", "First", "UserID", "Paid", "CRNs" };
+	private JTable table;
+	private String[] headers = new String[] { "Last", "First", "UserID", "Paid", "CRNs" };
 
 	public GUIViewStudentReport()
 	{
@@ -39,14 +39,7 @@ public class GUIViewStudentReport extends JPanel
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), headers)
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		table.setModel(new UneditableTableModel(getTable(), headers));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(100);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -62,21 +55,10 @@ public class GUIViewStudentReport extends JPanel
 		add(loginPanel);
 
 		// Back button
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-//			}
-//		});
 		JButton btnBack = new UniversalBackButton();
-		
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
-		
+
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setBounds(498, 386, 99, 23);
 		btnPrint.addActionListener(new ActionListener()
@@ -97,8 +79,8 @@ public class GUIViewStudentReport extends JPanel
 					e1.printStackTrace();
 				}
 
-			}// end of actionPerformed
-		});// end of actionListener
+			}
+		});
 		add(btnPrint);
 
 		// Panel label, essentially
@@ -110,6 +92,9 @@ public class GUIViewStudentReport extends JPanel
 		add(lblAdministration);
 	}
 
+	/**
+	 * @return a two-dimensional Object Array which contains user information
+	 */
 	Object[][] getTable()
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
@@ -142,11 +127,21 @@ public class GUIViewStudentReport extends JPanel
 		return cells;
 	}
 
+	/**
+	 * @param hasDues
+	 *            whether or not the Student owes still
+	 * @return a formatted Unicode String based on dues
+	 */
 	String getPaymentUnicode(boolean hasDues)
 	{
 		return hasDues ? "   \u2713" : "   \u2717";
 	}
 
+	/**
+	 * @param profile
+	 *            the profile to populate the String for
+	 * @return a formatted string of all CRNs the teacher is enrolled in
+	 */
 	String getCRNS(UserProfile profile)
 	{
 		String rVal = "";

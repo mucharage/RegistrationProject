@@ -14,9 +14,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
@@ -24,8 +24,9 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIChangePerm extends JPanel
 {
-	JTable table;
-	String[] headers = new String[] { "Last", "First", "UserID", "Perm Level" };
+	private JTable table;
+	private JLabel confirmation;
+	private String[] headers = new String[] { "Last", "First", "UserID", "Perm Level" };
 
 	public GUIChangePerm()
 	{
@@ -36,15 +37,15 @@ public class GUIChangePerm extends JPanel
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
+		confirmation = new JLabel("");
+		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmation.setBounds(249, 374, 45, 49);
+		add(confirmation);
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(getTable(), headers)
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		table.setModel(new UneditableTableModel(getTable(), headers));
+		table.setAutoCreateRowSorter(true);
+		scrollPane.setViewportView(table);
 
 		// Adds the back button
 		JButton btnBack = new UniversalBackButton();
@@ -59,10 +60,12 @@ public class GUIChangePerm extends JPanel
 		JLabel lblNewPermissionLevel = new JLabel("New Permission Level:");
 		lblNewPermissionLevel.setBounds(304, 390, 106, 14);
 		add(lblNewPermissionLevel);
-		
+
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(1, UserProfile.STUDENT, UserProfile.ADMIN, 1));
+		spinner.setEditor(new JSpinner.DefaultEditor(spinner));
 		spinner.setBounds(420, 387, 29, 20);
+		spinner.setToolTipText("<html>1 = Student<br>2 = TA<br>3 = Teacher<br>4 = Administrator</html>");
 		add(spinner);
 
 		JButton btnApply = new JButton("Apply");
@@ -76,14 +79,20 @@ public class GUIChangePerm extends JPanel
 				if (rowSel > -1)
 				{
 					UserProfile selectedUser = StudentRegistrationMain.profiles.getUserProfile((String) table.getModel().getValueAt(rowSel, 2));
-					if (selectedUser != null)
+					int newLevel = (int) spinner.getValue();
+					if (selectedUser != null && newLevel != selectedUser.getPermLevel())
 					{
+						selectedUser.setPermLevel(newLevel);
+						table.setModel(new UneditableTableModel(getTable(), headers));
+						displaySuccess();
+						return;
 					}
 				}
+				displayError();
 			}
 		});
 		add(btnApply);
-		
+
 		// Panel label, essentially
 		JLabel lblAdministration = new JLabel("Change Permission Levels");
 		lblAdministration.setForeground(Color.GRAY);
@@ -93,10 +102,34 @@ public class GUIChangePerm extends JPanel
 		add(lblAdministration);
 	}
 
-	public Object[][] getTable()
+	void displayError()
+	{
+		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		confirmation.setText("\u2717");
+		confirmation.setForeground(Color.RED);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * changes the JLabel "confirmation" to a Green Check Mark
+	 */
+	void displaySuccess()
+	{
+		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+		confirmation.setText("\u2713");
+		confirmation.setForeground(Color.GREEN);
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * @return a table with all users except for the currently logged in user
+	 */
+	Object[][] getTable()
 	{
 		Set<UserProfile> users = StudentRegistrationMain.profiles.copyUserProfiles();
-		Object[][] cells = new Object[users.size()][headers.length];
+		Object[][] cells = new Object[users.size() - 1][headers.length];
 		int row = 0;
 		for (UserProfile u : users)
 		{

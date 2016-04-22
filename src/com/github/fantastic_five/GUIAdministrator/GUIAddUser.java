@@ -68,18 +68,22 @@ public class GUIAddUser extends JPanel
 		add(lblFirstName);
 
 		firstnameTextField = new JTextField();
-		firstnameTextField.addKeyListener(new KeyAdapter() {
+		firstnameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0)
+			{
 				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		firstnameTextField.addMouseListener(new MouseAdapter() {
+		firstnameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -98,18 +102,22 @@ public class GUIAddUser extends JPanel
 		add(lblMiddleName);
 
 		middlenameTextField = new JTextField();
-		middlenameTextField.addKeyListener(new KeyAdapter() {
+		middlenameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		middlenameTextField.addMouseListener(new MouseAdapter() {
+		middlenameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -128,18 +136,22 @@ public class GUIAddUser extends JPanel
 		add(lblLastName);
 
 		lastnameTextField = new JTextField();
-		lastnameTextField.addMouseListener(new MouseAdapter() {
+		lastnameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		lastnameTextField.addKeyListener(new KeyAdapter() {
+		lastnameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -158,18 +170,22 @@ public class GUIAddUser extends JPanel
 		add(lblUserID);
 
 		userIDTextField = new JTextField();
-		userIDTextField.addKeyListener(new KeyAdapter() {
+		userIDTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		userIDTextField.addMouseListener(new MouseAdapter() {
+		userIDTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -188,9 +204,11 @@ public class GUIAddUser extends JPanel
 		add(lblPassword);
 
 		passwordTextField = new JTextField();
-		passwordTextField.addMouseListener(new MouseAdapter() {
+		passwordTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -208,15 +226,7 @@ public class GUIAddUser extends JPanel
 		add(confirmation);
 
 		JButton btnBack = new UniversalBackButton();
-//		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(10, 386, 128, 23);
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-//			}
-//		});
 		add(btnBack);
 
 		JComboBox<String> permDropdown = new JComboBox<String>();
@@ -288,20 +298,23 @@ public class GUIAddUser extends JPanel
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 		});
 	}
 
-	public int getPermFromString(String s)
+	/**
+	 * @param textLevel
+	 *            a String describing the permission level
+	 * @return an integer value of the represented String
+	 */
+	public int getPermFromString(String textLevel)
 	{
-		switch (s)
+		switch (textLevel)
 		{
 		case STUDENT:
 			return UserProfile.STUDENT;
@@ -326,11 +339,6 @@ public class GUIAddUser extends JPanel
 		if (firstnameTextField.getText().length() <= 0)
 		{
 			displayError(firstnameTextField);
-			return false;
-		}
-		if (middlenameTextField.getText().length() <= 0)
-		{
-			displayError(middlenameTextField);
 			return false;
 		}
 		if (lastnameTextField.getText().length() <= 0)
