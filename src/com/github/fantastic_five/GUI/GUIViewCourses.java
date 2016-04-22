@@ -34,6 +34,8 @@ import com.github.fantastic_five.Logic.UserProfile;
 @SuppressWarnings("serial")
 public class GUIViewCourses extends JPanel
 {
+	private String[] headers = new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" };
+
 	public GUIViewCourses()
 	{
 		setBounds(0, 0, 618, 434);
@@ -52,10 +54,9 @@ public class GUIViewCourses extends JPanel
 		 * 
 		 */
 		JTable table = new JTable();
-		table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
+		table.setModel(new UneditableTableModel(getCourseTable(), headers));
 		scrollPane.setViewportView(table);
-		
-		//does the impossible and adds a rudimentary sorting mechanism to the table. you're welcome - stephen
+		// does the impossible and adds a rudimentary sorting mechanism to the table. you're welcome - stephen
 		table.setAutoCreateRowSorter(true);
 
 		/**
@@ -95,24 +96,24 @@ public class GUIViewCourses extends JPanel
 			}
 		});
 		add(btnPrint);
-		
+
 		/**
 		 * adds a login GUI
 		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-		
-	/**
-	 * Displays Course Description by  double Clicking selected Course 
-	 */
+
+		/**
+		 * Displays Course Description by double Clicking selected Course
+		 */
 		table.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent e)
 			{
 				if (e.getClickCount() == 2)
 				{
-					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), 0));
 
 					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 					popup.setBounds(200, 200, 447, 147);
@@ -121,19 +122,19 @@ public class GUIViewCourses extends JPanel
 					popup.setResizable(false);
 					popup.setVisible(true);
 					popup.setAlwaysOnTop(true);
-					
-					JScrollPane scrollPane = new JScrollPane();	
+
+					JScrollPane scrollPane = new JScrollPane();
 					scrollPane.setBounds(10, 11, 421, 96);
 					popup.getContentPane().add(scrollPane);
-																		
+
 					JTextArea desc = new JTextArea();
 					desc.setText(selectedCourse.getDescription());
 					desc.setWrapStyleWord(true);
 					desc.setLineWrap(true);
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);						
+					desc.setBounds(10, 11, 421, 96);
 					desc.setEditable(false);
-					scrollPane.setViewportView(desc);										
+					scrollPane.setViewportView(desc);
 				}
 			}
 		});
