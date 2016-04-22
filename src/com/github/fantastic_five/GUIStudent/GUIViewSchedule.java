@@ -121,7 +121,7 @@ public class GUIViewSchedule extends JPanel
 		 * adds a JLabel named "View Schedule"
 		 */
 		JLabel lblCourseRemoval = new JLabel("View Schedule");
-		lblCourseRemoval.setBounds(178, 54, 243, 23);
+		lblCourseRemoval.setBounds(10, 54, 587, 23);
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);

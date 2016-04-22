@@ -70,7 +70,7 @@ public class GUIAddDropCourse extends JPanel
 				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 			}
 		});
-		searchField.setBounds(88, 82, 128, 20);
+		searchField.setBounds(51, 95, 128, 20);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
@@ -103,7 +103,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates an another ScrollPane
 		 */
 		JScrollPane addedScrollPane = new JScrollPane();
-		addedScrollPane.setBounds(41, 227, 540, 107);
+		addedScrollPane.setBounds(10, 227, 598, 107);
 		add(addedScrollPane);
 
 		/**
@@ -149,7 +149,7 @@ public class GUIAddDropCourse extends JPanel
 							/**
 							 * Makes Table-Cell Non-editable
 							 */
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
@@ -190,7 +190,7 @@ public class GUIAddDropCourse extends JPanel
 		 */
 //		btnBack = new JButton("Back");
 		JButton btnBack = new UniversalBackButton();
-		btnBack.setBounds(41, 389, 128, 23);
+		btnBack.setBounds(10, 388, 128, 23);
 //		btnBack.addMouseListener(new MouseAdapter()
 //		{
 //			@Override
@@ -205,7 +205,7 @@ public class GUIAddDropCourse extends JPanel
 		 * adds a label named, "Search By"
 		 */
 		JLabel lblSearchBy = new JLabel("Search By:");
-		lblSearchBy.setBounds(41, 56, 116, 20);
+		lblSearchBy.setBounds(10, 64, 116, 20);
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
@@ -214,7 +214,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Adds a label named, "CRN:"
 		 */
 		lblCrn = new JLabel("CRN:");
-		lblCrn.setBounds(43, 84, 46, 14);
+		lblCrn.setBounds(10, 97, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
@@ -222,14 +222,14 @@ public class GUIAddDropCourse extends JPanel
 		 * Adds a ScrollPane
 		 */
 		JScrollPane searchScrollPane = new JScrollPane();
-		searchScrollPane.setBounds(41, 128, 540, 43);
+		searchScrollPane.setBounds(10, 128, 598, 43);
 		add(searchScrollPane);
 
 		/**
 		 * Creates a Table which shall display result of the course that user has searched for
 		 */
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -244,7 +244,7 @@ public class GUIAddDropCourse extends JPanel
 		searchScrollPane.setViewportView(searchTable);
 
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(226, 81, 128, 23);
+		btnSearch.setBounds(189, 94, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
@@ -256,7 +256,7 @@ public class GUIAddDropCourse extends JPanel
 					int CRN = Integer.parseInt(searchField.getText());
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 						{
 							@Override
 							public boolean isCellEditable(int row, int column)
@@ -290,7 +290,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -317,7 +317,7 @@ public class GUIAddDropCourse extends JPanel
 					/**
 					 * Makes Table-Cell Non-editable
 					 */
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 					{
 						@Override
 						public boolean isCellEditable(int row, int column)
@@ -347,7 +347,7 @@ public class GUIAddDropCourse extends JPanel
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(41, 30, 540, 23);
+		lblCourseRemoval.setBounds(10, 30, 598, 23);
 		add(lblCourseRemoval);
 
 	}// end of GUIAddorRemoveCourse()

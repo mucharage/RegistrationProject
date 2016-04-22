@@ -42,12 +42,12 @@ public class GUIViewSchedule extends JPanel
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 60, 587, 107);
+		scrollPane.setBounds(10, 119, 587, 106);
 		add(scrollPane);
 
 		// Adds a table which will display list of courses that user have chose
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddRemoveClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
+		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
 		scrollPane.setViewportView(addedTable);
 
 		// Button & logic for back button
@@ -97,7 +97,7 @@ public class GUIViewSchedule extends JPanel
 		lblViewSchedule.setForeground(Color.GRAY);
 		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
-		lblViewSchedule.setBounds(177, 30, 243, 23);
+		lblViewSchedule.setBounds(10, 54, 587, 23);
 		add(lblViewSchedule);
 
 		/**
