@@ -32,6 +32,7 @@ import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.Course.Day;
 
 @SuppressWarnings("serial")
 public class GUIAddDropClass extends JPanel
@@ -123,7 +124,7 @@ public class GUIAddDropClass extends JPanel
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
 
 							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 							{
@@ -158,18 +159,8 @@ public class GUIAddDropClass extends JPanel
 		add(btnDrop);
 
 		// adds a back button
-//		btnBack = new JButton("Back");
-		JButton btnBack = new UniversalBackButton();
-		
+		JButton btnBack = new UniversalBackButton();		
 		btnBack.setBounds(10, 389, 128, 23);
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			@Override
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-//			}
-//		});
 		add(btnBack);
 
 		// adds a label named "Search By"
@@ -300,6 +291,9 @@ public class GUIAddDropClass extends JPanel
 		add(lblCourseRemoval);
 	}
 
+	/**
+	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 */
 	public static Object[][] getClassTable()
 	{
 		Set<Course> enrolledCourses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
@@ -313,18 +307,14 @@ public class GUIAddDropClass extends JPanel
 			cells[row][1] = c.getTitle();
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
-			if (teacher != null)
-				cells[row][4] = teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
-			cells[row][5] = c.getDays();
+			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
+			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 		return cells;
 	}
-
-	/**
-	 * @return a two-dimensional object array for the table with properly pre-filled info
-	 */
+	
 	private Object[][] getSearchResultTable(int CRN)
 	{
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
@@ -351,10 +341,17 @@ public class GUIAddDropClass extends JPanel
 			cells[row][2] = c.getStudentCap();
 			cells[row][3] = c.getRemainingCap();
 			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
-			cells[row][5] = c.getDays();
+			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 		return cells;
+	}
+	static String getFormattedDays(TreeSet<Day> days)
+	{
+		String rVal = "";
+		for (Day d : days)
+			rVal += d.getAbbreviation() + " ";
+		return rVal;
 	}
 }
