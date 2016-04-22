@@ -54,18 +54,22 @@ public class GUIAddCourse extends JPanel
 		add(lblCourseName);
 
 		fieldCourseName = new JTextField();
-		fieldCourseName.addKeyListener(new KeyAdapter() {
+		fieldCourseName.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldCourseName.addMouseListener(new MouseAdapter() {
+		fieldCourseName.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldCourseName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -84,18 +88,22 @@ public class GUIAddCourse extends JPanel
 		add(lblDaysOffered);
 
 		fieldDays = new JTextField();
-		fieldDays.addKeyListener(new KeyAdapter() {
+		fieldDays.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldDays.addMouseListener(new MouseAdapter() {
+		fieldDays.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldDays.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -114,9 +122,11 @@ public class GUIAddCourse extends JPanel
 		add(lblTimeStart);
 
 		fieldTimeStart = new JTextField();
-		fieldTimeStart.addKeyListener(new KeyAdapter() {
+		fieldTimeStart.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
@@ -124,9 +134,11 @@ public class GUIAddCourse extends JPanel
 				repaint();
 			}
 		});
-		fieldTimeStart.addMouseListener(new MouseAdapter() {
+		fieldTimeStart.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
@@ -146,20 +158,24 @@ public class GUIAddCourse extends JPanel
 		add(lblTimeEnd);
 
 		fieldTimeEnd = new JTextField();
-		fieldTimeEnd.addKeyListener(new KeyAdapter() {
+		fieldTimeEnd.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
-				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));				
+			public void keyTyped(KeyEvent e)
+			{
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldTimeEnd.addMouseListener(new MouseAdapter() {
+		fieldTimeEnd.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));				
+			public void mouseClicked(MouseEvent e)
+			{
+				fieldTimeStart.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				fieldTimeEnd.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -178,18 +194,22 @@ public class GUIAddCourse extends JPanel
 		add(lblStudentCapacity);
 
 		fieldCapacity = new JTextField();
-		fieldCapacity.addMouseListener(new MouseAdapter() {
+		fieldCapacity.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldCapacity.addKeyListener(new KeyAdapter() {
+		fieldCapacity.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldCapacity.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -208,18 +228,22 @@ public class GUIAddCourse extends JPanel
 		add(lblCourseDesc);
 
 		fieldCourseDesc = new JTextArea();
-		fieldCourseDesc.addKeyListener(new KeyAdapter() {
+		fieldCourseDesc.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				fieldCourseDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		fieldCourseDesc.addMouseListener(new MouseAdapter() {
+		fieldCourseDesc.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				fieldCourseDesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -258,16 +282,6 @@ public class GUIAddCourse extends JPanel
 		lblhrFormatEx2.setBounds(467, 194, 141, 14);
 		add(lblhrFormatEx2);
 
-		// Back button & implementation
-		// JButton btnBack = new JButton("Back");
-		// btnBack.addActionListener(new ActionListener()
-		// {
-		// public void actionPerformed(ActionEvent e)
-		// {
-		// StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-		// }
-		// });
-		//
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);

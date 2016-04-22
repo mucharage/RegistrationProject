@@ -99,6 +99,28 @@ public class GUIAdmin extends JPanel
 		});
 		add(btnViewTeachers);
 
+		JButton btnViewPendingApplicants = new JButton("View Pending Applicants");
+		btnViewPendingApplicants.setBounds(138, 282, 154, 23);
+		btnViewPendingApplicants.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIManageApplicants());
+			}
+		});
+		add(btnViewPendingApplicants);
+
+		JButton btnChangeUserPermissions = new JButton("Change User Permissions");
+		btnChangeUserPermissions.setBounds(323, 282, 154, 23);
+		btnChangeUserPermissions.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				StudentRegistrationMain.replaceMainWindowContents(new GUIChangePerm());
+			}
+		});
+		add(btnChangeUserPermissions);
+
 		// Adds the login panel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
