@@ -53,7 +53,7 @@ public class GUITeacher extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIAddRemoveClass());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIAddDropClass());
 			}
 		});
 		btnAddRemoveCourse.setBounds(178, 220, 243, 23);

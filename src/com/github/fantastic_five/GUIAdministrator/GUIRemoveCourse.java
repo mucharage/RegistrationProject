@@ -8,9 +8,10 @@ package com.github.fantastic_five.GUIAdministrator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.TreeSet;
@@ -26,22 +27,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.UserProfile;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class GUIRemoveCourse extends JPanel
 {
-	// Private instance variables
 	private JTextField fieldCRN;
 
 	public GUIRemoveCourse()
@@ -55,14 +52,7 @@ public class GUIRemoveCourse extends JPanel
 		add(scrollPane);
 
 		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
 		scrollPane.setViewportView(table);
 
 		// Label for the CRN box
@@ -72,39 +62,28 @@ public class GUIRemoveCourse extends JPanel
 		add(lblCrnToRemove);
 
 		// The box where the CRN entered should be accessed
-		fieldCRN = new JTextField();		
-		fieldCRN.addMouseListener(new MouseAdapter() {
+		fieldCRN = new JTextField();
+		fieldCRN.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent arg0)
+			{
 				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 			}
 		});
-		fieldCRN.addKeyListener(new KeyAdapter() {
+		fieldCRN.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(KeyEvent e)
+			{
 				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 			}
 		});
-//		fieldCRN.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//				fieldCRN.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-//			}
-//		});
 		fieldCRN.setBounds(384, 64, 107, 20);
 		add(fieldCRN);
 		fieldCRN.setColumns(10);
 
-		// Back Button and all of its actions
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIAdmin());
-//			}
-//		});
-		
+
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 389, 128, 23);
 		add(btnBack);
@@ -143,7 +122,7 @@ public class GUIRemoveCourse extends JPanel
 					GUI.setLayout(null);
 
 					JTextArea confirmation = new JTextArea();
-					confirmation.setText("Are you sure you want to remove " + "\n" + "                     "  + searchedCourse.getTitle() + "?");
+					confirmation.setText("Are you sure you want to remove " + "\n" + "                     " + searchedCourse.getTitle() + "?");
 					confirmation.setForeground(Color.RED);
 					confirmation.setFont(new Font("Tahoma", Font.BOLD, 16));
 					confirmation.setBounds(7, 11, 322, 44);
@@ -174,18 +153,7 @@ public class GUIRemoveCourse extends JPanel
 							// Removes the class
 							StudentRegistrationMain.mainCourseManager.removeCourse(Integer.parseInt(fieldCRN.getText()));
 							// Refreshes the table
-							table.setModel(new DefaultTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" })
-							{
-								@Override
-								public boolean isCellEditable(int row, int column)
-								{
-									return false;
-								}
-							});
-							scrollPane.setViewportView(table);
-							revalidate();
-							repaint();
-							// Removes the popup
+							table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
 							popup.dispose();
 						}
 					});
@@ -254,7 +222,6 @@ public class GUIRemoveCourse extends JPanel
 					desc.setBounds(10, 11, 421, 96);
 					desc.setEditable(false);
 					scrollPane.setViewportView(desc);
-
 				}
 			}
 		});
@@ -288,6 +255,11 @@ public class GUIRemoveCourse extends JPanel
 		return cells;
 	}
 
+	/**
+	 * @param days
+	 *            a TreeSet of days which need to be formatted
+	 * @return a formatted String containing the abbreviations of all days in the TreeSet
+	 */
 	String getFormattedDays(TreeSet<Day> days)
 	{
 		String rVal = "";

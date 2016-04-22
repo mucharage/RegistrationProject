@@ -34,31 +34,29 @@ import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUIAddRemoveClass extends JPanel
+public class GUIAddDropClass extends JPanel
 {
 	// private instance variables.
 	private JTextField searchField;
 	private JButton btnAdd;
-	private JButton btnRemove;
-	private JButton btnBack;
+	private JButton btnDrop;
 	private JButton btnSearch;
 	private JLabel lblCrn;
 	private JTable searchTable;
 	private JTable addedTable;
 
-	private int CRNToSearch;
 	ArrayList<Course> courseSearchResult;
 
 	/**
 	 * This GUI class displays the panel for adding and removing courses that the teacher is teaching.
 	 */
-	public GUIAddRemoveClass()
+	public GUIAddDropClass()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
 		searchField = new JTextField();
-		searchField.setBounds(88, 82, 206, 20);
+		searchField.setBounds(51, 95, 128, 20);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
@@ -87,13 +85,13 @@ public class GUIAddRemoveClass extends JPanel
 
 		// Creates another scroll pane
 		JScrollPane addedScrollPane = new JScrollPane();
-		addedScrollPane.setBounds(41, 227, 540, 107);
+		addedScrollPane.setBounds(10, 227, 595, 107);
 		add(addedScrollPane);
 
 		// Button & Logic for Remove Courses
-		btnRemove = new JButton("Remove");
-		btnRemove.setBounds(180, 345, 254, 23);
-		btnRemove.addActionListener(new ActionListener()
+		btnDrop = new JButton("Drop");
+		btnDrop.setBounds(226, 345, 128, 23);
+		btnDrop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -127,7 +125,7 @@ public class GUIAddRemoveClass extends JPanel
 						{
 							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
 
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
@@ -157,13 +155,13 @@ public class GUIAddRemoveClass extends JPanel
 				popup.getContentPane().add(btnNo);
 			}
 		});
-		add(btnRemove);
+		add(btnDrop);
 
 		// adds a back button
 //		btnBack = new JButton("Back");
 		JButton btnBack = new UniversalBackButton();
 		
-		btnBack.setBounds(41, 389, 128, 23);
+		btnBack.setBounds(10, 389, 128, 23);
 //		btnBack.addActionListener(new ActionListener()
 //		{
 //			@Override
@@ -176,25 +174,25 @@ public class GUIAddRemoveClass extends JPanel
 
 		// adds a label named "Search By"
 		JLabel lblSearchBy = new JLabel("Search By:");
-		lblSearchBy.setBounds(41, 56, 116, 20);
+		lblSearchBy.setBounds(10, 64, 116, 20);
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
 
 		// adds a label named "CRN:"
 		lblCrn = new JLabel("CRN:");
-		lblCrn.setBounds(43, 84, 46, 14);
+		lblCrn.setBounds(10, 97, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
 		// adds a scroll pane
 		JScrollPane searchScrollPane = new JScrollPane();
-		searchScrollPane.setBounds(41, 132, 539, 50);
+		searchScrollPane.setBounds(10, 128, 595, 43);
 		add(searchScrollPane);
 
 		// adds a table to display searched classes
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -206,7 +204,7 @@ public class GUIAddRemoveClass extends JPanel
 
 		// Button & Logic for Search
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(306, 81, 128, 23);
+		btnSearch.setBounds(189, 94, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
@@ -218,7 +216,7 @@ public class GUIAddRemoveClass extends JPanel
 					int CRN = Integer.parseInt(searchField.getText());
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 						{
 							@Override
 							public boolean isCellEditable(int row, int column)
@@ -257,12 +255,12 @@ public class GUIAddRemoveClass extends JPanel
 
 		// adds another table that displays courses the user has added
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" }));
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"}));
 		addedScrollPane.setViewportView(addedTable);
 
 		// Button & Logic for Add courses
 		btnAdd = new JButton("Add");
-		btnAdd.setBounds(180, 183, 254, 23);
+		btnAdd.setBounds(226, 182, 128, 23);
 		btnAdd.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -272,7 +270,7 @@ public class GUIAddRemoveClass extends JPanel
 				if (rowSel > -1)
 				{
 					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 					{
 						@Override
 						public boolean isCellEditable(int row, int column)
@@ -294,11 +292,11 @@ public class GUIAddRemoveClass extends JPanel
 		add(loginPanel);
 
 		// adds a label named "Add or Remove Courses
-		JLabel lblCourseRemoval = new JLabel("Add or Remove Courses");
+		JLabel lblCourseRemoval = new JLabel("Add/Drop Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(177, 30, 243, 23);
+		lblCourseRemoval.setBounds(10, 30, 598, 23);
 		add(lblCourseRemoval);
 	}
 
