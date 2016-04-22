@@ -25,7 +25,7 @@ public class DatabaseIO
 		{
 			FileOutputStream fileOut = new FileOutputStream(fileLocation);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(new DatabasePackage(StudentRegistrationMain.mainCourseManager, StudentRegistrationMain.profiles, StudentRegistrationMain.financialRecords));
+			out.writeObject(new DatabasePackage(StudentRegistrationMain.mainCourseManager, StudentRegistrationMain.profiles, StudentRegistrationMain.financialRecords, StudentRegistrationMain.pendingApplications));
 			out.close();
 			fileOut.close();
 		}
@@ -51,6 +51,7 @@ public class DatabaseIO
 				StudentRegistrationMain.profiles = databases.profiles;
 				StudentRegistrationMain.mainCourseManager = databases.courseManager;
 				StudentRegistrationMain.financialRecords = databases.financialRecords;
+				StudentRegistrationMain.pendingApplications = databases.pendingApplications;
 			}
 			else
 			{
@@ -80,12 +81,14 @@ public class DatabaseIO
 		public CourseManager courseManager;
 		public UserProfileDatabase profiles;
 		public FinancialRecordsOffice financialRecords;
+		public PendingApplicationDatabase pendingApplications;
 
-		public DatabasePackage(CourseManager courseManager, UserProfileDatabase profiles, FinancialRecordsOffice financialRecords)
+		public DatabasePackage(CourseManager courseManager, UserProfileDatabase profiles, FinancialRecordsOffice financialRecords, PendingApplicationDatabase pendingApplications)
 		{
 			this.courseManager = courseManager;
 			this.profiles = profiles;
 			this.financialRecords = financialRecords;
+			this.pendingApplications =  pendingApplications;
 		}
 	}
 

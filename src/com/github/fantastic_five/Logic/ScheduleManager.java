@@ -24,11 +24,37 @@ public class ScheduleManager
 	 * @param user The user whose schedule is being viewed
 	 * @return The set of courses from a specified user's schedule which conflict with a specified course
 	 */
-	public static Set<Course> courseAndScheduleConflict(Course course, UserProfile user)
+	public static Set<Course> getConflictingCourses(Course course, UserProfile user)
 	{
 		Set<Course> rVal = new HashSet<Course>();
 		CourseManager mainCourseManager = StudentRegistrationMain.mainCourseManager;
 	
+		Set<Course> userSchedule = mainCourseManager.getCoursesWithLearner(user);
+		userSchedule.addAll(mainCourseManager.getCoursesWithInstructor(user));
+		
+		for(Course c: userSchedule)
+		{
+			if(course.conflictsWith(c))
+			{
+				rVal.add(c);
+			}
+		}
+		
+		return rVal;
+	}
+	
+	/**
+	 * Returns the set of courses from a specified user's schedule which conflict with a specified course
+	 * @param crn The course which is being checked against
+	 * @param user The user whose schedule is being viewed
+	 * @return The set of courses from a specified user's schedule which conflict with a specified course
+	 */
+	public static Set<Course> getConflictingCourses(int crn, UserProfile user)
+	{
+		Set<Course> rVal = new HashSet<Course>();
+		CourseManager mainCourseManager = StudentRegistrationMain.mainCourseManager;
+		Course course = mainCourseManager.getCourse(crn);
+		
 		Set<Course> userSchedule = mainCourseManager.getCoursesWithLearner(user);
 		userSchedule.addAll(mainCourseManager.getCoursesWithInstructor(user));
 		
