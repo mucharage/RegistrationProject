@@ -6,6 +6,7 @@
 package com.github.fantastic_five.GUIStudent;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
@@ -36,11 +39,11 @@ import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
 import com.github.fantastic_five.Logic.UserProfile;
+import com.github.fantastic_five.Logic.ScheduleManager;
 
 @SuppressWarnings("serial")
 public class GUIAddDropCourse extends JPanel
 {
-	protected static final String ScheduleManager = null;
 	/**
 	 * Private instant variables
 	 */
@@ -64,9 +67,11 @@ public class GUIAddDropCourse extends JPanel
 		setLayout(null);
 
 		searchField = new JTextField();
-		searchField.addMouseListener(new MouseAdapter() {
+		searchField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 			}
 		});
@@ -149,7 +154,7 @@ public class GUIAddDropCourse extends JPanel
 							/**
 							 * Makes Table-Cell Non-editable
 							 */
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
+							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 							{
 								@Override
 								public boolean isCellEditable(int row, int column)
@@ -188,17 +193,17 @@ public class GUIAddDropCourse extends JPanel
 		/**
 		 * adds a back button with logic behind it.
 		 */
-//		btnBack = new JButton("Back");
+		// btnBack = new JButton("Back");
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 388, 128, 23);
-//		btnBack.addMouseListener(new MouseAdapter()
-//		{
-//			@Override
-//			public void mouseClicked(MouseEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-//			}// end of mouseClicked
-//		});// end of addMouseListener
+		// btnBack.addMouseListener(new MouseAdapter()
+		// {
+		// @Override
+		// public void mouseClicked(MouseEvent e)
+		// {
+		// StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
+		// }// end of mouseClicked
+		// });// end of addMouseListener
 		add(btnBack);
 
 		/**
@@ -229,7 +234,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates a Table which shall display result of the course that user has searched for
 		 */
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
+		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -272,14 +277,14 @@ public class GUIAddDropCourse extends JPanel
 					{
 						searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 						revalidate();
-						repaint();						
+						repaint();
 					} // end of else
 				} // end of try
 				catch (NumberFormatException exception)
 				{
 					searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 					revalidate();
-					repaint();	
+					repaint();
 				} // end of catch
 			}// end of acitonPerformed
 		});// end of addActionListener
@@ -290,7 +295,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
+		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -310,30 +315,21 @@ public class GUIAddDropCourse extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				int rowSel = searchTable.getSelectedRow();
-					
+
 				if (rowSel > -1)
 				{
-					
-				}
-				
-				else if (rowSel > -1)
-				{					
-					StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-					/**
-					 * Makes Table-Cell Non-editable
-					 */
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
+					Set<Course> conflicts = ScheduleManager.getConflictingCourses((int) searchTable.getModel().getValueAt(rowSel, 0), StudentRegistrationMain.getCurrentLoggedInUser());
+
+					if (conflicts.size() > 0)
 					{
-						@Override
-						public boolean isCellEditable(int row, int column)
-						{
-							return false;
-						}// end of isCellEditable
-					});// end setModel
-					addedScrollPane.setViewportView(addedTable);
-					revalidate();
-					repaint();
-				} // end of if
+						// Do something with an error here: the user has conflicts
+					}
+					else
+					{
+						StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
+						((AbstractTableModel) addedTable.getModel()).fireTableDataChanged();
+					}
+				}
 			}// end of the actionPerformed
 		});// end of the addActionListener
 		add(btnAdd);
@@ -425,4 +421,5 @@ public class GUIAddDropCourse extends JPanel
 			rVal += d.getAbbreviation() + " ";
 		return rVal;
 	}
+
 }// end of JPanel extension of GUIAddorRemoveCourse()
