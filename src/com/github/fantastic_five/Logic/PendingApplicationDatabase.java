@@ -17,7 +17,7 @@ public class PendingApplicationDatabase implements Serializable
 	
 	public PendingApplicationDatabase()
 	{
-		database = new TreeSet<>();
+		database = new TreeSet<>(new ApplicationComparator());
 	}
 	
 	public TreeSet<PendingApplication> copyDatabase()

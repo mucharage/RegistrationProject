@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,8 +29,7 @@ import javax.swing.UIManager;
 
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import com.github.fantastic_five.Logic.PendingApplication;
 
 @SuppressWarnings("serial")
 public class GUICreateApplication extends JPanel
@@ -217,11 +218,10 @@ public class GUICreateApplication extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-			  checkFields();
-			  if(checkFields() == true)
+			  if(checkFields())
 			  {
 				displaySuccess();
-				
+				parseFields();
 			  	// Initialize frame as a new JFrame
 				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Application Created");
 				// Set the dimensions of the frame
@@ -248,8 +248,9 @@ public class GUICreateApplication extends JPanel
 				txtpnPleaseContactThe.setBounds(30, 6, 250, 100);
 				// add the text area to the pane and frame
 				popup.getContentPane().add(txtpnPleaseContactThe);
-				JButton btnNo = new JButton("No");
-				btnNo.addActionListener(new ActionListener()
+				resetFields();
+				JButton fakeButton = new JButton("No");
+				fakeButton.addActionListener(new ActionListener()
 				{
 					@Override
 					public void actionPerformed(ActionEvent e)
@@ -257,7 +258,7 @@ public class GUICreateApplication extends JPanel
 						popup.dispose();
 					}
 				});
-				btnNo.addKeyListener(new KeyAdapter()
+				fakeButton.addKeyListener(new KeyAdapter()
 				{
 					public void keyPressed(KeyEvent ke)
 					{ // handler
@@ -267,7 +268,7 @@ public class GUICreateApplication extends JPanel
 						}
 					}
 				});
-				popup.getContentPane().add(btnNo);
+				popup.getContentPane().add(fakeButton);
 			  }	
 			}
 		});
@@ -302,6 +303,20 @@ public class GUICreateApplication extends JPanel
 			}
 		});
 	}
+	
+	void parseFields()
+	{
+		String firstName = firstnameTextField.getText();
+		String middleName = middlenameTextField.getText();
+		String lastName = lastnameTextField.getText();
+		String userID = userIDTextField.getText();
+		String password = passwordTextField.getText();
+		
+
+		
+		PendingApplication app = new PendingApplication(userID, password, firstName, middleName, lastName);
+		StudentRegistrationMain.pendingApplications.addApplication(app);
+	}
 
 
 	/**
@@ -314,11 +329,6 @@ public class GUICreateApplication extends JPanel
 		if (firstnameTextField.getText().length() <= 0)
 		{
 			displayError(firstnameTextField);
-			return false;
-		}
-		if (middlenameTextField.getText().length() <= 0)
-		{
-			displayError(middlenameTextField);
 			return false;
 		}
 		if (lastnameTextField.getText().length() <= 0)
