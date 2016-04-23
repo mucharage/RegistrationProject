@@ -56,7 +56,7 @@ public class FinancialRecordsOffice implements Serializable
 
 		if (!rVal)
 		{
-			userPaymentInfo.put(user, false);
+			userPaymentInfo.put(user, true);
 			DatabaseIO.serializeEverything();
 		}
 
