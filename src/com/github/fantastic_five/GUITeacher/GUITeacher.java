@@ -47,8 +47,8 @@ public class GUITeacher extends JPanel
 		add(btnView);
 
 		// Button & logic for removing courses
-		JButton btnAddRemoveCourse = new JButton("Add / Remove Courses");
-		btnAddRemoveCourse.addActionListener(new ActionListener()
+		JButton btnAddDropCourse = new JButton("Add / Drop Courses");
+		btnAddDropCourse.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -56,8 +56,8 @@ public class GUITeacher extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIAddDropClass());
 			}
 		});
-		btnAddRemoveCourse.setBounds(178, 220, 243, 23);
-		add(btnAddRemoveCourse);
+		btnAddDropCourse.setBounds(178, 220, 243, 23);
+		add(btnAddDropCourse);
 
 		// Button for viewing schedules
 		JButton btnViewSchedule = new JButton("View Schedule");
@@ -80,10 +80,10 @@ public class GUITeacher extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO: add setBounds & button; make GUIViewStudents class
-				//StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
 			}
 		});
+		add(btnViewStudents);
 		
 		
 		// Panel label
@@ -99,17 +99,5 @@ public class GUITeacher extends JPanel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
-		
-		JButton btnViewStudent = new JButton("View Student");
-		btnViewStudent.setBounds(178, 288, 243, 23);
-		btnViewStudent.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
-			}
-		});
-		add(btnViewStudent);
 	}
 }
