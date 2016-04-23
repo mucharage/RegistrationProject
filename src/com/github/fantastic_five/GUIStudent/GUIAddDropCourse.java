@@ -292,6 +292,7 @@ public class GUIAddDropCourse extends JPanel
 		addedTable = new JTable();
 		addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 		addedScrollPane.setViewportView(addedTable);
+		addedTable.setAutoCreateRowSorter(true);
 
 		/**
 		 * Button & Logic for Add Courses to list below.
