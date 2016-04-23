@@ -323,6 +323,7 @@ public class GUIAddDropCourse extends JPanel
 					if (conflicts.size() > 0)
 					{
 						// Do something with an error here: the user has conflicts
+						System.out.println("Epic fail");
 					}
 					else
 					{
