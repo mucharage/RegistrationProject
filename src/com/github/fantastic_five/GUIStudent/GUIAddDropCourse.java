@@ -6,7 +6,6 @@
 package com.github.fantastic_five.GUIStudent;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,16 +29,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
 import com.github.fantastic_five.Logic.Course.Day;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.ScheduleManager;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAddDropCourse extends JPanel
@@ -150,18 +148,14 @@ public class GUIAddDropCourse extends JPanel
 						int rowSel = addedTable.getSelectedRow();
 						if (rowSel > -1)
 						{
-							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(rowSel, 0));
+							int CRN = (int) addedTable.getModel().getValueAt(rowSel, 0);
+							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), CRN);
+							StudentRegistrationMain.mainCourseManager.getCourse(CRN).decrRemainingCap();
 							/**
 							 * Makes Table-Cell Non-editable
 							 */
-							addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
-							{
-								@Override
-								public boolean isCellEditable(int row, int column)
-								{
-									return false;
-								}// end of isCellEdittable
-							});// end of setModel
+							addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+							searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 							addedScrollPane.setViewportView(addedTable);
 							revalidate();
 							repaint();
@@ -234,14 +228,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates a Table which shall display result of the course that user has searched for
 		 */
 		searchTable = new JTable();
-		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}// end of isCellEditable
-		});// end of setModel
+		searchTable.setModel(new UneditableTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 
 		/*
 		 * Added a Button named "Search" would search for the entered CRN from the Course data.
@@ -261,14 +248,7 @@ public class GUIAddDropCourse extends JPanel
 					int CRN = Integer.parseInt(searchField.getText());
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						searchTable.setModel(new DefaultTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
-						{
-							@Override
-							public boolean isCellEditable(int row, int column)
-							{
-								return false;
-							}// end of isCellEditable
-						});// end of setModel
+						searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 						searchScrollPane.setViewportView(searchTable);
 						revalidate();
 						repaint();
@@ -295,14 +275,7 @@ public class GUIAddDropCourse extends JPanel
 		 * Creates an another Table which shall course that user has added.
 		 */
 		addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
-		{
-			@Override
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			}
-		});
+		addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
 		addedScrollPane.setViewportView(addedTable);
 
 		/**
@@ -323,12 +296,18 @@ public class GUIAddDropCourse extends JPanel
 					if (conflicts.size() > 0)
 					{
 						// Do something with an error here: the user has conflicts
-						System.out.println("Epic fail");
+						for(Course c: conflicts)
+						{
+							System.out.println(c.getTitle());
+						}
 					}
 					else
 					{
-						StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-						((AbstractTableModel) addedTable.getModel()).fireTableDataChanged();
+						int CRN = (int) searchTable.getModel().getValueAt(rowSel, 0);
+						StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), CRN);
+						addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+
 					}
 				}
 			}// end of the actionPerformed
