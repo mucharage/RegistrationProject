@@ -25,14 +25,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.ScheduleManager;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAddDropClass extends JPanel
@@ -43,8 +47,9 @@ public class GUIAddDropClass extends JPanel
 	private JButton btnDrop;
 	private JButton btnSearch;
 	private JLabel lblCrn;
+	private JLabel lblClassReq;
 	private JTable searchTable;
-	private JTable addedTable;
+	private static JTable addedTable;
 
 	ArrayList<Course> courseSearchResult;
 
@@ -260,19 +265,35 @@ public class GUIAddDropClass extends JPanel
 
 				if (rowSel > -1)
 				{
-					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
+					Set<Course> conflicts = ScheduleManager.getConflictingCourses((int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0), StudentRegistrationMain.getCurrentLoggedInUser());
+					if (conflicts.size() > 0)
 					{
-						@Override
-						public boolean isCellEditable(int row, int column)
-						{
-							return false;
-						}
-					});
-					addedScrollPane.setViewportView(addedTable);
-					revalidate();
-					repaint();					
-					
+						JDialog conflict = new JDialog(StudentRegistrationMain.mainWindow, "Course Conflict");
+						conflict.setBounds(100, 100, 343, 87);
+						conflict.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						conflict.setLocationRelativeTo(null);
+						conflict.getContentPane().setLayout(null);
+						conflict.setResizable(false);
+						conflict.setVisible(true);
+						conflict.setAlwaysOnTop(true);
+
+						JScrollPane scrollPane = new JScrollPane();
+						scrollPane.setBounds(0, 0, 339, 59);
+						conflict.getContentPane().add(scrollPane);
+
+						JTable table = new JTable();
+						table.setModel(new UneditableTableModel(getConflictTable((int) searchTable.getModel().getValueAt(table.convertRowIndexToModel(rowSel), 0)), new String[] { "CRN", "Class", "Time" }));
+						scrollPane.setViewportView(table);
+					}
+					// Checks to make sure the user isn't taking MORE than 5 classes
+					else if (StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser()).size() <= 5)
+					{
+						StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0));
+						addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						revalidate();
+						repaint();
+					}
 				}
 			}
 		});
@@ -314,6 +335,23 @@ public class GUIAddDropClass extends JPanel
 			row++;
 		}
 		return cells;
+	}
+	
+	private Object[][] getConflictTable(int CRN)
+	{
+		Set<Course> courseConflict = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser());
+		Object[][] cells = new Object[courseConflict.size()][3];
+		int row = 0;
+
+		for (Course c : courseConflict)
+		{
+			cells[row][0] = c.getCRN();
+			cells[row][1] = c.getTitle();
+			cells[row][2] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+		return cells;
+
 	}
 	
 	private Object[][] getSearchResultTable(int CRN)
