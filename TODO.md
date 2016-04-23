@@ -1,49 +1,15 @@
 #Tentative To-Do List:
 
-**To Most / All Code:**
+- [ ] Cells in Teacher GUIs don't need to be editable
+ 
+- [ ] Change Student Add/Drop Course button to Register/Drop Course
+ 
+- [ ] Teacher View Schedule doesn't need "Teacher" column
 
-- [x] Change tables to use TBA if teacher == null
+- [ ] Implement help button? Use this link: https://www.youtube.com/watch?v=KLvZhenUbgM
 
-- [x] Implement table text formatting for days 
+- [ ] MAKE SURE THAT TABLES WITH SORTING ARE GETTING ROW VALUES CORRECTLY. Use this:
+ 
+table.getModel().getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), <Column Needed Here>)
 
-**Backbone:**
-
-- [ ] Ensure that addLearnerToCourse() is working properly via GUITeacher
-
-- [x] Complete "big.dat" and remove other .dat implementation
-
-- [x] Implement some interface for Financial Records Office
-
-- [x] Implement print methods where necessary
-
-- [x] Make sure UserProfileDatabase / CourseManager + Connectors can handle TA being teacher AND student
-
-**Administration:**
-
-- [x] Finish "View Student Report"
-
-- [x] Finish "View Teacher Report"
-
-- [x] Implement teacher availibity checkmark properly
-
-- [x] Implement student payment checkmark properly
-
-- [x] Remove ability to remove users from UserProfileDatabase
-
-- [x] Catch Time Exception for Create Class
-
-- [x] Ensure password length is > 0 when making new accounts
-
-**Teacher:**
-
-- [ ] Copy Alay's Add/Remove courses from GUIAddRemoveCourse
-
-- [ ] Finish "View Schedule"
-
-- [ ] Implement Add/Remove courses similarly to Student
-
-**Student:**
-
-- [x] Finish Add/Remove course (should be mostly working?)
-
-- [x] Needs to display notifications if searched result is not available. 
+Only necessary on tables with SORTING.
