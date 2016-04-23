@@ -89,12 +89,16 @@ public class GUIAddDropClass extends JPanel
 			}
 		});
 
-		// Creates another scroll pane
+		/**
+		 *  Creates another scroll pane
+		 */
 		JScrollPane addedScrollPane = new JScrollPane();
 		addedScrollPane.setBounds(10, 227, 595, 107);
 		add(addedScrollPane);
 
-		// Button & Logic for Remove Courses
+		/**
+		 *  Button & Logic for Remove Courses
+		 */
 		btnDrop = new JButton("Drop");
 		btnDrop.setBounds(226, 345, 128, 23);
 		btnDrop.addActionListener(new ActionListener()
@@ -163,30 +167,40 @@ public class GUIAddDropClass extends JPanel
 		});
 		add(btnDrop);
 
-		// adds a back button
+		/**
+		 *  Adds a back button
+		 */
 		JButton btnBack = new UniversalBackButton();		
 		btnBack.setBounds(10, 389, 128, 23);
 		add(btnBack);
 
-		// adds a label named "Search By"
+		/**
+		 *  Adds a label named "Search By"
+		 */
 		JLabel lblSearchBy = new JLabel("Search By:");
 		lblSearchBy.setBounds(10, 64, 116, 20);
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
 
-		// adds a label named "CRN:"
+		/** 
+		 * Adds a label named "CRN:"
+		 */
 		lblCrn = new JLabel("CRN:");
 		lblCrn.setBounds(10, 97, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
-		// adds a scroll pane
+		/**
+		 * Adds a scroll pane
+		 */
 		JScrollPane searchScrollPane = new JScrollPane();
 		searchScrollPane.setBounds(10, 128, 595, 43);
 		add(searchScrollPane);
 
-		// adds a table to display searched classes
+		/** 
+		 * Adds a table to display searched classes
+		 */
 		searchTable = new JTable();
 		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 		{
@@ -198,7 +212,9 @@ public class GUIAddDropClass extends JPanel
 		});
 		searchScrollPane.setViewportView(searchTable);
 
-		// Button & Logic for Search
+		/**
+		 * Button & Logic for Search button
+		 */
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(189, 94, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
@@ -249,12 +265,16 @@ public class GUIAddDropClass extends JPanel
 		});
 		add(btnSearch);
 
-		// adds another table that displays courses the user has added
+		/**
+		 * Adds another table that displays courses the user has added
+		 */
 		addedTable = new JTable();
 		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"}));
 		addedScrollPane.setViewportView(addedTable);
 
-		// Button & Logic for Add courses
+		/**
+		 * Button & Logic for Add courses
+		 */
 		btnAdd = new JButton("Add");
 		btnAdd.setBounds(226, 182, 128, 23);
 		btnAdd.addActionListener(new ActionListener()
@@ -299,12 +319,16 @@ public class GUIAddDropClass extends JPanel
 		});
 		add(btnAdd);
 
-		// adds a GUILogin
+		/**
+		 * Adds a GUILogin
+		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// adds a label named "Add or Remove Courses
+		/**
+		 * Adds a label named "Add or Remove Courses
+		 */
 		JLabel lblCourseRemoval = new JLabel("Add/Drop Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
