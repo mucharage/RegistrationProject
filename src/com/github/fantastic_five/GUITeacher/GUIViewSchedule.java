@@ -62,37 +62,7 @@ public class GUIViewSchedule extends JPanel
 
 		});
 		addedTable.setAutoCreateRowSorter(true);
-		addedTable.addMouseListener(new MouseAdapter()
-		{
-			public void mouseClicked(MouseEvent e)
-			{
-				if (e.getClickCount() == 2)
-				{
-					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) addedTable.getModel().getValueAt(addedTable.convertRowIndexToModel(addedTable.getSelectedRow()), 0));
-
-					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
-					popup.setBounds(200, 200, 447, 147);
-					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-					popup.setResizable(false);
-					popup.setVisible(true);
-					popup.setAlwaysOnTop(true);
-
-					JScrollPane scrollPane = new JScrollPane();
-					scrollPane.setBounds(10, 11, 421, 96);
-					popup.getContentPane().add(scrollPane);
-
-					JTextArea desc = new JTextArea();
-					desc.setText(selectedCourse.getDescription());
-					desc.setWrapStyleWord(true);
-					desc.setLineWrap(true);
-					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
-					desc.setEditable(false);
-					scrollPane.setViewportView(desc);
-				}
-			}
-		});
+		
 		scrollPane.setViewportView(addedTable);
 
 
@@ -141,5 +111,40 @@ public class GUIViewSchedule extends JPanel
 		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViewSchedule.setBounds(10, 54, 587, 23);
 		add(lblViewSchedule);
+	
+		/**
+		 * Displays Course Description by double Clicking selected Course
+		 */
+		addedTable.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() == 2)
+				{
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) addedTable.getModel().getValueAt(addedTable.getSelectedRow(), 0));
+
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
+					popup.setBounds(200, 200, 447, 147);
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					popup.setResizable(false);
+					popup.setVisible(true);
+					popup.setAlwaysOnTop(true);
+					
+					JScrollPane scrollPane = new JScrollPane();	
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);					
+										
+					JTextArea desc = new JTextArea();
+					desc.setText(selectedCourse.getDescription());
+					desc.setWrapStyleWord(true);
+					desc.setLineWrap(true);
+					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+					desc.setBounds(10, 11, 421, 96);						
+					desc.setEditable(false);
+					scrollPane.setViewportView(desc);
+				}
+			}
+		});
 	}
 }
