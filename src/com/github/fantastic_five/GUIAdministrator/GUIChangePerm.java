@@ -88,7 +88,7 @@ public class GUIChangePerm extends JPanel
 				int rowSel = table.getSelectedRow();
 				if (rowSel > -1)
 				{
-					UserProfile selectedUser = StudentRegistrationMain.profiles.getUserProfile((String) table.getModel().getValueAt(rowSel, 2));
+					UserProfile selectedUser = StudentRegistrationMain.profiles.getUserProfile((String) table.getModel().getValueAt(table.convertRowIndexToModel(rowSel), 2));
 					int newLevel = (int) spinner.getValue();
 					if (selectedUser != null && newLevel != selectedUser.getPermLevel())
 					{
