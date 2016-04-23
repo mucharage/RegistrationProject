@@ -43,6 +43,7 @@ public class ScheduleManager
 		{
 			userSchedule.addAll(mainCourseManager.getCoursesWithInstructor(user));	
 		}
+		
 		for (Course c : userSchedule)
 		{
 			if (course.conflictsWith(c))
