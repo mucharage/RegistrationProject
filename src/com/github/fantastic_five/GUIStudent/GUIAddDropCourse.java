@@ -353,7 +353,7 @@ public class GUIAddDropCourse extends JPanel
 		/**
 		 * Adds a Label named, "Add or Remove Courses."
 		 */
-		JLabel lblCourseRemoval = new JLabel("Add/Drop Courses");
+		JLabel lblCourseRemoval = new JLabel("Register/Drop Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);

@@ -50,7 +50,7 @@ public class GUIStudent extends JPanel
 		/**
 		 * Button & Logic for Add or Remove Course
 		 */
-		JButton btnAddremoveCourse = new JButton("Add / Drop Course");
+		JButton btnAddremoveCourse = new JButton("Register / Drop Course");
 		btnAddremoveCourse.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
