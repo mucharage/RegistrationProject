@@ -58,6 +58,7 @@ public class DatabaseIO
 				StudentRegistrationMain.profiles = new UserProfileDatabase();
 				StudentRegistrationMain.mainCourseManager = new CourseManager();
 				StudentRegistrationMain.financialRecords = new FinancialRecordsOffice();
+				StudentRegistrationMain.pendingApplications = new PendingApplicationDatabase();
 				
 				serializeEverything();
 			}

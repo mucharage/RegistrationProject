@@ -350,6 +350,7 @@ public class GUICreateApplication extends JPanel
 			displayError(lastnameTextField);
 			return false;
 		}
+		System.out.println(StudentRegistrationMain.pendingApplications.hasApplication(userIDTextField.getText()));
 		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()) || StudentRegistrationMain.pendingApplications.hasApplication(userIDTextField.getText()))
 		{
 			displayError(userIDTextField);
