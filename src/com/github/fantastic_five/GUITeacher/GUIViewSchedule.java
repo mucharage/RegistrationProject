@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
+import com.github.fantastic_five.GUIStudent.GUIAddDropCourse;
 import com.github.fantastic_five.Logic.Course;
 
 @SuppressWarnings("serial")
@@ -51,7 +52,7 @@ public class GUIViewSchedule extends JPanel
 		 *  Adds a table which will display list of courses that user have chose
 		 */
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
 		{
 			@Override
 			public boolean isCellEditable(int row, int column)
@@ -60,7 +61,10 @@ public class GUIViewSchedule extends JPanel
 			}
 
 		});
+		addedTable.setAutoCreateRowSorter(true);
+		
 		scrollPane.setViewportView(addedTable);
+
 
 		/**
 		 *  Button & logic for back button
@@ -107,7 +111,7 @@ public class GUIViewSchedule extends JPanel
 		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViewSchedule.setBounds(10, 54, 587, 23);
 		add(lblViewSchedule);
-
+	
 		/**
 		 * Displays Course Description by double Clicking selected Course
 		 */
@@ -126,20 +130,19 @@ public class GUIViewSchedule extends JPanel
 					popup.setResizable(false);
 					popup.setVisible(true);
 					popup.setAlwaysOnTop(true);
-
-					JScrollPane scrollPane = new JScrollPane();
+					
+					JScrollPane scrollPane = new JScrollPane();	
 					scrollPane.setBounds(10, 11, 421, 96);
-					popup.getContentPane().add(scrollPane);
-
+					popup.getContentPane().add(scrollPane);					
+										
 					JTextArea desc = new JTextArea();
 					desc.setText(selectedCourse.getDescription());
 					desc.setWrapStyleWord(true);
 					desc.setLineWrap(true);
 					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
+					desc.setBounds(10, 11, 421, 96);						
 					desc.setEditable(false);
 					scrollPane.setViewportView(desc);
-
 				}
 			}
 		});

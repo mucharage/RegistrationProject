@@ -62,7 +62,7 @@ public class GUIAddDropClass extends JPanel
 		setLayout(null);
 
 		searchField = new JTextField();
-		searchField.setBounds(51, 95, 128, 20);
+		searchField.setBounds(98, 95, 128, 20);
 		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
@@ -93,14 +93,14 @@ public class GUIAddDropClass extends JPanel
 		 *  Creates another scroll pane
 		 */
 		JScrollPane addedScrollPane = new JScrollPane();
-		addedScrollPane.setBounds(10, 227, 595, 107);
+		addedScrollPane.setBounds(10, 216, 598, 107);
 		add(addedScrollPane);
 
 		/**
 		 *  Button & Logic for Remove Courses
 		 */
 		btnDrop = new JButton("Drop");
-		btnDrop.setBounds(226, 345, 128, 23);
+		btnDrop.setBounds(242, 335, 128, 23);
 		btnDrop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -187,7 +187,7 @@ public class GUIAddDropClass extends JPanel
 		 * Adds a label named "CRN:"
 		 */
 		lblCrn = new JLabel("CRN:");
-		lblCrn.setBounds(10, 97, 46, 14);
+		lblCrn.setBounds(42, 97, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
@@ -195,7 +195,7 @@ public class GUIAddDropClass extends JPanel
 		 * Adds a scroll pane
 		 */
 		JScrollPane searchScrollPane = new JScrollPane();
-		searchScrollPane.setBounds(10, 128, 595, 43);
+		searchScrollPane.setBounds(10, 128, 598, 43);
 		add(searchScrollPane);
 
 		/** 
@@ -216,7 +216,7 @@ public class GUIAddDropClass extends JPanel
 		 * Button & Logic for Search button
 		 */
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(189, 94, 128, 23);
+		btnSearch.setBounds(242, 95, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
@@ -271,12 +271,13 @@ public class GUIAddDropClass extends JPanel
 		addedTable = new JTable();
 		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"}));
 		addedScrollPane.setViewportView(addedTable);
+		addedTable.setAutoCreateRowSorter(true);
 
 		/**
 		 * Button & Logic for Add courses
 		 */
 		btnAdd = new JButton("Add");
-		btnAdd.setBounds(226, 182, 128, 23);
+		btnAdd.setBounds(242, 183, 128, 23);
 		btnAdd.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
