@@ -40,7 +40,8 @@ import com.github.fantastic_five.Logic.UserProfile;
 public class GUIRemoveCourse extends JPanel
 {
 	private JTextField fieldCRN;
-
+	private String[] headers = new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" };
+	
 	public GUIRemoveCourse()
 	{
 		setLayout(null);
@@ -52,7 +53,7 @@ public class GUIRemoveCourse extends JPanel
 		add(scrollPane);
 
 		JTable table = new JTable();
-		table.setModel(new UneditableTableModel(getCourseTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" }));
+		table.setModel(new UneditableTableModel(getCourseTable(), headers));
 		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
@@ -201,7 +202,7 @@ public class GUIRemoveCourse extends JPanel
 			{
 				if (e.getClickCount() == 2)
 				{
-					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.getSelectedRow(), 0));
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), 0));
 
 					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
 					popup.setBounds(200, 200, 447, 147);
@@ -235,7 +236,7 @@ public class GUIRemoveCourse extends JPanel
 		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		TreeSet<Course> courseOfferings = StudentRegistrationMain.mainCourseManager.copyCourseOfferings();
 		int numCourses = courseOfferings.size();
-		Object[][] cells = new Object[numCourses][7];
+		Object[][] cells = new Object[numCourses][headers.length];
 
 		int row = 0;
 		// Loops through all courses and sets the columns in each row appropriately
