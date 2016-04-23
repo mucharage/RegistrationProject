@@ -33,6 +33,7 @@ public class ScheduleManager
 		CourseManager mainCourseManager = StudentRegistrationMain.mainCourseManager;
 
 		Set<Course> userSchedule = new HashSet<Course>();
+		
 		Set<Course> additions = mainCourseManager.getCoursesWithLearner(user);
 		if(additions != null)
 		{
@@ -41,7 +42,7 @@ public class ScheduleManager
 		additions = mainCourseManager.getCoursesWithInstructor(user);
 		if(additions != null)
 		{
-			userSchedule.addAll(mainCourseManager.getCoursesWithInstructor(user));	
+			userSchedule.addAll(additions);	
 		}
 		
 		for (Course c : userSchedule)
@@ -66,22 +67,8 @@ public class ScheduleManager
 	 */
 	public static Set<Course> getConflictingCourses(int crn, UserProfile user)
 	{
-		Set<Course> rVal = new HashSet<Course>();
-		CourseManager mainCourseManager = StudentRegistrationMain.mainCourseManager;
-		Course course = mainCourseManager.getCourse(crn);
-
-		Set<Course> userSchedule = mainCourseManager.getCoursesWithLearner(user);
-		userSchedule.addAll(mainCourseManager.getCoursesWithInstructor(user));
-
-		for (Course c : userSchedule)
-		{
-			if (course.conflictsWith(c))
-			{
-				rVal.add(c);
-			}
-		}
-
-		return rVal;
+		Course course = StudentRegistrationMain.mainCourseManager.getCourse(crn);
+		return getConflictingCourses(course, user);
 	}
 
 	public static boolean usersScheduleIsValid(UserProfile user)
