@@ -6,11 +6,8 @@ import java.io.Serializable;
  * Group 5
  */
 import java.security.InvalidParameterException;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
-
-import com.github.fantastic_five.Logic.Course.Day;
 
 /**
  * 
@@ -220,7 +217,7 @@ public class Course implements Serializable
 		boolean coursesConflict;
 
 		@SuppressWarnings("unchecked")
-		HashSet<Day> intersection = (HashSet<Day>) days.clone();
+		Set<Day> intersection = (TreeSet<Day>) days.clone();
 		intersection.retainAll(other.days);
 
 		// Checks if the courses ever meet on the same day

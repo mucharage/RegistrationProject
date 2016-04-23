@@ -315,6 +315,7 @@ public class CourseManager implements Serializable
 					{
 						rVal = true;
 						network.add(connector);
+						course.incrRemainingCap();
 						DatabaseIO.serializeEverything();
 					}
 				}

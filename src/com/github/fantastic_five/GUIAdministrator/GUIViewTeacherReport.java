@@ -47,7 +47,7 @@ public class GUIViewTeacherReport extends JPanel
 		table.getColumnModel().getColumn(3).setPreferredWidth(60);
 		table.getColumnModel().getColumn(4).setPreferredWidth(25);
 		table.getColumnModel().getColumn(5).setPreferredWidth(225);
-
+		table.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(table);
 
 		// Adds the login panel

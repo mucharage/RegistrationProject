@@ -20,6 +20,8 @@ import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class GUIChangePerm extends JPanel
@@ -45,6 +47,14 @@ public class GUIChangePerm extends JPanel
 		table = new JTable();
 		table.setModel(new UneditableTableModel(getTable(), headers));
 		table.setAutoCreateRowSorter(true);
+		table.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent arg0)
+			{
+				confirmation.setText("");
+			}
+		});
 		scrollPane.setViewportView(table);
 
 		// Adds the back button
@@ -78,7 +88,7 @@ public class GUIChangePerm extends JPanel
 				int rowSel = table.getSelectedRow();
 				if (rowSel > -1)
 				{
-					UserProfile selectedUser = StudentRegistrationMain.profiles.getUserProfile((String) table.getModel().getValueAt(rowSel, 2));
+					UserProfile selectedUser = StudentRegistrationMain.profiles.getUserProfile((String) table.getModel().getValueAt(table.convertRowIndexToModel(rowSel), 2));
 					int newLevel = (int) spinner.getValue();
 					if (selectedUser != null && newLevel != selectedUser.getPermLevel())
 					{
@@ -102,6 +112,9 @@ public class GUIChangePerm extends JPanel
 		add(lblAdministration);
 	}
 
+	/**
+	 * changes the JLabel "confirmation" to a Red X
+	 */
 	void displayError()
 	{
 		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
