@@ -32,7 +32,9 @@ public class GUITeacher extends JPanel
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
 
-		// Button & Logic for View Course
+		/**
+		 *  Button & Logic for View Course
+		 */
 		JButton btnView = new JButton("View Courses");
 		btnView.addActionListener(new ActionListener()
 		{
@@ -46,7 +48,9 @@ public class GUITeacher extends JPanel
 		btnView.setBounds(178, 186, 243, 23);
 		add(btnView);
 
-		// Button & logic for removing courses
+		/**
+		 *  Button & logic for removing courses
+		 */
 		JButton btnAddDropCourse = new JButton("Add / Drop Courses");
 		btnAddDropCourse.addActionListener(new ActionListener()
 		{
@@ -59,7 +63,9 @@ public class GUITeacher extends JPanel
 		btnAddDropCourse.setBounds(178, 220, 243, 23);
 		add(btnAddDropCourse);
 
-		// Button for viewing schedules
+		/**
+		 *  Button for viewing schedules
+		 */
 		JButton btnViewSchedule = new JButton("View Schedule");
 		btnViewSchedule.addActionListener(new ActionListener()
 		{
@@ -72,7 +78,9 @@ public class GUITeacher extends JPanel
 		btnViewSchedule.setBounds(178, 254, 243, 23);
 		add(btnViewSchedule);
 		
-		// Button & logic for viewing students currently enrolled in classes you are teaching
+		/**
+		 *  Button & logic for viewing students currently enrolled in classes you are teaching
+		 */
 		JButton btnViewStudents = new JButton("View Students");
 		btnViewStudents.setBounds(178, 284, 243, 23);
 		btnViewStudents.addActionListener(new ActionListener()
@@ -86,7 +94,9 @@ public class GUITeacher extends JPanel
 		add(btnViewStudents);
 		
 		
-		// Panel label
+		/**
+		 *  Panel label
+		 */
 		JLabel lblTeacher = new JLabel("Teacher");
 		lblTeacher.setBounds(232, 78, 46, 14);
 		lblTeacher.setForeground(Color.GRAY);
@@ -95,7 +105,9 @@ public class GUITeacher extends JPanel
 		lblTeacher.setBounds(178, 96, 243, 23);
 		add(lblTeacher);
 		
-		// Adds the login panel
+		/**
+		 *  Adds the login panel
+		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);

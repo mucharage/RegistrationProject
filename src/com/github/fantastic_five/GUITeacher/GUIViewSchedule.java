@@ -38,20 +38,34 @@ public class GUIViewSchedule extends JPanel
 	 */
 	public GUIViewSchedule()
 	{
-		// Adds a ScrollPane
+		/**
+		 *  Adds a ScrollPane
+		 */
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 119, 587, 106);
 		add(scrollPane);
 
-		// Adds a table which will display list of courses that user have chose
+		/**
+		 *  Adds a table which will display list of courses that user have chose
+		 */
 		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time", "Room" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
+
+		});
 		scrollPane.setViewportView(addedTable);
 
-		// Button & logic for back button
-		JButton btnBack = new UniversalBackButton();
+		/**
+		 *  Button & logic for back button
+		 */
+		JButton btnBack = new UniversalBackButton();		
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
@@ -77,12 +91,16 @@ public class GUIViewSchedule extends JPanel
 		});
 		add(btnPrint);
 
-		// Adds a login GUI
+		/**
+		 *  Adds a login GUI
+		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// Adds a JLabel named "View Schedule"
+		/**
+		 *  Adds a JLabel named "View Schedule"
+		 */
 		JLabel lblViewSchedule = new JLabel("View Schedule");
 		lblViewSchedule.setForeground(Color.GRAY);
 		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -122,8 +140,8 @@ public class GUIViewSchedule extends JPanel
 					desc.setEditable(false);
 					scrollPane.setViewportView(desc);
 
-				} // end of if statement
-			}// end of mouseClicked
-		});// end of addMouseLisener
+				}
+			}
+		});
 	}
 }
