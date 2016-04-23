@@ -13,6 +13,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,39 +32,47 @@ import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIViewStudent extends JPanel
 {
 	private JTable table;
 	private JTable table_1;
+	private static JTable addedTable;
 	/**
 	 * This GUI that shall display teacher's individual schedule of c31rses he/she is teaching
 	 */
 	public GUIViewStudent()
 	{
-		// Adds a ScrollPane
+		/**
+		 * Adds a ScrollPane
+		 */
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 62, 598, 106);
 		add(scrollPane);
 
-		// Adds a table which will display list of courses that user have chose
-		JTable addedTable = new JTable();
-		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
-		scrollPane.setViewportView(addedTable);
+		/**
+		 * Adds a table which will display list of courses that the user chose
+		 */
+		addedTable = new JTable();
+		addedTable.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" })
+		{
+			@Override
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			}
 
-		// Button & logic for back button
-//		JButton btnBack = new JButton("Back");
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			@Override
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUITeacher());
-//			}
-//		});
+		});
+		scrollPane.setViewportView(addedTable);
+		addedTable.setAutoCreateRowSorter(true);
+		
+		/**
+		 * Button & logic for back button
+		 */
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
@@ -88,13 +99,17 @@ public class GUIViewStudent extends JPanel
 		});
 		add(btnPrint);
 
-		// Adds a login GUI
+		/**
+		 * Adds a login GUI
+		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 		
-		// Adds a JLabel named "View Schedule"
-		JLabel lblViewSchedule = new JLabel("View Schedule");
+		/**
+		 * Adds a JLabel named "View Students"
+		 */
+		JLabel lblViewSchedule = new JLabel("View Students");
 		lblViewSchedule.setBounds(10, 35, 587, 23);
 		lblViewSchedule.setForeground(Color.GRAY);
 		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -120,13 +135,8 @@ public class GUIViewStudent extends JPanel
 		));
 		scrollPane_1.setViewportView(table_1);
 		
-//		table = new JTable();
-//		table.setModel(new DefaultTableModel(GUIAddDropClass.getClassTable(), new String[] { "User ID" , "Last Name", "First Name"}));
-//		scrollPane.setViewportView(table);
-//		scrollPane_1.setViewportView(table);
-
 		/**
-		 * Displays Course Description by double Clicking selected Course
+		 * Displays currently enrolled students by double clicking selected course
 		 */
 		addedTable.addMouseListener(new MouseAdapter()
 		{
@@ -134,31 +144,62 @@ public class GUIViewStudent extends JPanel
 			{
 				if (e.getClickCount() == 2)
 				{
-					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) addedTable.getModel().getValueAt(addedTable.getSelectedRow(), 0));
-
-					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Description");
-					popup.setBounds(200, 200, 447, 147);
-					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-					popup.setResizable(false);
-					popup.setVisible(true);
-					popup.setAlwaysOnTop(true);
-
-					JScrollPane scrollPane = new JScrollPane();
-					scrollPane.setBounds(10, 11, 421, 96);
-					popup.getContentPane().add(scrollPane);
-
-					JTextArea desc = new JTextArea();
-					desc.setText(selectedCourse.getDescription());
-					desc.setWrapStyleWord(true);
-					desc.setLineWrap(true);
-					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-					desc.setBounds(10, 11, 421, 96);
-					desc.setEditable(false);
-					scrollPane.setViewportView(desc);
-
-				} // end of if statement
-			}// end of mouseClicked
-		});// end of addMouseLisener
+					int rowSel = addedTable.getSelectedRow();
+					
+					if (rowSel > -1)
+					{
+						StudentRegistrationMain.mainCourseManager.getLearnersWithCourse((int) addedTable.getModel().getValueAt(rowSel, 0));
+						table_1.setModel(new DefaultTableModel(getStudentTable(), new String[] { "User ID", "Last Name", "First Name" })
+						{
+							@Override
+							public boolean isCellEditable(int row, int column)
+							{
+								return false;
+							}
+						});
+						scrollPane_1.setViewportView(table_1);
+						revalidate();
+						repaint();	
+						//System.out.println(StudentRegistrationMain.mainCourseManager.getLearnersWithCourse((int) addedTable.getModel().getValueAt(rowSel, 0)));
+						
+						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) addedTable.getModel().getValueAt(addedTable.getSelectedRow(), 0));
+						Set<UserProfile> student = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(selectedCourse.getCRN());
+						
+						Iterator<UserProfile> names = student.iterator();
+						while(names.hasNext())
+						{
+							System.out.println(names.next());
+						}
+					
+					}
+				}
+			}
+		});
+	}	
+	
+	/**
+	 * @return fills or removes information from the table when a student adds or drops the selected course.
+	 */
+	public static Object[][] getStudentTable()
+	{
+		Set<Course> selectedCourse = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
+		Object[][] cells = new Object[selectedCourse.size()][3];
+		int row = 0;		
+		for (Course c : selectedCourse)
+		{
+			Set<UserProfile> student = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(c.getCRN());
+			
+			Iterator<UserProfile> names = student.iterator();
+			while(names.hasNext())
+			{
+				System.out.println(names.next());
+			}
+			//student.getUserID();
+			//cells[row][0] = c.getUserID();
+			cells[row][1] = c.getTitle();
+			cells[row][2] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+		return cells;
 	}
 }
