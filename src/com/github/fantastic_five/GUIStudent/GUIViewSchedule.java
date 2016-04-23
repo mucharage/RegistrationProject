@@ -61,26 +61,15 @@ public class GUIViewSchedule extends JPanel
 			}
 
 		});
+		addedTable.setAutoCreateRowSorter(true);
 		scrollPane.setViewportView(addedTable);
 
-		// addedTable = new JTable();
-		// addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Time", "Day", "Teacher"}));
-		// scrollPane.setViewportView(addedTable);
 
 		/**
 		 * Button & logic for back button
 		 */
-//		JButton btnBack = new JButton("Back");
 		JButton btnBack = new UniversalBackButton();
-		
 		btnBack.setBounds(10, 386, 128, 23);
-//		btnBack.addActionListener(new ActionListener()
-//		{
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				StudentRegistrationMain.replaceMainWindowContents(new GUIStudent());
-//			}
-//		});
 		add(btnBack);
 
 		/**
