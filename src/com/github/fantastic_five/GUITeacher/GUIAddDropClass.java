@@ -339,7 +339,7 @@ public class GUIAddDropClass extends JPanel
 	
 	private Object[][] getConflictTable(int CRN)
 	{
-		Set<Course> courseConflict = StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser());
+		Set<Course> courseConflict = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
 		Object[][] cells = new Object[courseConflict.size()][3];
 		int row = 0;
 
@@ -351,7 +351,6 @@ public class GUIAddDropClass extends JPanel
 			row++;
 		}
 		return cells;
-
 	}
 	
 	private Object[][] getSearchResultTable(int CRN)
