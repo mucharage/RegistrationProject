@@ -67,18 +67,22 @@ public class GUICreateApplication extends JPanel
 		add(lblFirstName);
 
 		firstnameTextField = new JTextField();
-		firstnameTextField.addKeyListener(new KeyAdapter() {
+		firstnameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		firstnameTextField.addMouseListener(new MouseAdapter() {
+		firstnameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -97,18 +101,22 @@ public class GUICreateApplication extends JPanel
 		add(lblMiddleName);
 
 		middlenameTextField = new JTextField();
-		middlenameTextField.addMouseListener(new MouseAdapter() {
+		middlenameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		middlenameTextField.addKeyListener(new KeyAdapter() {
+		middlenameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -127,18 +135,22 @@ public class GUICreateApplication extends JPanel
 		add(lblLastName);
 
 		lastnameTextField = new JTextField();
-		lastnameTextField.addMouseListener(new MouseAdapter() {
+		lastnameTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		lastnameTextField.addKeyListener(new KeyAdapter() {
+		lastnameTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -157,18 +169,22 @@ public class GUICreateApplication extends JPanel
 		add(lblUserID);
 
 		userIDTextField = new JTextField();
-		userIDTextField.addKeyListener(new KeyAdapter() {
+		userIDTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
 				repaint();
 			}
 		});
-		userIDTextField.addMouseListener(new MouseAdapter() {
+		userIDTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -187,9 +203,11 @@ public class GUICreateApplication extends JPanel
 		add(lblPassword);
 
 		passwordTextField = new JTextField();
-		passwordTextField.addMouseListener(new MouseAdapter() {
+		passwordTextField.addMouseListener(new MouseAdapter()
+		{
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e)
+			{
 				passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
 				revalidate();
@@ -211,65 +229,64 @@ public class GUICreateApplication extends JPanel
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
-
 		JButton btnCreate = new JButton("Apply");
 		btnCreate.setBounds(252, 300, 217, 23);
 		btnCreate.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-			  if(checkFields())
-			  {
-				displaySuccess();
-				parseFields();
-			  	// Initialize frame as a new JFrame
-				JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Application Created");
-				// Set the dimensions of the frame
-				popup.setBounds(100, 100, 303, 141);
-				// When the frame is closed, it simply goes away
-				popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-				popup.getContentPane().setLayout(null);
-				popup.setResizable(false);
-				popup.setVisible(true);
-				popup.setAlwaysOnTop(true);
+				if (checkFields())
+				{
+					displaySuccess();
+					parseFields();
+					// Initialize frame as a new JFrame
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Application Created");
+					// Set the dimensions of the frame
+					popup.setBounds(100, 100, 303, 141);
+					// When the frame is closed, it simply goes away
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					popup.getContentPane().setLayout(null);
+					popup.setResizable(false);
+					popup.setVisible(true);
+					popup.setAlwaysOnTop(true);
 
-				// Create a text area to go inside the frame
-				JTextArea txtpnPleaseContactThe = new JTextArea();
-				// Making the font "Tahoma", plain text, size 15
-				txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				// Menu is the color of the text area background
-				txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
-				// Make the text not editable by the user
-				txtpnPleaseContactThe.setEditable(false);
-				// The text that is displayed
-				txtpnPleaseContactThe.setText("Congratulations! You have finished\r\nyour registration application. Please\r\n wait for administration to confirm\r\n your application before you login.\r\n               Thank you.");
-				// Set the dimensions of the frame
-				txtpnPleaseContactThe.setBounds(30, 6, 250, 100);
-				// add the text area to the pane and frame
-				popup.getContentPane().add(txtpnPleaseContactThe);
-				resetFields();
-				JButton fakeButton = new JButton("No");
-				fakeButton.addActionListener(new ActionListener()
-				{
-					@Override
-					public void actionPerformed(ActionEvent e)
+					// Create a text area to go inside the frame
+					JTextArea txtpnPleaseContactThe = new JTextArea();
+					// Making the font "Tahoma", plain text, size 15
+					txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					// Menu is the color of the text area background
+					txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
+					// Make the text not editable by the user
+					txtpnPleaseContactThe.setEditable(false);
+					// The text that is displayed
+					txtpnPleaseContactThe.setText("Congratulations! You have finished\r\nyour registration application. Please\r\n wait for administration to confirm\r\n your application before you login.\r\n               Thank you.");
+					// Set the dimensions of the frame
+					txtpnPleaseContactThe.setBounds(30, 6, 250, 100);
+					// add the text area to the pane and frame
+					popup.getContentPane().add(txtpnPleaseContactThe);
+					resetFields();
+					JButton fakeButton = new JButton("No");
+					fakeButton.addActionListener(new ActionListener()
 					{
-						popup.dispose();
-					}
-				});
-				fakeButton.addKeyListener(new KeyAdapter()
-				{
-					public void keyPressed(KeyEvent ke)
-					{ // handler
-						if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
+						@Override
+						public void actionPerformed(ActionEvent e)
 						{
 							popup.dispose();
 						}
-					}
-				});
-				popup.getContentPane().add(fakeButton);
-			  }	
+					});
+					fakeButton.addKeyListener(new KeyAdapter()
+					{
+						public void keyPressed(KeyEvent ke)
+						{ // handler
+							if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
+							{
+								popup.dispose();
+							}
+						}
+					});
+					popup.getContentPane().add(fakeButton);
+				}
 			}
 		});
 		add(btnCreate);
@@ -283,7 +300,7 @@ public class GUICreateApplication extends JPanel
 				confirmation.setText("");
 				revalidate();
 				repaint();
-				
+
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnCreate.doClick();
@@ -303,7 +320,7 @@ public class GUICreateApplication extends JPanel
 			}
 		});
 	}
-	
+
 	void parseFields()
 	{
 		String firstName = firstnameTextField.getText();
@@ -311,13 +328,10 @@ public class GUICreateApplication extends JPanel
 		String lastName = lastnameTextField.getText();
 		String userID = userIDTextField.getText();
 		String password = passwordTextField.getText();
-		
 
-		
 		PendingApplication app = new PendingApplication(userID, password, firstName, middleName, lastName);
 		StudentRegistrationMain.pendingApplications.addApplication(app);
 	}
-
 
 	/**
 	 * Checks to see that all the text fields have SOMETHING in them..
@@ -336,7 +350,7 @@ public class GUICreateApplication extends JPanel
 			displayError(lastnameTextField);
 			return false;
 		}
-		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
+		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()) || StudentRegistrationMain.pendingApplications.hasApplication(userIDTextField.getText()))
 		{
 			displayError(userIDTextField);
 			if (StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
@@ -398,6 +412,7 @@ public class GUICreateApplication extends JPanel
 		userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 	}
+
 	void displaySuccess()
 	{
 		confirmation.setText("\u2713");
