@@ -92,6 +92,25 @@ public class GUIStudent extends JPanel
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
+		
+		if(StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser()).size() < 3)
+		{
+			JLabel lblClassReq = new JLabel(getErrorText());
+			lblClassReq.setFont(new Font("Monospaced", Font.PLAIN, 12));
+			lblClassReq.setHorizontalAlignment(SwingConstants.CENTER);
+			lblClassReq.setForeground(Color.RED);
+			lblClassReq.setBounds(10, 368, 598, 14);
+			add(lblClassReq);
+		}
 
 	}// end of GUIStudent()
+	
+	/**
+	 * Creates Error when the student is not registered for enough classes.
+	 */
+
+	String getErrorText()
+	{
+		return (StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser()).size() < 3) ? "You are not registered for enough classes. (Minimum of Three)" : "";
+	}
 }// end of JPanel extension of GUIStudent
