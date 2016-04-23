@@ -311,7 +311,7 @@ public class GUIAddDropCourse extends JPanel
 					if (conflicts.size() > 0)
 					{
 						JDialog conflict = new JDialog(StudentRegistrationMain.mainWindow, "Course Conflict");
-						conflict.setBounds(100, 100, 343, 87);
+						conflict.setBounds(100, 100, 343, 127);
 						conflict.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						conflict.setLocationRelativeTo(null);
 						conflict.getContentPane().setLayout(null);
@@ -320,7 +320,7 @@ public class GUIAddDropCourse extends JPanel
 						conflict.setAlwaysOnTop(true);
 
 						JScrollPane scrollPane = new JScrollPane();
-						scrollPane.setBounds(0, 0, 339, 59);
+						scrollPane.setBounds(0, 0, 339, 99);
 						conflict.getContentPane().add(scrollPane);
 
 						JTable table = new JTable();

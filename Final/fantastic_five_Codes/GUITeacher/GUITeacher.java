@@ -77,23 +77,7 @@ public class GUITeacher extends JPanel
 		});
 		btnViewSchedule.setBounds(178, 254, 243, 23);
 		add(btnViewSchedule);
-		
-		/**
-		 *  Button & logic for viewing students currently enrolled in classes you are teaching
-		 */
-		JButton btnViewStudents = new JButton("View Students");
-		btnViewStudents.setBounds(178, 284, 243, 23);
-		btnViewStudents.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
-			}
-		});
-		add(btnViewStudents);
-		
-		
+				
 		/**
 		 *  Panel label
 		 */

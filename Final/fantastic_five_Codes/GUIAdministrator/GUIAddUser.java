@@ -1,38 +1,35 @@
-package com.github.fantastic_five.GUI;
+package com.github.fantastic_five.GUIAdministrator;
 
 /**
- * @author Fantastic Five (Jose Stovall in AddUser; edited by Steven Hullander here)
- * A JPanel which creates an account that must be
- * accepted/declined by admin before becoming a userprofile.
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel which adds new student UserProfiles to the UserProfileDatabase
  */
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import com.github.fantastic_five.Logic.PendingApplication;
+import com.github.fantastic_five.Logic.UserProfile;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
 
 @SuppressWarnings("serial")
-public class GUICreateApplication extends JPanel
+public class GUIAddUser extends JPanel
 {
 	private JTextField firstnameTextField;
 	private JTextField middlenameTextField;
@@ -40,8 +37,12 @@ public class GUICreateApplication extends JPanel
 	private JTextField userIDTextField;
 	private JTextField passwordTextField;
 	private JLabel confirmation;
+	private final String STUDENT = "Student";
+	private final String TEACHER = "Teacher";
+	private final String TA = "Teacher's Assistant";
+	private final String ADMIN = "Administrator";
 
-	public GUICreateApplication()
+	public GUIAddUser()
 	{
 		setLayout(null);
 		setBounds(0, 0, 618, 434);
@@ -52,7 +53,7 @@ public class GUICreateApplication extends JPanel
 		add(loginPanel);
 
 		// Panel Label
-		JLabel lblCreateStudent = new JLabel("Student Registration");
+		JLabel lblCreateStudent = new JLabel("Add User");
 		lblCreateStudent.setForeground(Color.GRAY);
 		lblCreateStudent.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblCreateStudent.setHorizontalAlignment(SwingConstants.CENTER);
@@ -70,7 +71,7 @@ public class GUICreateApplication extends JPanel
 		firstnameTextField.addKeyListener(new KeyAdapter()
 		{
 			@Override
-			public void keyTyped(KeyEvent e)
+			public void keyTyped(KeyEvent arg0)
 			{
 				firstnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
@@ -101,10 +102,10 @@ public class GUICreateApplication extends JPanel
 		add(lblMiddleName);
 
 		middlenameTextField = new JTextField();
-		middlenameTextField.addMouseListener(new MouseAdapter()
+		middlenameTextField.addKeyListener(new KeyAdapter()
 		{
 			@Override
-			public void mouseClicked(MouseEvent e)
+			public void keyTyped(KeyEvent e)
 			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
@@ -112,10 +113,10 @@ public class GUICreateApplication extends JPanel
 				repaint();
 			}
 		});
-		middlenameTextField.addKeyListener(new KeyAdapter()
+		middlenameTextField.addMouseListener(new MouseAdapter()
 		{
 			@Override
-			public void keyTyped(KeyEvent e)
+			public void mouseClicked(MouseEvent e)
 			{
 				middlenameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				confirmation.setText("");
@@ -158,7 +159,7 @@ public class GUICreateApplication extends JPanel
 			}
 		});
 		lastnameTextField.setColumns(10);
-		lastnameTextField.setBounds(252, 195, 217, 20);
+		lastnameTextField.setBounds(252, 196, 217, 20);
 		add(lastnameTextField);
 
 		// User ID
@@ -218,9 +219,8 @@ public class GUICreateApplication extends JPanel
 		passwordTextField.setBounds(252, 258, 217, 20);
 		add(passwordTextField);
 
-		// Confirmation thingy
+		// Confirmation thing
 		confirmation = new JLabel("");
-		confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
 		confirmation.setHorizontalAlignment(SwingConstants.CENTER);
 		confirmation.setBounds(252, 354, 217, 20);
 		add(confirmation);
@@ -229,67 +229,56 @@ public class GUICreateApplication extends JPanel
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
 
-		JButton btnCreate = new JButton("Apply");
-		btnCreate.setBounds(252, 300, 217, 23);
+		JComboBox<String> permDropdown = new JComboBox<String>();
+		permDropdown.addItem(this.STUDENT);
+		permDropdown.addItem(this.TEACHER);
+		permDropdown.addItem(this.TA);
+		permDropdown.addItem(this.ADMIN);
+		permDropdown.setEditable(false);
+		permDropdown.setBounds(252, 290, 217, 20);
+		add(permDropdown);
+
+		JButton btnCreate = new JButton("Create");
+		btnCreate.setBounds(252, 322, 217, 23);
 		btnCreate.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				String fName = firstnameTextField.getText();
+				String mName = middlenameTextField.getText();
+				String lName = lastnameTextField.getText();
+				String userID = userIDTextField.getText();
+				String pwd = passwordTextField.getText();
 				if (checkFields())
 				{
-					displaySuccess();
-					parseFields();
-					// Initialize frame as a new JFrame
-					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Application Created");
-					// Set the dimensions of the frame
-					popup.setBounds(100, 100, 303, 141);
-					// When the frame is closed, it simply goes away
-					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-					popup.getContentPane().setLayout(null);
-					popup.setResizable(false);
-					popup.setVisible(true);
-					popup.setAlwaysOnTop(true);
+					int permLevel = getPermFromString((String) permDropdown.getSelectedItem());
+					// Shouldn't ever be "GUEST", but let's be safe
+					if (permLevel == UserProfile.GUEST)
+					{
+						permDropdown.setForeground(Color.RED);
+						return;
+					}
 
-					// Create a text area to go inside the frame
-					JTextArea txtpnPleaseContactThe = new JTextArea();
-					// Making the font "Tahoma", plain text, size 15
-					txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					// Menu is the color of the text area background
-					txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
-					// Make the text not editable by the user
-					txtpnPleaseContactThe.setEditable(false);
-					// The text that is displayed
-					txtpnPleaseContactThe.setText("Congratulations! You have finished\r\nyour registration application. Please\r\n wait for administration to confirm\r\n your application before you login.\r\n               Thank you.");
-					// Set the dimensions of the frame
-					txtpnPleaseContactThe.setBounds(30, 6, 250, 100);
-					// add the text area to the pane and frame
-					popup.getContentPane().add(txtpnPleaseContactThe);
+					StudentRegistrationMain.profiles.addUser(new UserProfile(userID, pwd, permLevel, fName, mName, lName));
+					if (permLevel == UserProfile.STUDENT || permLevel == UserProfile.TA)
+						StudentRegistrationMain.financialRecords.addUser(new UserProfile(userID, pwd, 1, fName, mName, lName));
+
+					confirmation.setFont(new Font("Monospaced", Font.PLAIN, 32));
+					confirmation.setText("\u2713");
+					confirmation.setForeground(Color.GREEN);
 					resetFields();
-					JButton fakeButton = new JButton("No");
-					fakeButton.addActionListener(new ActionListener()
-					{
-						@Override
-						public void actionPerformed(ActionEvent e)
-						{
-							popup.dispose();
-						}
-					});
-					fakeButton.addKeyListener(new KeyAdapter()
-					{
-						public void keyPressed(KeyEvent ke)
-						{ // handler
-							if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
-							{
-								popup.dispose();
-							}
-						}
-					});
-					popup.getContentPane().add(fakeButton);
 				}
+				revalidate();
+				repaint();
 			}
 		});
 		add(btnCreate);
+
+		JLabel lblRole = new JLabel("Role:");
+		lblRole.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRole.setBounds(102, 293, 128, 14);
+		add(lblRole);
 
 		passwordTextField.addKeyListener(new KeyListener()
 		{
@@ -300,7 +289,6 @@ public class GUICreateApplication extends JPanel
 				confirmation.setText("");
 				revalidate();
 				repaint();
-
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
 				{
 					btnCreate.doClick();
@@ -310,27 +298,35 @@ public class GUICreateApplication extends JPanel
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 		});
 	}
 
-	void parseFields()
+	/**
+	 * @param textLevel
+	 *            a String describing the permission level
+	 * @return an integer value of the represented String
+	 */
+	public int getPermFromString(String textLevel)
 	{
-		String firstName = firstnameTextField.getText();
-		String middleName = middlenameTextField.getText();
-		String lastName = lastnameTextField.getText();
-		String userID = userIDTextField.getText();
-		String password = passwordTextField.getText();
-
-		PendingApplication app = new PendingApplication(userID, password, firstName, middleName, lastName);
-		StudentRegistrationMain.pendingApplications.addApplication(app);
+		switch (textLevel)
+		{
+		case STUDENT:
+			return UserProfile.STUDENT;
+		case TEACHER:
+			return UserProfile.TEACHER;
+		case TA:
+			return UserProfile.TA;
+		case ADMIN:
+			return UserProfile.ADMIN;
+		default:
+			return UserProfile.GUEST;
+		}
 	}
 
 	/**
@@ -350,8 +346,7 @@ public class GUICreateApplication extends JPanel
 			displayError(lastnameTextField);
 			return false;
 		}
-		System.out.println(StudentRegistrationMain.pendingApplications.hasApplication(userIDTextField.getText()));
-		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()) || StudentRegistrationMain.pendingApplications.hasApplication(userIDTextField.getText()))
+		if (userIDTextField.getText().length() <= 0 || StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
 		{
 			displayError(userIDTextField);
 			if (StudentRegistrationMain.profiles.hasUser(userIDTextField.getText()))
@@ -384,8 +379,6 @@ public class GUICreateApplication extends JPanel
 		resetFieldColors();
 		for (JTextField field : erroredFields)
 			field.setBorder(BorderFactory.createLineBorder(Color.RED));;
-		confirmation.setText("\u2717");
-		confirmation.setForeground(Color.RED);
 		revalidate();
 		repaint();
 	}
@@ -412,13 +405,5 @@ public class GUICreateApplication extends JPanel
 		lastnameTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		userIDTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		passwordTextField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-	}
-
-	void displaySuccess()
-	{
-		confirmation.setText("\u2713");
-		confirmation.setForeground(Color.GREEN);
-		revalidate();
-		repaint();
 	}
 }
