@@ -52,7 +52,7 @@ public class GUIManageApplicants extends JPanel
 		add(loginPanel);
 
 		// Panel label, essentially
-		JLabel lblAdministration = new JLabel("Change Permission Levels");
+		JLabel lblAdministration = new JLabel("Pending Applicants ");
 		lblAdministration.setForeground(Color.GRAY);
 		lblAdministration.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAdministration.setHorizontalAlignment(SwingConstants.CENTER);
