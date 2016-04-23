@@ -25,14 +25,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
+import com.github.fantastic_five.GUI.UneditableTableModel;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
 import com.github.fantastic_five.Logic.Course;
-import com.github.fantastic_five.Logic.UserProfile;
 import com.github.fantastic_five.Logic.Course.Day;
+import com.github.fantastic_five.Logic.ScheduleManager;
+import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
 public class GUIAddDropClass extends JPanel
@@ -43,8 +47,9 @@ public class GUIAddDropClass extends JPanel
 	private JButton btnDrop;
 	private JButton btnSearch;
 	private JLabel lblCrn;
+	private JLabel lblClassReq;
 	private JTable searchTable;
-	private JTable addedTable;
+	private static JTable addedTable;
 
 	ArrayList<Course> courseSearchResult;
 
@@ -84,12 +89,16 @@ public class GUIAddDropClass extends JPanel
 			}
 		});
 
-		// Creates another scroll pane
+		/**
+		 *  Creates another scroll pane
+		 */
 		JScrollPane addedScrollPane = new JScrollPane();
 		addedScrollPane.setBounds(10, 227, 595, 107);
 		add(addedScrollPane);
 
-		// Button & Logic for Remove Courses
+		/**
+		 *  Button & Logic for Remove Courses
+		 */
 		btnDrop = new JButton("Drop");
 		btnDrop.setBounds(226, 345, 128, 23);
 		btnDrop.addActionListener(new ActionListener()
@@ -158,30 +167,40 @@ public class GUIAddDropClass extends JPanel
 		});
 		add(btnDrop);
 
-		// adds a back button
+		/**
+		 *  Adds a back button
+		 */
 		JButton btnBack = new UniversalBackButton();		
 		btnBack.setBounds(10, 389, 128, 23);
 		add(btnBack);
 
-		// adds a label named "Search By"
+		/**
+		 *  Adds a label named "Search By"
+		 */
 		JLabel lblSearchBy = new JLabel("Search By:");
 		lblSearchBy.setBounds(10, 64, 116, 20);
 		lblSearchBy.setForeground(Color.GRAY);
 		lblSearchBy.setFont(new Font("Verdana", Font.BOLD, 13));
 		add(lblSearchBy);
 
-		// adds a label named "CRN:"
+		/** 
+		 * Adds a label named "CRN:"
+		 */
 		lblCrn = new JLabel("CRN:");
 		lblCrn.setBounds(10, 97, 46, 14);
 		lblCrn.setFont(new Font("Verdana", Font.BOLD, 12));
 		add(lblCrn);
 
-		// adds a scroll pane
+		/**
+		 * Adds a scroll pane
+		 */
 		JScrollPane searchScrollPane = new JScrollPane();
 		searchScrollPane.setBounds(10, 128, 595, 43);
 		add(searchScrollPane);
 
-		// adds a table to display searched classes
+		/** 
+		 * Adds a table to display searched classes
+		 */
 		searchTable = new JTable();
 		searchTable.setModel(new DefaultTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
 		{
@@ -193,7 +212,9 @@ public class GUIAddDropClass extends JPanel
 		});
 		searchScrollPane.setViewportView(searchTable);
 
-		// Button & Logic for Search
+		/**
+		 * Button & Logic for Search button
+		 */
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(189, 94, 128, 23);
 		btnSearch.addActionListener(new ActionListener()
@@ -244,12 +265,16 @@ public class GUIAddDropClass extends JPanel
 		});
 		add(btnSearch);
 
-		// adds another table that displays courses the user has added
+		/**
+		 * Adds another table that displays courses the user has added
+		 */
 		addedTable = new JTable();
 		addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"}));
 		addedScrollPane.setViewportView(addedTable);
 
-		// Button & Logic for Add courses
+		/**
+		 * Button & Logic for Add courses
+		 */
 		btnAdd = new JButton("Add");
 		btnAdd.setBounds(226, 182, 128, 23);
 		btnAdd.addActionListener(new ActionListener()
@@ -260,30 +285,50 @@ public class GUIAddDropClass extends JPanel
 
 				if (rowSel > -1)
 				{
-					StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(rowSel, 0));
-					addedTable.setModel(new DefaultTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time"})
+					Set<Course> conflicts = ScheduleManager.getConflictingCourses((int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0), StudentRegistrationMain.getCurrentLoggedInUser());
+					if (conflicts.size() > 0)
 					{
-						@Override
-						public boolean isCellEditable(int row, int column)
-						{
-							return false;
-						}
-					});
-					addedScrollPane.setViewportView(addedTable);
-					revalidate();
-					repaint();					
-					
+						JDialog conflict = new JDialog(StudentRegistrationMain.mainWindow, "Course Conflict");
+						conflict.setBounds(100, 100, 343, 87);
+						conflict.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						conflict.setLocationRelativeTo(null);
+						conflict.getContentPane().setLayout(null);
+						conflict.setResizable(false);
+						conflict.setVisible(true);
+						conflict.setAlwaysOnTop(true);
+
+						JScrollPane scrollPane = new JScrollPane();
+						scrollPane.setBounds(0, 0, 339, 59);
+						conflict.getContentPane().add(scrollPane);
+
+						JTable table = new JTable();
+						table.setModel(new UneditableTableModel(getConflictTable((int) searchTable.getModel().getValueAt(table.convertRowIndexToModel(rowSel), 0)), new String[] { "CRN", "Class", "Time" }));
+						scrollPane.setViewportView(table);
+					}
+					// Checks to make sure the user isn't taking MORE than 5 classes
+					else if (StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser()).size() <= 5)
+					{
+						StudentRegistrationMain.mainCourseManager.addInstructorToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0));
+						addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						revalidate();
+						repaint();
+					}
 				}
 			}
 		});
 		add(btnAdd);
 
-		// adds a GUILogin
+		/**
+		 * Adds a GUILogin
+		 */
 		JPanel loginPanel = new GUILogStatus();
 		loginPanel.setBounds(0, 0, 618, 24);
 		add(loginPanel);
 
-		// adds a label named "Add or Remove Courses
+		/**
+		 * Adds a label named "Add or Remove Courses
+		 */
 		JLabel lblCourseRemoval = new JLabel("Add/Drop Courses");
 		lblCourseRemoval.setForeground(Color.GRAY);
 		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -311,6 +356,22 @@ public class GUIAddDropClass extends JPanel
 			cells[row][4] = teacher == null ? "TBA" : teacher.getFirstName().substring(0, 1) + " " + teacher.getLastName();
 			cells[row][5] = getFormattedDays(c.getDays());
 			cells[row][6] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
+			row++;
+		}
+		return cells;
+	}
+	
+	private Object[][] getConflictTable(int CRN)
+	{
+		Set<Course> courseConflict = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
+		Object[][] cells = new Object[courseConflict.size()][3];
+		int row = 0;
+
+		for (Course c : courseConflict)
+		{
+			cells[row][0] = c.getCRN();
+			cells[row][1] = c.getTitle();
+			cells[row][2] = c.getStartTime(Course.TWENTYFOUR_HR_CLOCK) + "-" + c.getEndTime(Course.TWENTYFOUR_HR_CLOCK);
 			row++;
 		}
 		return cells;
