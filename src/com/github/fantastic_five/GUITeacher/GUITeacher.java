@@ -88,7 +88,7 @@ public class GUITeacher extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudent());
+				StudentRegistrationMain.replaceMainWindowContents(new GUIViewStudents());
 			}
 		});
 		add(btnViewStudents);

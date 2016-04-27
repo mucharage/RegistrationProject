@@ -25,8 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.github.fantastic_five.StudentRegistrationMain;
@@ -47,7 +45,6 @@ public class GUIAddDropClass extends JPanel
 	private JButton btnDrop;
 	private JButton btnSearch;
 	private JLabel lblCrn;
-	private JLabel lblClassReq;
 	private JTable searchTable;
 	private static JTable addedTable;
 
