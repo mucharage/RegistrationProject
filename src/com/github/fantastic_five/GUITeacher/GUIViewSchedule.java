@@ -28,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import com.github.fantastic_five.StudentRegistrationMain;
 import com.github.fantastic_five.GUI.UniversalBackButton;
 import com.github.fantastic_five.GUIMisc.GUILogStatus;
-import com.github.fantastic_five.GUIStudent.GUIAddDropCourse;
 import com.github.fantastic_five.Logic.Course;
 
 @SuppressWarnings("serial")
