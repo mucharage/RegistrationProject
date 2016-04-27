@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -120,7 +119,7 @@ public class GUIViewStudents extends JPanel
 		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblViewSchedule);
-		
+
 		JLabel lblClasses = new JLabel("Classes");
 		lblClasses.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClasses.setForeground(Color.GRAY);
@@ -137,51 +136,44 @@ public class GUIViewStudents extends JPanel
 			{
 				if (e.getClickCount() == 2)
 				{
-					int rowSel = classTable.convertRowIndexToModel(classTable.getSelectedRow());
+					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.getSelectedRow()), 0);
 
-					if (rowSel > -1)
+					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse(CRN);
+					Set<UserProfile> students = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(CRN);
+
+					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Students");
+					popup.setBounds(200, 200, 447, 147);
+					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
+					popup.setResizable(false);
+					popup.setVisible(true);
+					popup.setAlwaysOnTop(true);
+
+					JTextArea desc = new JTextArea();
+					String x = "";
+					for (UserProfile student : students)
 					{
-						Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) classTable.getModel().getValueAt(rowSel, 0));
-						Set<UserProfile> students = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(selectedCourse.getCRN());
-
-						JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, selectedCourse.getTitle() + " - Students");
-						popup.setBounds(200, 200, 447, 147);
-						popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-						popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
-						popup.setResizable(false);
-						popup.setVisible(true);
-						popup.setAlwaysOnTop(true);
-
-						JTextArea desc = new JTextArea();
-						String x = "";
-						for(UserProfile student : students)
-						{
-							x += student.getFirstName() + " " + student.getLastName() + " - " + student.getUserID() + "\n";
-						}
-
-						// JTextArea desc = new JTextArea();
-						desc.setText(selectedCourse.getDescription());
-						desc.setText(x);
-						desc.setWrapStyleWord(true);
-						desc.setLineWrap(true);
-						desc.setFont(new Font("Verdana", Font.PLAIN, 12));
-						desc.setBounds(10, 11, 421, 96);
-						desc.setEditable(false);
-
-						JScrollPane scrollPane = new JScrollPane(desc);
-						scrollPane.setBounds(10, 11, 421, 96);
-						popup.getContentPane().add(scrollPane);
+						x += student.getFirstName() + " " + student.getLastName() + " - " + student.getUserID() + "\n";
 					}
+
+					// JTextArea desc = new JTextArea();
+					desc.setText(selectedCourse.getDescription());
+					desc.setText(x);
+					desc.setWrapStyleWord(true);
+					desc.setLineWrap(true);
+					desc.setFont(new Font("Verdana", Font.PLAIN, 12));
+					desc.setBounds(10, 11, 421, 96);
+					desc.setEditable(false);
+
+					JScrollPane scrollPane = new JScrollPane(desc);
+					scrollPane.setBounds(10, 11, 421, 96);
+					popup.getContentPane().add(scrollPane);
 				}
 				// Single click checking!
 				else
 				{
-					int rowSel = classTable.convertRowIndexToModel(classTable.getSelectedRow());
-					if (rowSel > -1)
-					{
-						int CRN = (int) classTable.getValueAt(rowSel, 0);
-						studentTable.setModel(new UneditableTableModel(getStudentTable(CRN), studentHeaders));
-					}
+					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.getSelectedRow()), 0);
+					studentTable.setModel(new UneditableTableModel(getStudentTable(CRN), studentHeaders));
 				}
 			}
 		});
@@ -189,13 +181,10 @@ public class GUIViewStudents extends JPanel
 
 	public Object[][] getClassTable()
 	{
-		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		Set<Course> courses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
-		int numCourses = courses.size();
-		Object[][] cells = new Object[numCourses][7];
+		Object[][] cells = new Object[courses.size()][7];
 
 		int row = 0;
-		// Loops through all courses and sets the columns in each row appropriately
 		for (Course c : courses)
 		{
 			cells[row][0] = c.getCRN();
@@ -211,12 +200,10 @@ public class GUIViewStudents extends JPanel
 
 	private Object[][] getStudentTable(int CRN)
 	{
-		// Some local variables that help me later. Wastes memory, maybe - but saves typing a lot
 		Set<UserProfile> students = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(CRN);
 		Object[][] cells = new Object[students.size()][studentHeaders.length];
 
 		int row = 0;
-		// Loops through all courses and sets the columns in each row appropriately
 		for (UserProfile u : students)
 		{
 			cells[row][0] = u.getLastName();
