@@ -199,7 +199,7 @@ public class GUIAddDropCourse extends JPanel
 
 		// Creates a Table which shall display result of the course that user has searched for
 		searchTable = new JTable();
-		searchTable.setModel(new UneditableTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));// end of setModel
+		searchTable.setModel(new UneditableTableModel(getSearchResultTable(0), headers));
 		searchScrollPane.setViewportView(searchTable);
 
 		// Added a Button named "Search" would search for the entered CRN from the Course data.
@@ -215,7 +215,7 @@ public class GUIAddDropCourse extends JPanel
 					int CRN = Integer.parseInt(searchField.getText());
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
-						searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+						searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), headers));
 						searchScrollPane.setViewportView(searchTable);
 					}
 					else
@@ -237,7 +237,7 @@ public class GUIAddDropCourse extends JPanel
 
 		// Creates an another Table which shall course that user has added.
 		addedTable = new JTable();
-		addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+		addedTable.setModel(new UneditableTableModel(getClassTable(), headers));
 		addedScrollPane.setViewportView(addedTable);
 		addedTable.setAutoCreateRowSorter(true);
 
@@ -275,14 +275,18 @@ public class GUIAddDropCourse extends JPanel
 					// Checks to make sure the user isn't taking MORE than 5 classes
 					else if (StudentRegistrationMain.mainCourseManager.getCoursesWithLearner(StudentRegistrationMain.getCurrentLoggedInUser()).size() <= 5)
 					{
-						StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0));
-						addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
-						searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));// end of setModel
-						lblClassReq.setText(getErrorText());
-						revalidate();
-						repaint();
+						int CRN = (int) searchTable.getModel().getValueAt(searchTable.convertRowIndexToModel(rowSel), 0);
+						// Checks to make sure the student isn't also the teacher: this is a check for TA cases:
+						if (StudentRegistrationMain.mainCourseManager.getInstructorWithCourse(CRN).getUserID() != StudentRegistrationMain.getCurrentLoggedInUser().getUserID())
+						{
+							StudentRegistrationMain.mainCourseManager.addLearnerToCourse(StudentRegistrationMain.getCurrentLoggedInUser(), CRN);
+							addedTable.setModel(new UneditableTableModel(getClassTable(), headers));
+							searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), headers));
+							lblClassReq.setText(getErrorText());
+							revalidate();
+							repaint();
+						}
 					}
-
 				}
 			}
 		});
