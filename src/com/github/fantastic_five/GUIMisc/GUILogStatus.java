@@ -90,7 +90,8 @@ public class GUILogStatus extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				StudentRegistrationMain.replaceMainWindowContents(new GUIChangeDetails());
+				if (StudentRegistrationMain.getCurrentLoggedInUser().getPermLevel() != UserProfile.GUEST)
+					StudentRegistrationMain.replaceMainWindowContents(new GUIChangeDetails());
 			}
 		});
 		add(currentLoggedIn);
