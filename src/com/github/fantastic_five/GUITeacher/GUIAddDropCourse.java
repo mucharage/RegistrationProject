@@ -11,10 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -35,7 +38,7 @@ import com.github.fantastic_five.Logic.ScheduleManager;
 import com.github.fantastic_five.Logic.UserProfile;
 
 @SuppressWarnings("serial")
-public class GUIAddDropClass extends JPanel
+public class GUIAddDropCourse extends JPanel
 {
 	private JTextField searchField;
 	private JButton btnAdd;
@@ -46,24 +49,30 @@ public class GUIAddDropClass extends JPanel
 	private JTable addedTable;
 	private String[] headers = new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" };
 
-	public GUIAddDropClass()
+	public GUIAddDropCourse()
 	{
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
 		searchField = new JTextField();
+		searchField.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			}
+		});
 		searchField.setBounds(98, 95, 128, 20);
-		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
 		{
 			@Override
 			public void keyTyped(KeyEvent e)
 			{
+				searchField.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				if (e.getKeyChar() == KeyEvent.VK_ENTER)
-				{
 					btnSearch.doClick();
-				}
 			}
 
 			@Override
@@ -72,10 +81,11 @@ public class GUIAddDropClass extends JPanel
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e)
+			public void keyReleased(KeyEvent arg0)
 			{
 			}
 		});
+		add(searchField);
 
 		// Creates another scroll pane
 
@@ -119,7 +129,6 @@ public class GUIAddDropClass extends JPanel
 						if (rowSel > -1)
 						{
 							StudentRegistrationMain.mainCourseManager.removeInstructorFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), (int) addedTable.getModel().getValueAt(addedTable.convertRowIndexToModel(rowSel), 0));
-
 							addedTable.setModel(new UneditableTableModel(getClassTable(), headers));
 							addedScrollPane.setViewportView(addedTable);
 							revalidate();
@@ -179,7 +188,6 @@ public class GUIAddDropClass extends JPanel
 		btnSearch.addActionListener(new ActionListener()
 		{
 			@Override
-
 			public void actionPerformed(ActionEvent e)
 			{
 				try
@@ -188,27 +196,20 @@ public class GUIAddDropClass extends JPanel
 					if (StudentRegistrationMain.mainCourseManager.getCourse(CRN) != null)
 					{
 						searchTable.setModel(new UneditableTableModel(getSearchResultTable(CRN), headers));
+						searchScrollPane.setViewportView(searchTable);
 					}
 					else
 					{
-						JLabel errorMessage = new JLabel();
-						errorMessage.setForeground(Color.RED);
-						errorMessage.setText("CRN Not Found");
-						errorMessage.setBounds(88, 102, 206, 20);
+						searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 						revalidate();
 						repaint();
-						add(errorMessage);
 					}
 				}
 				catch (NumberFormatException exception)
 				{
-					JLabel notNumbers = new JLabel();
-					notNumbers.setForeground(Color.RED);
-					notNumbers.setText("Invalid CRN");
-					notNumbers.setBounds(90, 102, 206, 20);
+					searchField.setBorder(BorderFactory.createLineBorder(Color.RED));
 					revalidate();
 					repaint();
-					add(notNumbers);
 				}
 			}
 		});

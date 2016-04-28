@@ -48,10 +48,10 @@ public class GUIAddDropCourse extends JPanel
 	private JTable searchTable;
 	private JTable addedTable;
 	private JLabel lblClassReq;
+	private String[] headers = new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" };
 
 	public GUIAddDropCourse()
 	{
-
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
@@ -65,7 +65,6 @@ public class GUIAddDropCourse extends JPanel
 			}
 		});
 		searchField.setBounds(98, 95, 128, 20);
-		add(searchField);
 		searchField.setColumns(10);
 		searchField.addKeyListener(new KeyListener()
 		{
@@ -87,6 +86,7 @@ public class GUIAddDropCourse extends JPanel
 			{
 			}
 		});
+		add(searchField);
 
 		// Creates an another ScrollPane for the added courses
 		JScrollPane addedScrollPane = new JScrollPane();
@@ -131,15 +131,15 @@ public class GUIAddDropCourse extends JPanel
 							StudentRegistrationMain.mainCourseManager.removeLearnerFromCourse(StudentRegistrationMain.getCurrentLoggedInUser(), CRN);
 							StudentRegistrationMain.mainCourseManager.getCourse(CRN).decrRemainingCap();
 
-							addedTable.setModel(new UneditableTableModel(getClassTable(), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+							addedTable.setModel(new UneditableTableModel(getClassTable(), headers));
 							lblClassReq.setText(getErrorText());
 							try
 							{
-								searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+								searchTable.setModel(new UneditableTableModel(getSearchResultTable(Integer.parseInt(searchField.getText())), headers));
 							}
 							catch (NumberFormatException ex)
 							{
-								searchTable.setModel(new UneditableTableModel(getSearchResultTable(0), new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Day", "Time" }));
+								searchTable.setModel(new UneditableTableModel(getSearchResultTable(0), headers));
 							}
 
 							revalidate();
