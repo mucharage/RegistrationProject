@@ -34,7 +34,7 @@ public class UserProfile implements Serializable
 		this.middleName = middleName;
 		this.lastName = lastName;
 	}
-	
+
 	public UserProfile(PendingApplication application, int permLevel)
 	{
 		this.userID = application.getUserID();

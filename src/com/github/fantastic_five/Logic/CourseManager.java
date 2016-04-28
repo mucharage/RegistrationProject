@@ -1,9 +1,5 @@
 package com.github.fantastic_five.Logic;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -43,6 +39,7 @@ public class CourseManager implements Serializable
 	 * 
 	 * @return The treeSet of all courses being offered, ordered by CRN
 	 */
+	@SuppressWarnings("unchecked")
 	public TreeSet<Course> copyCourseOfferings()
 	{
 		TreeSet<Course> rVal = (TreeSet<Course>) courseOfferings.clone();

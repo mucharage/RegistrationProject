@@ -41,76 +41,20 @@ public class GUIViewCourses extends JPanel
 		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
-		/**
-		 * Adds a ScrollPane
-		 */
-
+		// Main table scrollpane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 64, 587, 311);
 		add(scrollPane);
 
-		/**
-		 * Adds a table displaying important details for each courses.
-		 * 
-		 */
+		// Adds a table including proper headers and table content
 		JTable table = new JTable();
 		table.setModel(new UneditableTableModel(getCourseTable(), headers));
-		scrollPane.setViewportView(table);
-		// does the impossible and adds a rudimentary sorting mechanism to the table. you're welcome - stephen
 		table.setAutoCreateRowSorter(true);
-
-		/**
-		 * Button & Logic for View Schedule
-		 */
-		JButton btnBack = new UniversalBackButton();
-		btnBack.setBounds(10, 386, 128, 23);
-		add(btnBack);
-
-		/**
-		 * Adds a Label named View Courses.
-		 */
-		JLabel lblCourseRemoval = new JLabel("View Courses");
-		lblCourseRemoval.setForeground(Color.GRAY);
-		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCourseRemoval.setBounds(179, 21, 243, 23);
-		add(lblCourseRemoval);
-
-		JButton btnPrint = new JButton("Print");
-		btnPrint.setBounds(469, 386, 128, 23);
-		btnPrint.addActionListener(new ActionListener()
-		{
-
-			public void actionPerformed(ActionEvent e)
-			{
-				MessageFormat header = new MessageFormat("Master Course List");
-				MessageFormat footer = new MessageFormat("Guest");
-				try
-				{
-					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-				}
-				catch (PrinterException e1)
-				{
-					e1.printStackTrace();
-				}
-			}
-		});
-		add(btnPrint);
-
-		/**
-		 * adds a login GUI
-		 */
-		JPanel loginPanel = new GUILogStatus();
-		loginPanel.setBounds(0, 0, 618, 24);
-		add(loginPanel);
-
-		/**
-		 * Displays Course Description by double Clicking selected Course
-		 */
 		table.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				// Checks for double-click event
 				if (e.getClickCount() == 2)
 				{
 					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse((int) table.getModel().getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), 0));
@@ -138,10 +82,49 @@ public class GUIViewCourses extends JPanel
 				}
 			}
 		});
+
+		scrollPane.setViewportView(table);
+
+		JButton btnBack = new UniversalBackButton();
+		btnBack.setBounds(10, 386, 128, 23);
+		add(btnBack);
+
+		// Adds a Label named View Courses.
+		JLabel lblCourseRemoval = new JLabel("View Courses");
+		lblCourseRemoval.setForeground(Color.GRAY);
+		lblCourseRemoval.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblCourseRemoval.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCourseRemoval.setBounds(179, 21, 243, 23);
+		add(lblCourseRemoval);
+
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(469, 386, 128, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				MessageFormat header = new MessageFormat("Master Course List");
+				MessageFormat footer = new MessageFormat("Guest");
+				try
+				{
+					table.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{
+				}
+			}
+		});
+		add(btnPrint);
+
+		// Adds the login status panel
+		JPanel loginPanel = new GUILogStatus();
+		loginPanel.setBounds(0, 0, 618, 24);
+		add(loginPanel);
 	}
 
 	/**
-	 * @return a two-dimensional object array for the table with properly pre-filled info
+	 * @return a two-dimensional object array for the table containing contents about ALL university courses
 	 */
 	public Object[][] getCourseTable()
 	{
@@ -168,6 +151,11 @@ public class GUIViewCourses extends JPanel
 		return cells;
 	}
 
+	/**
+	 * @param days
+	 *            a TreeSet of days which needs to be formatted
+	 * @return a formatted string with the day abbreviations from the TreeSet
+	 */
 	String getFormattedDays(TreeSet<Day> days)
 	{
 		String rVal = "";

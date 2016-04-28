@@ -50,11 +50,12 @@ public class GUILogin extends JPanel
 	// Create the login screen panel.
 	public GUILogin()
 	{
+		setBounds(0, 0, 618, 434);
 		setLayout(null);
 
-		// usernameField is a new JTextField object
 		// this is the box the user will type his/her name in
 		usernameField = new JTextField();
+		usernameField.setBounds(204, 182, 202, 20);
 		usernameField.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -67,14 +68,11 @@ public class GUILogin extends JPanel
 				repaint();
 			}
 		});
-		// Set the dimensions of the field
-		usernameField.setBounds(204, 182, 202, 20);
-		// Add field to panel
 		add(usernameField);
 
-		// passwordField is a new JTextField object
 		// this is the box the user will type his/her password in
 		passwordField = new JPasswordField();
+		passwordField.setBounds(204, 227, 202, 20);
 		passwordField.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -87,60 +85,39 @@ public class GUILogin extends JPanel
 				repaint();
 			}
 		});
-		// Set the dimensions of the field
-		passwordField.setBounds(204, 227, 202, 20);
-		// Add field to panel
 		add(passwordField);
 
-		// lblWelcomeMSG is a new JLabel object
 		// lblWelcomeMSG will show up as "WELCOME!"
 		JLabel lblWelcomeMSG = new JLabel("WELCOME!");
-		// Making the font "Verdana", BOLD text, size 70
 		lblWelcomeMSG.setFont(new Font("Verdana", Font.BOLD, 70));
-		// Set the dimensions of the label
 		lblWelcomeMSG.setBounds(90, 49, 700, 70);
-		// Add greeting to panel
 		add(lblWelcomeMSG);
 
-		// lblUsername is a new JLabel object
 		// lblUsername will show up as "Username:"
 		JLabel lblUsername = new JLabel("User ID:");
-		// Set the dimensions of the label
 		lblUsername.setBounds(210, 165, 300, 20);
-		// Add label to panel
 		add(lblUsername);
 
-		// lblPassword is a new JLabel object
 		// lblPassword will show up as "Password:"
 		JLabel lblPassword = new JLabel("Password:");
-		// Set the dimensions of the label
 		lblPassword.setBounds(211, 209, 300, 20);
-		// Add label to panel
 		add(lblPassword);
 
-		// btnForgotPassword is a new JButton object
 		// btnForgotPassword will show up as "Forgot Password?" without borders
 		JButton btnForgotPassword = new JButton("Forgot Password?");
-		// Set the dimensions of the button
 		btnForgotPassword.setBounds(290, 244, 120, 23);
-		// Make the button appear as just a clickable text
 		btnForgotPassword.setContentAreaFilled(false);
-		// Make the button borders invisible
 		btnForgotPassword.setBorderPainted(false);
-		// Make the text the color BLUE
 		btnForgotPassword.setForeground(Color.GRAY);
-		// When button is clicked, GUIForgotPass is called
 		btnForgotPassword.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				{
-					// Initialize frame as a new JFrame
+					// Initialize frame as a new JDialog
 					JDialog popup = new JDialog(StudentRegistrationMain.mainWindow, "Password Recovery");
-					// Set the dimensions of the frame
 					popup.setBounds(100, 100, 303, 141);
-					// When the frame is closed, it simply goes away
 					popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					popup.setLocationRelativeTo(StudentRegistrationMain.mainWindow);
 					popup.getContentPane().setLayout(null);
@@ -150,17 +127,12 @@ public class GUILogin extends JPanel
 
 					// Create a text area to go inside the frame
 					JTextArea txtpnPleaseContactThe = new JTextArea();
-					// Making the font "Tahoma", plain text, size 15
 					txtpnPleaseContactThe.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					// Menu is the color of the text area background
 					txtpnPleaseContactThe.setBackground(UIManager.getColor("menu"));
-					// Make the text not editable by the user
 					txtpnPleaseContactThe.setEditable(false);
-					// The text that is displayed
 					txtpnPleaseContactThe.setText("Please contact the System\r\n  Administration Office to\r\n   obtain your password.\r\n          Thank you.");
-					// Set the dimensions of the frame
 					txtpnPleaseContactThe.setBounds(57, 11, 178, 80);
-					// add the text area to the pane and frame
+					
 					popup.getContentPane().add(txtpnPleaseContactThe);
 					JButton btnNo = new JButton("No");
 					btnNo.addActionListener(new ActionListener()
@@ -174,29 +146,19 @@ public class GUILogin extends JPanel
 					btnNo.addKeyListener(new KeyAdapter()
 					{
 						public void keyPressed(KeyEvent ke)
-						{ // handler
+						{
 							if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
-							{
-								System.out.println("escaped ?");
 								popup.dispose();
-							}
-							else
-							{
-								System.out.println("not escaped");
-							}
 						}
 					});
 					popup.getContentPane().add(btnNo);
 				}
 			}
 		});
-		// Add button to panel
 		add(btnForgotPassword);
 
-		// Login is a new JButton object
 		// Login will show up as a button with "Login" inside it
 		JButton btnLogin = new JButton("Login");
-		// Set the dimensions of the button
 		btnLogin.setBounds(204, 272, 90, 23);
 		btnLogin.addActionListener(new ActionListener()
 		{
@@ -209,22 +171,20 @@ public class GUILogin extends JPanel
 					if (user != null && user.passwordIs(new String(passwordField.getPassword())))
 					{
 						StudentRegistrationMain.logOut();
-
-						// temporary bugfix
 						StudentRegistrationMain.loggedIn.set(0, user);
-
-						// StudentRegistrationMain.loggedIn.add(user);
 						StudentRegistrationMain.replaceMainWindowContents(getGUIFromPerm(user.getPermLevel()));
 					}
 					else
+					{
 						createError();
+					}
 				}
 				else
+				{
 					createError();
+				}
 			}
 		});
-
-		// Add button to panel
 		add(btnLogin);
 
 		// User can press enter after entering password and it will click Login
@@ -249,13 +209,11 @@ public class GUILogin extends JPanel
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 		});
 
@@ -279,20 +237,16 @@ public class GUILogin extends JPanel
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				/** Do Nothing */
 			}
 		});
 
-		// Guest is a new JButton object
-		// Guest will show up as a button with "Guest" inside it
+		// btnGuest will show up as a button with "Guest" inside it
 		JButton btnGuest = new JButton("Guest");
-		// Set the dimensions of the button
 		btnGuest.setBounds(316, 272, 90, 23);
 		btnGuest.addActionListener(new ActionListener()
 		{
@@ -301,9 +255,9 @@ public class GUILogin extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUIViewCourses());
 			}
 		});
-		// Add button to panel
 		add(btnGuest);
-		
+
+		// btnCreateApplication will show up as a button with "Apply for Registration" inside it
 		JButton btnCreateApplication = new JButton("Apply for Registration");
 		btnCreateApplication.setBounds(204, 329, 202, 23);
 		btnCreateApplication.addActionListener(new ActionListener()
@@ -313,7 +267,6 @@ public class GUILogin extends JPanel
 				StudentRegistrationMain.replaceMainWindowContents(new GUICreateApplication());
 			}
 		});
-		// Add button to panel
 		add(btnCreateApplication);
 	}
 

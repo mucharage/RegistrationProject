@@ -282,6 +282,7 @@ public class GUIAddCourse extends JPanel
 		lblhrFormatEx2.setBounds(467, 194, 141, 14);
 		add(lblhrFormatEx2);
 
+		// Proper Back Button
 		JButton btnBack = new UniversalBackButton();
 		btnBack.setBounds(10, 386, 128, 23);
 		add(btnBack);
@@ -377,7 +378,7 @@ public class GUIAddCourse extends JPanel
 			return;
 		}
 
-		int studentCap = -1;
+		int studentCap;
 		try
 		{
 			studentCap = Integer.parseInt(fieldCapacity.getText());

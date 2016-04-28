@@ -41,7 +41,7 @@ public class GUIRemoveCourse extends JPanel
 {
 	private JTextField fieldCRN;
 	private String[] headers = new String[] { "CRN", "Class", "Capacity", "Remaining", "Teacher", "Days", "Time" };
-	
+
 	public GUIRemoveCourse()
 	{
 		setLayout(null);

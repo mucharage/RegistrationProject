@@ -1,4 +1,4 @@
-	package com.github.fantastic_five.Logic;
+package com.github.fantastic_five.Logic;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -27,6 +27,7 @@ public class FinancialRecordsOffice implements Serializable
 	 * 
 	 * @return A map containing all the UserProfiles and a Boolean which equals true iff they have unpaid charges on their account
 	 */
+	@SuppressWarnings("unchecked")
 	public TreeMap<UserProfile, Boolean> copyUserPaymentInfo()
 	{
 		return (TreeMap<UserProfile, Boolean>) userPaymentInfo.clone();
@@ -47,7 +48,8 @@ public class FinancialRecordsOffice implements Serializable
 	/**
 	 * Attempts to add the specified UserProfile with no charges to the database. Fails if the database already contains that user (ie when hasUser(user.getUserID()) returns true).
 	 * 
-	 * @param user The UserProfile being added.
+	 * @param user
+	 *            The UserProfile being added.
 	 * @return true iff The UserProfile was successfully added
 	 */
 	public boolean addUser(UserProfile user)
@@ -64,13 +66,15 @@ public class FinancialRecordsOffice implements Serializable
 	}
 
 	/**
-	 * Checks to see if the specified user's account has any unpaid charges 
-	 * @param userID The user who's accounts charges are being examined
+	 * Checks to see if the specified user's account has any unpaid charges
+	 * 
+	 * @param userID
+	 *            The user who's accounts charges are being examined
 	 * @return true if the user's account has unpaid charges
 	 */
 	public boolean userHasCharges(String userID)
 	{
-		if(hasUser(userID))
+		if (hasUser(userID))
 		{
 			UserProfile dummy = dummyUser(userID);
 			return userPaymentInfo.get(dummy);
@@ -80,25 +84,27 @@ public class FinancialRecordsOffice implements Serializable
 			throw new IllegalArgumentException("userID Not Found");
 		}
 	}
-	
+
 	/**
 	 * Changes the boolean associated with a specified user
+	 * 
 	 * @param userID
-	 * @param newStatus The new value representing whether or not the specified UserProfile has unpaid charges
+	 * @param newStatus
+	 *            The new value representing whether or not the specified UserProfile has unpaid charges
 	 * @return true iff the value was successfully changed
 	 */
 	public boolean changeUsersPaymentStatus(String userID, boolean newStatus)
 	{
 		boolean rVal = false;
-		
-		if(hasUser(userID))
+
+		if (hasUser(userID))
 		{
 			rVal = true;
 			UserProfile dummy = dummyUser(userID);
 			userPaymentInfo.replace(dummy, newStatus);
 			DatabaseIO.serializeEverything();
 		}
-		
+
 		return rVal;
 	}
 

@@ -1,6 +1,9 @@
 package com.github.fantastic_five.GUITA;
 
-import java.awt.event.KeyEvent;
+/**
+ * @author Fantastic Five (Jose Stovall)
+ * A JPanel containing a tabbed view for both student and teacher abilities
+ */
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -18,13 +21,8 @@ public class GUITeacherAssistant extends JPanel
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setBounds(0, 0, 618, 434);
-
 		tabbedPane.addTab("Student", new GUIStudent());
-		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
 		tabbedPane.addTab("Teacher", new GUITeacher());
-		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
 		add(tabbedPane);
 	}
 }

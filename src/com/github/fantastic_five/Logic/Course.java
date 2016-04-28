@@ -1,4 +1,4 @@
-	package com.github.fantastic_five.Logic;
+package com.github.fantastic_five.Logic;
 
 import java.io.Serializable;
 /**
@@ -28,7 +28,7 @@ public class Course implements Serializable
 
 	public static final int TWENTYFOUR_HR_CLOCK = Time.TWENTYFOUR_HR_CLOCK;
 	public static final int TWELVE_HR_CLOCK = Time.TWELVE_HR_CLOCK;
-	
+
 	/**
 	 * Constructs a new course object
 	 * 
@@ -158,9 +158,10 @@ public class Course implements Serializable
 	 * 
 	 * @return The meeting days for the course
 	 */
+	@SuppressWarnings("unchecked")
 	public TreeSet<Day> getDays()
 	{
-		return (TreeSet)days.clone();
+		return (TreeSet<Day>) days.clone();
 	}
 
 	/**
@@ -178,7 +179,7 @@ public class Course implements Serializable
 
 		return rVal;
 	}
-	
+
 	/**
 	 * Returns a string representing the start time for the course, in either the 24 hour notation or the 12 hour notation
 	 * 
@@ -400,7 +401,7 @@ public class Course implements Serializable
 		}
 	}
 
-	public static enum Day implements Serializable//, Comparable<Day>
+	public static enum Day implements Serializable// , Comparable<Day>
 	{
 		MONDAY("Monday", "M", 0), TUESDAY("Tuesday", "T", 1), WEDNESDAY("Wednesday", "W", 2), THURSDAY("Thursday", "R", 3), FRIDAY("Friday", "F", 4), SATURDAY("Saturday", "S", 5), SUNDAY("Sunday", "U", 6);
 
@@ -472,11 +473,11 @@ public class Course implements Serializable
 
 			return rVal;
 		}
-	
-//		public int compareTo(Day other)
-//		{
-//			return Integer.compare(this.order, other.order);
-//		}
+
+		// public int compareTo(Day other)
+		// {
+		// return Integer.compare(this.order, other.order);
+		// }
 	}
 
 }

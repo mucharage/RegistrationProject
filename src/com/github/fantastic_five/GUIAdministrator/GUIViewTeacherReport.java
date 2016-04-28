@@ -76,7 +76,6 @@ public class GUIViewTeacherReport extends JPanel
 				}
 				catch (PrinterException e1)
 				{
-					e1.printStackTrace();
 				}
 
 			}
