@@ -59,7 +59,6 @@ public class GUILogStatus extends JPanel
 					StudentRegistrationMain.mainWindow.getContentPane().removeAll();
 					StudentRegistrationMain.mainWindow.getContentPane().add(new GUILogin());
 					StudentRegistrationMain.mainWindow.pack();
-
 				}
 				// Isn't a TA:
 				else
@@ -74,7 +73,7 @@ public class GUILogStatus extends JPanel
 		JLabel currentLoggedInPrefix = new JLabel("Current Logged In User: ");
 		currentLoggedInPrefix.setBounds(10, 4, 120, 14);
 		add(currentLoggedInPrefix);
-		
+
 		UserProfile u = StudentRegistrationMain.getCurrentLoggedInUser();
 		JButton currentLoggedIn = new JButton(u.getFirstName() + " " + u.getLastName() + " (" + getPermDescriptionFromInt(u.getPermLevel()) + ")");
 		currentLoggedIn.setToolTipText("Edit Account Information");
@@ -97,7 +96,12 @@ public class GUILogStatus extends JPanel
 		add(currentLoggedIn);
 	}
 
-	public String getPermDescriptionFromInt(int level)
+	/**
+	 * @param level
+	 *            the integer permission level to evaluate
+	 * @return a properly capitalized string of what the int permLevel equates to
+	 */
+	String getPermDescriptionFromInt(int level)
 	{
 		switch (level)
 		{

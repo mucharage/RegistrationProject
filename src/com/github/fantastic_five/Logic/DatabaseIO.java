@@ -31,7 +31,6 @@ public class DatabaseIO
 		}
 		catch (IOException i)
 		{
-			i.printStackTrace();
 			return;
 		}
 	}
@@ -59,18 +58,16 @@ public class DatabaseIO
 				StudentRegistrationMain.mainCourseManager = new CourseManager();
 				StudentRegistrationMain.financialRecords = new FinancialRecordsOffice();
 				StudentRegistrationMain.pendingApplications = new PendingApplicationDatabase();
-				
+
 				serializeEverything();
 			}
 		}
 		catch (IOException i)
 		{
-			i.printStackTrace();
 			return;
 		}
 		catch (ClassNotFoundException c)
 		{
-			c.printStackTrace();
 			return;
 		}
 	}
@@ -89,7 +86,7 @@ public class DatabaseIO
 			this.courseManager = courseManager;
 			this.profiles = profiles;
 			this.financialRecords = financialRecords;
-			this.pendingApplications =  pendingApplications;
+			this.pendingApplications = pendingApplications;
 		}
 	}
 

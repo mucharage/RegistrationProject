@@ -39,7 +39,7 @@ public class StudentRegistrationDemo
 				profiles.addUser(new UserProfile("admin", "pass", UserProfile.ADMIN, "Stephen", "", "Clark"));
 				profiles.addUser(new UserProfile("ta", "pass", UserProfile.TA, "Alay", "", "Patel"));
 				profiles.addUser(new UserProfile("mward", "pass", UserProfile.TEACHER, "Michael", "", "Ward"));
-				
+
 				office.addUser(new UserProfile("student", "pass", UserProfile.STUDENT, "Christian", "", "Phillips"));
 				office.addUser(new UserProfile("ta", "pass", UserProfile.TA, "Alay", "", "Patel"));
 

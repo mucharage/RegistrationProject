@@ -20,7 +20,7 @@ public class UniversalBackButton extends JButton
 	public UniversalBackButton()
 	{
 		super("Back");
-		
+
 		this.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

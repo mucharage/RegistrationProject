@@ -1,4 +1,3 @@
-
 package com.github.fantastic_five.Logic;
 
 import java.io.Serializable;
@@ -30,6 +29,7 @@ public class UserProfileDatabase implements Serializable
 	 * 
 	 * @return A set of the UserProfiles in the database, sorted by their IDs.
 	 */
+	@SuppressWarnings("unchecked")
 	public TreeSet<UserProfile> copyUserProfiles()
 	{
 		return (TreeSet<UserProfile>) userProfiles.clone();

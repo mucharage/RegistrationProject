@@ -5,20 +5,26 @@ import java.io.Serializable;
 public class PendingApplication implements Serializable
 {
 	private static final long serialVersionUID = -2568389667038667208L;
-	
+
 	private String userID;
 	private String password;
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	
+
 	/**
 	 * Constructs a PendingApplication object.
-	 * @param userID the userID for this applicant
-	 * @param password the password for this applicant
-	 * @param firstName the applicant's first name
-	 * @param middleName the user's middle name
-	 * @param lastName the user's last name
+	 * 
+	 * @param userID
+	 *            the userID for this applicant
+	 * @param password
+	 *            the password for this applicant
+	 * @param firstName
+	 *            the applicant's first name
+	 * @param middleName
+	 *            the user's middle name
+	 * @param lastName
+	 *            the user's last name
 	 */
 	public PendingApplication(String userID, String password, String firstName, String middleName, String lastName)
 	{
@@ -28,12 +34,12 @@ public class PendingApplication implements Serializable
 		this.middleName = middleName;
 		this.lastName = lastName;
 	}
-	
+
 	public boolean equals(PendingApplication other)
 	{
-		return (this == other) ? true : (this.userID.equals(other.userID));				
+		return (this == other) ? true : (this.userID.equals(other.userID));
 	}
-	
+
 	/**
 	 * Returns the userID for this applicant
 	 * 
@@ -43,7 +49,7 @@ public class PendingApplication implements Serializable
 	{
 		return userID;
 	}
-	
+
 	/**
 	 * Returns the password for this applicant
 	 * 

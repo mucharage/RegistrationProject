@@ -12,19 +12,20 @@ import java.util.TreeSet;
 public class PendingApplicationDatabase implements Serializable
 {
 	private static final long serialVersionUID = -4842360659765401606L;
-	
+
 	private TreeSet<PendingApplication> database;
-	
+
 	public PendingApplicationDatabase()
 	{
 		database = new TreeSet<>(new ApplicationComparator());
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public TreeSet<PendingApplication> copyDatabase()
 	{
 		return (TreeSet<PendingApplication>) database.clone();
 	}
-	
+
 	/**
 	 * @param application
 	 *            the application that needs to be added to the database
@@ -42,28 +43,30 @@ public class PendingApplicationDatabase implements Serializable
 
 		return rVal;
 	}
-	
+
 	/**
 	 * Attempts to remove a userProfile with a specified userID from the database
-	 * @param userID the userID of the applicant
+	 * 
+	 * @param userID
+	 *            the userID of the applicant
 	 * @return Returns true iff the specified application was removed from the database
 	 */
 	public boolean removeApplication(String userID)
 	{
 		boolean rVal = false;
-		
+
 		PendingApplication dummy = dummyApplication(userID);
-		
+
 		if (database.contains(dummy))
 		{
 			rVal = true;
 			database.remove(dummy);
 			DatabaseIO.serializeEverything();
 		}
-		
+
 		return rVal;
 	}
-	
+
 	/**
 	 * Checks to see if the database contains a PendingApplication with the specified ID
 	 * 
@@ -75,7 +78,7 @@ public class PendingApplicationDatabase implements Serializable
 	{
 		return database.contains(dummyApplication(userID));
 	}
-	
+
 	/**
 	 * Returns the PendingApplication object that matches with the userID
 	 * 
@@ -97,12 +100,12 @@ public class PendingApplicationDatabase implements Serializable
 
 		return rVal;
 	}
-	
+
 	private PendingApplication dummyApplication(String id)
 	{
 		return new PendingApplication(id, null, null, null, null);
 	}
-	
+
 	private static class ApplicationComparator implements Serializable, Comparator<PendingApplication>
 	{
 		private static final long serialVersionUID = -4566674384568387112L;

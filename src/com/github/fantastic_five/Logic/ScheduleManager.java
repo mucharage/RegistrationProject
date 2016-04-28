@@ -33,18 +33,18 @@ public class ScheduleManager
 		CourseManager mainCourseManager = StudentRegistrationMain.mainCourseManager;
 
 		Set<Course> userSchedule = new HashSet<Course>();
-		
+
 		Set<Course> additions = mainCourseManager.getCoursesWithLearner(user);
-		if(additions != null)
+		if (additions != null)
 		{
 			userSchedule.addAll(additions);
 		}
 		additions = mainCourseManager.getCoursesWithInstructor(user);
-		if(additions != null)
+		if (additions != null)
 		{
-			userSchedule.addAll(additions);	
+			userSchedule.addAll(additions);
 		}
-		
+
 		for (Course c : userSchedule)
 		{
 			if (course.conflictsWith(c))

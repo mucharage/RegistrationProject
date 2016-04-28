@@ -61,82 +61,17 @@ public class GUIViewStudents extends JPanel
 		studentScrollPane.setBounds(10, 203, 598, 172);
 		add(studentScrollPane);
 
-		/**
-		 * Adds a table which will display list of courses that the user chose
-		 */
+		// Adds a table which will display list of courses that the user chose
 		classTable = new JTable();
 		classTable.setModel(new UneditableTableModel(getClassTable(), classHeaders));
-		classScrollPane.setViewportView(classTable);
 		classTable.setAutoCreateRowSorter(true);
-
-		studentTable = new JTable();
-		studentTable.setModel(new UneditableTableModel(null, studentHeaders));
-		studentScrollPane.setViewportView(studentTable);
-		studentTable.setAutoCreateRowSorter(true);
-
-		/**
-		 * Button & logic for back button
-		 */
-		JButton btnBack = new UniversalBackButton();
-		btnBack.setBounds(10, 386, 128, 23);
-		add(btnBack);
-
-		JButton btnPrint = new JButton("Print");
-		btnPrint.setBounds(480, 386, 128, 23);
-		btnPrint.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				MessageFormat header = new MessageFormat("Schedule");
-				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName() + " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
-				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();
-				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
-				try
-				{
-					classTable.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-				}
-				catch (PrinterException e1)
-				{
-					e1.printStackTrace();
-				}
-			}
-		});
-		add(btnPrint);
-
-		/**
-		 * Adds a login GUI
-		 */
-		JPanel loginPanel = new GUILogStatus();
-		loginPanel.setBounds(0, 0, 618, 24);
-		add(loginPanel);
-
-		/**
-		 * Adds a JLabel named "View Students"
-		 */
-		JLabel lblViewSchedule = new JLabel("View Students");
-		lblViewSchedule.setBounds(10, 175, 598, 23);
-		lblViewSchedule.setForeground(Color.GRAY);
-		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblViewSchedule);
-
-		JLabel lblClasses = new JLabel("Classes");
-		lblClasses.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClasses.setForeground(Color.GRAY);
-		lblClasses.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblClasses.setBounds(10, 32, 598, 23);
-		add(lblClasses);
-
-		/**
-		 * Displays currently enrolled students by double clicking selected course
-		 */
 		classTable.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent e)
 			{
 				if (e.getClickCount() == 2)
 				{
-					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.getSelectedRow()), 0);
+					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.convertRowIndexToModel(classTable.getSelectedRow())), 0);
 
 					Course selectedCourse = StudentRegistrationMain.mainCourseManager.getCourse(CRN);
 					Set<UserProfile> students = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(CRN);
@@ -172,13 +107,70 @@ public class GUIViewStudents extends JPanel
 				// Single click checking!
 				else
 				{
-					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.getSelectedRow()), 0);
+					int CRN = (int) classTable.getModel().getValueAt(classTable.convertRowIndexToModel(classTable.convertRowIndexToModel(classTable.getSelectedRow())), 0);
 					studentTable.setModel(new UneditableTableModel(getStudentTable(CRN), studentHeaders));
 				}
 			}
 		});
+		classScrollPane.setViewportView(classTable);
+
+		studentTable = new JTable();
+		studentTable.setModel(new UneditableTableModel(null, studentHeaders));
+		studentTable.setAutoCreateRowSorter(true);
+		studentScrollPane.setViewportView(studentTable);
+
+		// Button & logic for back button
+		JButton btnBack = new UniversalBackButton();
+		btnBack.setBounds(10, 386, 128, 23);
+		add(btnBack);
+
+		// Print button and functionality
+		JButton btnPrint = new JButton("Print");
+		btnPrint.setBounds(480, 386, 128, 23);
+		btnPrint.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				MessageFormat header = new MessageFormat("Schedule");
+				String name = StudentRegistrationMain.getCurrentLoggedInUser().getFirstName() + " " + StudentRegistrationMain.getCurrentLoggedInUser().getLastName();
+				String userID = StudentRegistrationMain.getCurrentLoggedInUser().getUserID();
+				MessageFormat footer = new MessageFormat("Name: " + name + "                                                                User ID: " + userID);
+				try
+				{
+					classTable.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				}
+				catch (PrinterException e1)
+				{
+				}
+			}
+		});
+		add(btnPrint);
+
+		// Adds login status bar
+		JPanel loginPanel = new GUILogStatus();
+		loginPanel.setBounds(0, 0, 618, 24);
+		add(loginPanel);
+
+		// Adds a JLabel named "View Students"
+		JLabel lblViewSchedule = new JLabel("View Students");
+		lblViewSchedule.setBounds(10, 175, 598, 23);
+		lblViewSchedule.setForeground(Color.GRAY);
+		lblViewSchedule.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblViewSchedule.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblViewSchedule);
+
+		JLabel lblClasses = new JLabel("Classes");
+		lblClasses.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClasses.setForeground(Color.GRAY);
+		lblClasses.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblClasses.setBounds(10, 32, 598, 23);
+		add(lblClasses);
+
 	}
 
+	/**
+	 * @return a two-dimensional object array for the table containing all courses the instructor is enrolled in
+	 */
 	public Object[][] getClassTable()
 	{
 		Set<Course> courses = StudentRegistrationMain.mainCourseManager.getCoursesWithInstructor(StudentRegistrationMain.getCurrentLoggedInUser());
@@ -198,6 +190,11 @@ public class GUIViewStudents extends JPanel
 		return cells;
 	}
 
+	/**
+	 * @param CRN
+	 *            The CRN to populate a table for
+	 * @return a two-dimensional object array for the table containing all students enrolled in a CRN
+	 */
 	private Object[][] getStudentTable(int CRN)
 	{
 		Set<UserProfile> students = StudentRegistrationMain.mainCourseManager.getLearnersWithCourse(CRN);
