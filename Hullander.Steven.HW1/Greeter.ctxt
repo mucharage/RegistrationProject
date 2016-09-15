@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=aName
+comment0.target=Greeter(java.lang.String)
+comment0.text=\r\n\ \ Constructor\ that\ initializes\ instance\ variables\r\n
+comment1.params=
+comment1.target=java.lang.String\ greetPerson()
+comment1.text=\r\n\ Greets\ a\ person\r\n\ \r\n\ @return\ \ \ \ \ a\ greeting\ message\ to\ the\ content\ of\ name\r\n
+comment2.params=other
+comment2.target=void\ swapNames(Greeter)
+comment2.text=\r\n\ Swaps\ the\ content\ of\ name\ in\ the\ initial\ Greeter\ object\r\n\ with\ the\ content\ stored\ in\ the\ other\ Greeter\ object\r\n\ \r\n\ @param\ other\ \ the\ name\ of\ the\ other\ object,\ not\ null\r\n
+numComments=3

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=smallestNum\ largestNum
+comment0.target=Summer(int,\ int)
+comment0.text=\r\n\ Constructor\ that\ initializes\ instance\ variables\r\n
+comment1.params=
+comment1.target=int\ getSum()
+comment1.text=\r\n\ method\ to\ calculate\ the\ sum\ of\ integers\r\n\ from\ smallest\ number\ to\ largest\r\n\ \r\n\ @param\ currentNum\ \ the\ number\ being\ added\ to\ sum\ at\ the\ current\ time\r\n\ \r\n\ @return\ sum\ \ the\ sum\ of\ all\ integers\ startNum\ to\ endNum\r\n
+numComments=2

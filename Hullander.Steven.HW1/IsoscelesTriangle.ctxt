@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=sideLength\ base
+comment0.target=IsoscelesTriangle(double,\ double)
+comment1.params=
+comment1.target=double\ area()
+comment1.text=\r\n\ @return\ area\ \ the\ area\ of\ the\ ploygon\r\n
+comment2.params=
+comment2.target=double\ perimeter()
+comment2.text=\r\n\ @return\ perimeter\ \ the\ perimeter\ of\ the\ ploygon\r\n
+numComments=3

@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=numbers
+comment0.target=DataAnalyzer(java.util.ArrayList)
+comment0.text=\r\n\ \ Constructor\ that\ initializes\ instance\ variables\r\n\ \ \r\n\ \ @param\ holdList\ \ copy\ of\ arrayList\ recieved\ from\ tester\ (numbers)\r\n\ \ @param\ numbers\ \ arrayList\ of\ integers\ sent\ from\ tester\r\n
+comment1.params=
+comment1.target=void\ getMax()
+comment1.text=\r\n\ method\ to\ determine\ the\ max\ value\ in\ the\ arrayList\r\n
+comment2.params=
+comment2.target=void\ getMin()
+comment2.text=\r\n\ method\ to\ determine\ the\ min\ value\ in\ the\ arrayList\r\n
+comment3.params=
+comment3.target=void\ getAverage()
+comment3.text=\r\n\ method\ to\ determine\ the\ average\ value\ in\ the\ arrayList\r\n\ \r\n\ @param\ average\ the\ total\ sum\ divided\ by\ the\ number\ of\ integers\r\n\ @param\ sum\ \ total\ of\ all\ the\ integers\ added\ together\r\n
+numComments=4
